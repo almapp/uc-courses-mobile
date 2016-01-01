@@ -18,7 +18,8 @@
   "description": "Buscacursos: An Ionic project",
   "version": "0.1.0",
   "scripts": {
-    "start": "ionic serve --lab -c -s"
+    "start": "ionic serve --lab -c -s",
+    "android": "ionic run android"
   },
   "keywords": [
     "ionic",
@@ -28,5 +29,16 @@
     "chile"
   ],
   "author": "Patricio López <patricio@lopezjuri.com> (https://lopezjuri.com)",
-  "license": "GPL-3.0"
+  "license": "GPL-3.0",
+  "cordovaPlugins": [
+    "cordova-plugin-device",
+    "cordova-plugin-console",
+    "cordova-plugin-whitelist",
+    "cordova-plugin-splashscreen",
+    "cordova-plugin-statusbar",
+    "ionic-plugin-keyboard"
+  ],
+  "cordovaPlatforms": [
+    "android"
+  ]
 }
