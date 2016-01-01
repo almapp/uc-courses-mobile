@@ -18,7 +18,7 @@
   "description": "Buscacursos: An Ionic project",
   "version": "0.1.0",
   "scripts": {
-    "start": "ionic serve --lab"
+    "start": "ionic serve --lab -c -s"
   },
   "keywords": [
     "ionic",
