@@ -1,14 +1,95 @@
 <ion-navbar *navbar>
-  <ion-searchbar></ion-searchbar>
+  <ion-title>Busca Cursos UC</ion-title>
+  <ion-buttons right>
+    <button (click)="selectPeriod()">
+      {{ period | periodize }}
+    </button>
+  </ion-buttons>
 </ion-navbar>
 
-<ion-content padding class="page-content">
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the
-    <code>www/app/</code> directory to add or change tabs, update any existing page or create new pages.
-  </p>
+<ion-content class="page-content">
+  <ion-card>
+    <ion-card-header>
+      Búsqueda
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-input>
+          <icon search item-left></icon>
+          <input type="text" placeholder="NRC, Sigla o nombre">
+        </ion-input>
+        <ion-item (click)="selectCampus()">
+          <icon locate item-left></icon>
+          Campus
+          <ion-note item-right>
+            {{ campus ? campus.name : "Todos" }}
+          </ion-note>
+        </ion-item>
+        <ion-item>
+          <icon school item-left></icon>
+          Escuela
+          <ion-note item-right>
+            Todas
+          </ion-note>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-content>
+      <ion-list>
+        <ion-list-header>Ingeniería</ion-list-header>
+        <ion-item class="course">
+          <ion-avatar item-left class="teacher-photo">
+            <img src="img/karim.png">
+          </ion-avatar>
+          <h2>
+            <strong>IIC2233-1</strong>
+          </h2>
+          <small class="nrc">10760</small>
+          <h3>Programación Avanzada</h3>
+          <h4>Karim Pichara</h4>
+          <div class="modules">
+            <p>
+              <strong class="module">CAT</strong>:
+              <span class=blocks>
+                <strong>J</strong>:4,5</span>
+              <span class="classroom">BC25</span>
+            </p>
+            <p>
+              <strong class="module">AYUD</strong>:
+              <span class=blocks>
+                <strong>L</strong>:6</span>
+              <span class="classroom">A4</span>
+            </p>
+          </div>
+        </ion-item>
+        <ion-item class="course">
+          <ion-avatar item-left class="teacher-photo">
+
+          </ion-avatar>
+          <h2>
+            <strong>IIC2233-2</strong>
+          </h2>
+          <small class="nrc">10761</small>
+          <h3>Programación Avanzada</h3>
+          <h4>Christian Pieringer</h4>
+          <div class="modules">
+            <p>
+              <strong class="module">CAT</strong>:
+              <span class=blocks>
+                <strong>J</strong>:4,5</span>
+              <span class="classroom">BC24</span>
+            </p>
+            <p>
+              <strong class="module">AYUD</strong>:
+              <span class=blocks>
+                <strong>L</strong>:6</span>
+              <span class="classroom">A4</span>
+            </p>
+          </div>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
