@@ -34,6 +34,11 @@ export interface Campus {
     identifier: string;
 }
 
+export interface FullSearchQuery {
+    q: string;
+    campus?: Campus;
+}
+
 export interface SearchQuery {
     name?: string;
     initials?: string;
@@ -53,13 +58,25 @@ export class CoursesProvider {
         // ...
     }
 
-    search(period: Period, query: SearchQuery): Promise<Course[]> {
-        return new Promise(resolve => {
-            const params = new URLSearchParams();
-            if (query.campus) { params.set("campus", query.campus.name); }
-            if (query.initials) { params.set("initials", query.initials); }
+    fullSearch(period: Period, query: FullSearchQuery): Promise<Course[]> {
+        const url = `${this.url}/courses/${period.year}/${period.period}/fullsearch`;
+        const params = new URLSearchParams();
+        if (query.q) { params.set("q", query.q); }
+        if (query.campus) { params.set("campus", query.campus.name); }
+        return this.request(url, params);
+    }
 
-            this.http.get(`${this.url}/courses/${period.year}/${period.period}/search`, {
+    search(period: Period, query: SearchQuery): Promise<Course[]> {
+        const url = `${this.url}/courses/${period.year}/${period.period}/search`;
+        const params = new URLSearchParams();
+        if (query.initials) { params.set("initials", query.initials); }
+        if (query.campus) { params.set("campus", query.campus.name); }
+        return this.request(url, params);
+    }
+
+    request(url: string, params: URLSearchParams): Promise<Course[]> {
+        return new Promise(resolve => {
+            this.http.get(url, {
                 search: params
             }).subscribe(res => {
                 resolve(res.json());

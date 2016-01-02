@@ -2,7 +2,7 @@ import {Page, NavController, ActionSheet} from "ionic-framework/ionic";
 import {Pipe} from "angular2/core";
 
 import {Course} from "../../models/course";
-import {CoursesProvider, SearchQuery ,Period, Campus} from "../../providers/courses";
+import {CoursesProvider, FullSearchQuery, Period, Campus} from "../../providers/courses";
 import {CourseItem} from "../../components/course-item/course-item";
 
 @Pipe({
@@ -60,11 +60,11 @@ export class CoursesPage {
     }
 
     search(query: string) {
-        const request: SearchQuery = {
+        const request: FullSearchQuery = {
+            q: query,
             campus: this.campus,
-            initials: query,
         };
-        this.provider.search(this.period, request).then(results => {
+        this.provider.fullSearch(this.period, request).then(results => {
             this.courses = results;
         });
     }
