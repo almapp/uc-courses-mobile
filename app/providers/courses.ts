@@ -1,5 +1,5 @@
 import {Injectable} from "angular2/core";
-import {Http} from "angular2/http";
+import {Http, URLSearchParams} from "angular2/http";
 
 import {Course} from "../models/course";
 
@@ -41,7 +41,7 @@ export interface SearchQuery {
     NRC?: string;
     school?: string;
     teacher?: string;
-    campus?: string;
+    campus?: Campus;
     places?: string[];
 }
 
@@ -53,9 +53,15 @@ export class CoursesProvider {
         // ...
     }
 
-    search(period: Period, initials: string): Promise<Course[]> {
+    search(period: Period, query: SearchQuery): Promise<Course[]> {
         return new Promise(resolve => {
-            this.http.get(`${this.url}/courses/${period.year}/${period.period}/search?initials=${initials}`).subscribe(res => {
+            const params = new URLSearchParams();
+            if (query.campus) { params.set("campus", query.campus.name); }
+            if (query.initials) { params.set("initials", query.initials); }
+
+            this.http.get(`${this.url}/courses/${period.year}/${period.period}/search`, {
+                search: params
+            }).subscribe(res => {
                 resolve(res.json());
             });
         });

@@ -2,7 +2,7 @@ import {Page, NavController, ActionSheet} from "ionic-framework/ionic";
 import {Pipe} from "angular2/core";
 
 import {Course} from "../../models/course";
-import {CoursesProvider, Period, Campus} from "../../providers/courses";
+import {CoursesProvider, SearchQuery ,Period, Campus} from "../../providers/courses";
 import {CourseItem} from "../../components/course-item/course-item";
 
 @Pipe({
@@ -57,12 +57,14 @@ export class CoursesPage {
             { year: 2015, period: 2 },
         ];
         this.period = this.periods[0];
-
-        this.search("IIC2");
     }
 
     search(query: string) {
-        this.provider.search(this.period, query).then(results => {
+        const request: SearchQuery = {
+            campus: this.campus,
+            initials: query,
+        };
+        this.provider.search(this.period, request).then(results => {
             this.courses = results;
         });
     }

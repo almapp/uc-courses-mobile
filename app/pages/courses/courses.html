@@ -16,7 +16,7 @@
       <ion-list>
         <ion-input>
           <icon search item-left></icon>
-          <input type="text" placeholder="Sigla, nombre o NRC">
+          <input type="text" placeholder="Sigla, nombre o NRC" #query>
         </ion-input>
         <ion-item (click)="selectCampus()">
           <icon locate item-left></icon>
@@ -24,6 +24,9 @@
           <ion-note item-right>
             {{ campus ? campus.name : "Todos" }}
           </ion-note>
+        </ion-item>
+        <ion-item>
+          <button block small (click)="search(query.value)">Buscar</button>
         </ion-item>
       </ion-list>
     </ion-card-content>
