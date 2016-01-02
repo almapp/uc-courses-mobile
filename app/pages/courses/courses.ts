@@ -1,6 +1,8 @@
 import {Page, NavController, ActionSheet} from "ionic-framework/ionic";
 import {Pipe} from "angular2/core";
 
+import {CourseItem} from "../../components/course-item/course-item";
+
 interface Campus {
     name: string;
     identifier: string;
@@ -32,7 +34,8 @@ export class HumanizePeriodPipe {
 
 @Page({
     templateUrl: "build/pages/courses/courses.html",
-    pipes: [HumanizePeriodPipe]
+    pipes: [HumanizePeriodPipe],
+    directives: [CourseItem],
 })
 export class CoursesPage {
     private period: Period;
