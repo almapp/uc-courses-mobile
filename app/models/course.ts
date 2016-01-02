@@ -36,6 +36,7 @@ export class Course {
     period: Number;
     NRC: Number;
     initials: String;
+    section: number;
     school: String;
     droppable: Boolean;
     english: Boolean;
