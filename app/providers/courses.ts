@@ -3,6 +3,27 @@ import {Http} from "angular2/http";
 
 import {Course} from "../models/course";
 
+export const MODULES = [
+    "CAT",
+    "TALL",
+    "LAB",
+    "AYUD",
+    "PRAC",
+    "TERR",
+    "TES",
+    "OTRO",
+];
+
+export const DAYS = [
+    "L",
+    "M",
+    "W",
+    "J",
+    "V",
+    "S",
+    "D",
+];
+
 export interface Period {
     year: number;
     period: number;
@@ -21,7 +42,7 @@ export interface SearchQuery {
     school?: string;
     teacher?: string;
     campus?: string;
-    places?: [string];
+    places?: string[];
 }
 
 @Injectable()
@@ -32,11 +53,10 @@ export class CoursesProvider {
         // ...
     }
 
-    search(period: Period, initials: string): Promise<[Course]> {
+    search(period: Period, initials: string): Promise<Course[]> {
         return new Promise(resolve => {
             this.http.get(`${this.url}/courses/${period.year}/${period.period}/search?initials=${initials}`).subscribe(res => {
-                const courses: [Course] = res.json();
-                resolve(courses);
+                resolve(res.json());
             });
         });
     }

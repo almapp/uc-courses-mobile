@@ -7,17 +7,17 @@
   </h2>
   <small class="nrc">{{course.NRC}}</small>
   <h3 class="name">{{course.name}}</h3>
-  <h4 class="teachers">{{teachersName()}}</h4>
+  <h4 class="teachers">{{teachersName}}</h4>
   <div class="modules">
-    <p *ngFor="#type of activeModules()">
-      <strong class="module">{{type}}</strong>:
+    <p *ngFor="#mod of modules">
+      <strong class="module">{{mod.type}}</strong>:
       <span class="blocks">
-        <span class="block" *ngFor="#day of activeDays(type)">
-          <strong>{{day.day}}</strong>: {{day.modules}}
+        <span class="block" *ngFor="#block of mod.blocks">
+          <strong>{{block.day}}</strong>: {{block.hours}}
         </span>
       </span>
       <span class="classroom">
-        {{place(type)}}
+        {{mod.classroom}}
       </span>
     </p>
   </div>

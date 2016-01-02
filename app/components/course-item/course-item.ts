@@ -2,63 +2,63 @@ import {Component, Input} from "angular2/core";
 import {Item} from "ionic-framework/ionic";
 
 import {Course} from "../../models/course";
+import {CoursesProvider, Period, Campus, DAYS, MODULES} from "../../providers/courses";
+
+interface Module {
+    type: string;
+    blocks: {
+        day: string;
+        hours: number[];
+    }[];
+    classroom: string;
+}
 
 @Component({
     selector: "course-item",
     templateUrl: "build/components/course-item/course-item.html",
-    directives: [Item]
+    directives: [Item],
+    providers: [CoursesProvider],
 })
 export class CourseItem {
     @Input() course: Course;
 
-    static MODULES = [
-        "CAT",
-        "TALL",
-        "LAB",
-        "AYUD",
-        "PRAC",
-        "TERR",
-        "TES",
-        "OTRO",
-    ];
+    private _modules: Module[];
 
-    static DAYS = [
-        "L",
-        "M",
-        "W",
-        "J",
-        "V",
-        "S",
-        "D",
-    ];
-
-    constructor() {
+    constructor(private provider: CoursesProvider) {
         // ...
     }
 
-    place(modtype: string): string {
-        const mod = this.course.schedule[modtype];
+    get teachersName(): string {
+        return this.course.teachers.map(t => t.name).join(", ");
+    }
+
+    get modules() {
+        if (!this._modules) {
+            this._modules = this.course.schedule ? MODULES.filter(type => this.course.schedule[type]).map(type => {
+                return {
+                    type: type,
+                    blocks: this.day(type),
+                    classroom: this.place(type),
+                };
+            }) : [];
+        }
+        return this._modules;
+    }
+
+    private place(type: string): string {
+        const mod = this.course.schedule[type];
         const place = mod ? mod.location.place : null;
         return place ? place : "?";
     }
 
-    teachersName(): string {
-        return this.course.teachers.map(t => t.name).join(", ");
-    }
-
-    activeModules(): string[] {
-        return CourseItem.MODULES.filter(mod => this.course.schedule[mod]);
-    }
-
-    activeDays(modtype: string): string[] {
-        return CourseItem.DAYS.filter(day => {
-            const array = this.course.schedule[modtype].modules[day];
-            return array && array.length !== 0;
-        }).map(day => {
-            return {
-                day: day,
-                modules: this.course.schedule[modtype].modules[day].join(","),
-            };
-        });
+    private day(type: string) {
+        const blocks = [];
+        for (let day of DAYS) {
+            const array = this.course.schedule[type].modules[day];
+            if (array && array.length !== 0) {
+                blocks.push({ day: day, hours: array });
+            }
+        }
+        return blocks;
     }
 }
