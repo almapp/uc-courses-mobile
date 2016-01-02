@@ -1,17 +1,9 @@
 import {Page, NavController, ActionSheet} from "ionic-framework/ionic";
 import {Pipe} from "angular2/core";
 
+import {Course} from "../../models/course";
+import {CoursesProvider, Period, Campus} from "../../providers/courses";
 import {CourseItem} from "../../components/course-item/course-item";
-
-interface Campus {
-    name: string;
-    identifier: string;
-}
-
-interface Period {
-    year: number;
-    period: number;
-}
 
 @Pipe({
     name: "periodize"
@@ -36,6 +28,7 @@ export class HumanizePeriodPipe {
     templateUrl: "build/pages/courses/courses.html",
     pipes: [HumanizePeriodPipe],
     directives: [CourseItem],
+    providers: [CoursesProvider],
 })
 export class CoursesPage {
     private period: Period;
@@ -44,7 +37,13 @@ export class CoursesPage {
     private campus: Campus;
     private campuses: [Campus];
 
-    constructor(private actionSheet: ActionSheet, private nav: NavController) {
+    private courses: [Course];
+
+    constructor(
+        private provider: CoursesProvider,
+        private actionSheet: ActionSheet,
+        private nav: NavController) {
+
         this.campuses = [
             { name: "San Joaquín", identifier: "SJ" },
             { name: "Casa Central", identifier: "CC" },
@@ -58,6 +57,14 @@ export class CoursesPage {
             { year: 2015, period: 2 },
         ];
         this.period = this.periods[0];
+
+        this.search("IIC2");
+    }
+
+    search(query: string) {
+        this.provider.search(this.period, query).then(results => {
+            this.courses = results;
+        });
     }
 
     selectPeriod() {

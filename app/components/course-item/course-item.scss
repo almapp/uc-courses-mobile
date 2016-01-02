@@ -7,6 +7,16 @@ ion-item-content {
     top: 0;
   }
 
+  .name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .teachers {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
   .modules {
     padding-top: 7px;
 

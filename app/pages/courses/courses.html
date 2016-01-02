@@ -32,8 +32,10 @@
     <ion-card-content>
       <ion-list>
         <ion-list-header>Ingeniería</ion-list-header>
-        <course-item></course-item>
-        <course-item></course-item>
+          <course-item
+            *ngFor="#course of courses"
+            [course]="course">
+          </course-item>
       </ion-list>
     </ion-card-content>
   </ion-card>
