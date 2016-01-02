@@ -1,52 +1,52 @@
 export interface Teacher {
-    name: String;
-    photoURL: String;
+    name: string;
+    photoURL: string;
 }
 
 export interface CourseRestriction {
-    type: String;
-    value: String;
+    type: string;
+    value: string;
 }
 
 export interface CourseRequirement {
-    prerequisites: String[];
-    corequisites: String[];
+    prerequisites: string[];
+    corequisites: string[];
 }
 
 export interface ScheduleSchema {
     modules: {
-        L: Number[];
-        M: Number[];
-        W: Number[];
-        J: Number[];
-        V: Number[];
-        S: Number[];
-        D: Number[];
+        L: number[];
+        M: number[];
+        W: number[];
+        J: number[];
+        V: number[];
+        S: number[];
+        D: number[];
     };
     location: {
-        campus: String;
-        place: String;
+        campus: string;
+        place: string;
     };
 }
 
 export class Course {
-    _id: String;
-    name: String;
-    year: Number;
-    period: Number;
-    NRC: Number;
-    initials: String;
+    _id: string;
+    name: string;
+    year: number;
+    period: number;
+    NRC: number;
+    initials: string;
     section: number;
-    school: String;
-    droppable: Boolean;
-    english: Boolean;
-    specialApproval: Boolean;
+    school: string;
+    droppable: boolean;
+    english: boolean;
+    specialApproval: boolean;
     teachers: Teacher[];
-    credits: Number;
-    information: String;
+    credits: number;
+    information: string;
     vacancy: {
-        total: Number;
-        available: Number;
+        total: number;
+        available: number;
     };
     schedule: {
         CAT?: ScheduleSchema,
@@ -60,8 +60,8 @@ export class Course {
     };
     requisites: {
         requirements?: CourseRequirement[];
-        relation?: String;
-        restrictions?: String;
-        equivalences?: String[];
+        relation?: string;
+        restrictions?: string;
+        equivalences?: string[];
     };
 }
