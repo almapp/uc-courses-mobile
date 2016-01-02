@@ -43,6 +43,9 @@
           [course]="course">
         </course-item>
       </ion-list>
+      <p *ngIf="schools.length === 0">
+        Sin resultados
+      </p>
     </ion-card-content>
   </ion-card>
 </ion-content>
