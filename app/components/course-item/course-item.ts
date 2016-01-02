@@ -22,27 +22,24 @@ interface Module {
 export class CourseItem {
     @Input() course: Course;
 
-    private _modules: Module[];
+    modules: Module[];
 
     constructor(private provider: CoursesProvider) {
         // ...
     }
 
-    get teachersName(): string {
-        return this.course.teachers.map(t => t.name).join(", ");
+    ngOnInit() {
+        this.modules = this.course.schedule ? MODULES.filter(type => this.course.schedule[type]).map(type => {
+            return {
+                type: type,
+                blocks: this.day(type),
+                classroom: this.place(type),
+            };
+        }) : [];
     }
 
-    get modules() {
-        if (!this._modules) {
-            this._modules = this.course.schedule ? MODULES.filter(type => this.course.schedule[type]).map(type => {
-                return {
-                    type: type,
-                    blocks: this.day(type),
-                    classroom: this.place(type),
-                };
-            }) : [];
-        }
-        return this._modules;
+    get teachersName(): string {
+        return this.course.teachers.map(t => t.name).join(", ");
     }
 
     private place(type: string): string {
