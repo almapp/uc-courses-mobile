@@ -32,12 +32,12 @@ export class HumanizePeriodPipe {
 })
 export class CoursesPage {
     private period: Period;
-    private periods: [Period];
+    private periods: Period[];
 
     private campus: Campus;
-    private campuses: [Campus];
+    private campuses: Campus[];
 
-    private courses: [Course];
+    private courses: Course[];
 
     constructor(
         private provider: CoursesProvider,
