@@ -106,7 +106,7 @@ export class CoursesPage {
 
     selectCampus() {
         this.actionSheet.open({
-            titleText: "Selecciona periodo",
+            titleText: "Selecciona un campus",
             buttons: this.campuses.map(c => {
                 return { text: c.name };
             }),
