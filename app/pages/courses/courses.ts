@@ -78,15 +78,12 @@ export class CoursesPage {
             this.courses = {};
             results.forEach(course => {
                 if (!this.courses[course.school]) {
-                    console.log(course.school, "was created");
                     this.courses[course.school] = [course];
                 } else {
-                    console.log(course.school, "was appendned");
                     this.courses[course.school].push(course);
                 }
             });
             this.schools = Object.keys(this.courses);
-            console.log(this.courses["Matemática"] instanceof Array);
         });
     }
 
