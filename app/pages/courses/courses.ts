@@ -5,6 +5,10 @@ import {Course} from "../../models/course";
 import {CoursesProvider, FullSearchQuery, Period, Campus} from "../../providers/courses";
 import {CourseItem} from "../../components/course-item/course-item";
 
+interface CourseGroup {
+    [ Identifier: string ]: Course[];
+}
+
 @Pipe({
     name: "periodize"
 })
@@ -37,7 +41,8 @@ export class CoursesPage {
     private campus: Campus;
     private campuses: Campus[];
 
-    private courses: Course[];
+    private courses: CourseGroup;
+    private schools: string[];
 
     constructor(
         private provider: CoursesProvider,
@@ -57,6 +62,11 @@ export class CoursesPage {
             { year: 2015, period: 2 },
         ];
         this.period = this.periods[0];
+        this.courses = null;
+    }
+
+    course(school: string): Course[] {
+        return this.courses[school];
     }
 
     search(query: string) {
@@ -64,8 +74,19 @@ export class CoursesPage {
             q: query,
             campus: this.campus,
         };
-        this.provider.fullSearch(this.period, request).then(results => {
-            this.courses = results;
+        this.provider.fullSearch(this.period, request).then((results: Course[]) => {
+            this.courses = {};
+            results.forEach(course => {
+                if (!this.courses[course.school]) {
+                    console.log(course.school, "was created");
+                    this.courses[course.school] = [course];
+                } else {
+                    console.log(course.school, "was appendned");
+                    this.courses[course.school].push(course);
+                }
+            });
+            this.schools = Object.keys(this.courses);
+            console.log(this.courses["Matemática"] instanceof Array);
         });
     }
 
