@@ -9,17 +9,16 @@
   <h3 class="name">{{course.name}}</h3>
   <h4 class="teachers">{{teachersName()}}</h4>
   <div class="modules">
-    <p>
-      <strong class="module">CAT</strong>:
-      <span class=blocks>
-        <strong>J</strong>:4,5</span>
-      <span class="classroom">BC25</span>
-    </p>
-    <p>
-      <strong class="module">AYUD</strong>:
-      <span class=blocks>
-        <strong>L</strong>:6</span>
-      <span class="classroom">A4</span>
+    <p *ngFor="#type of activeModules()">
+      <strong class="module">{{type}}</strong>:
+      <span class="blocks">
+        <span class="block" *ngFor="#day of activeDays(type)">
+          <strong>{{day.day}}</strong>: {{day.modules}}
+        </span>
+      </span>
+      <span class="classroom">
+        {{place(type)}}
+      </span>
     </p>
   </div>
 </ion-item>

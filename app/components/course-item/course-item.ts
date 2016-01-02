@@ -10,11 +10,55 @@ import {Course} from "../../models/course";
 })
 export class CourseItem {
     @Input() course: Course;
+
+    static MODULES = [
+        "CAT",
+        "TALL",
+        "LAB",
+        "AYUD",
+        "PRAC",
+        "TERR",
+        "TES",
+        "OTRO",
+    ];
+
+    static DAYS = [
+        "L",
+        "M",
+        "W",
+        "J",
+        "V",
+        "S",
+        "D",
+    ];
+
     constructor() {
         // ...
     }
 
-    teachersName(): String {
+    place(modtype: string): string {
+        const mod = this.course.schedule[modtype];
+        const place = mod ? mod.location.place : null;
+        return place ? place : "?";
+    }
+
+    teachersName(): string {
         return this.course.teachers.map(t => t.name).join(", ");
+    }
+
+    activeModules(): string[] {
+        return CourseItem.MODULES.filter(mod => this.course.schedule[mod]);
+    }
+
+    activeDays(modtype: string): string[] {
+        return CourseItem.DAYS.filter(day => {
+            const array = this.course.schedule[modtype].modules[day];
+            return array && array.length !== 0;
+        }).map(day => {
+            return {
+                day: day,
+                modules: this.course.schedule[modtype].modules[day].join(","),
+            };
+        });
     }
 }
