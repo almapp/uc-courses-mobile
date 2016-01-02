@@ -3,9 +3,21 @@
 </ion-navbar>
 
 <ion-content scroll="false" class="page-content">
-  <ion-tabs tabbarPlacement="top" id="week-tabs">
-    <ion-tab *ngFor="#day of days" tabTitle={{day}}>
+  <ion-card *ngFor="#schedule of schedules">
+    <ion-card-header>
+      {{schedule.name}}
+    </ion-card-header>
 
-    </ion-tab>
-  </ion-tabs>
+    <ion-segment class="week-segment" [(ngModel)]="current">
+      <ion-segment-button *ngFor="#day of days" [value]="day" (select)="selectDay(day)">{{day}}</ion-segment-button>
+    </ion-segment>
+
+    <ion-card-content>
+      <div class="content">
+        <h1>Hola</h1>
+        <h1>Hola</h1>
+        <h1>Hola</h1>
+      </div>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

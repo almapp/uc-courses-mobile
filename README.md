@@ -42,3 +42,9 @@ npm run android
 ```
 
 > See: http://ionicframework.com/docs/v2/getting-started/installation/#building-for-android
+
+### Installing new Cordova plugins
+
+```
+ionic plugin add <plugin name>
+```
