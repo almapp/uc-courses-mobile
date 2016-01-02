@@ -1,21 +1,26 @@
-<ion-item>
-  <h2>
-    <strong class="identifier">{{course.initials}}-{{course.section}}</strong>
-  </h2>
-  <small class="nrc">{{course.NRC}}</small>
-  <h3 class="name">{{course.name}}</h3>
-  <h4 class="teachers">{{teachersName}}</h4>
-  <div class="modules">
-    <p *ngFor="#mod of modules">
-      <strong class="module">{{mod.type}}</strong>:
-      <span class="blocks">
-        <span class="block" *ngFor="#block of mod.blocks">
-          <strong>{{block.day}}</strong>: {{block.hours}}
+<ion-item-sliding>
+  <ion-item button (click)="select()">
+    <h2>
+      <strong class="identifier">{{course.initials}}-{{course.section}}</strong>
+    </h2>
+    <small class="nrc">{{course.NRC}}</small>
+    <h3 class="name">{{course.name}}</h3>
+    <h4 class="teachers">{{teachersName}}</h4>
+    <div class="modules">
+      <p *ngFor="#mod of modules">
+        <strong class="module">{{mod.type}}</strong>:
+        <span class="blocks">
+          <span class="block" *ngFor="#block of mod.blocks">
+            <strong>{{block.day}}</strong>: {{block.hours}}
+          </span>
         </span>
-      </span>
-      <span class="classroom">
-        {{mod.classroom}}
-      </span>
-    </p>
-  </div>
-</ion-item>
+        <span class="classroom">
+          {{mod.classroom}}
+        </span>
+      </p>
+    </div>
+  </ion-item>
+  <ion-item-options>
+    <button (click)="add()">Agregar</button>
+  </ion-item-options>
+</ion-item-sliding>

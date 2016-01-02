@@ -1,5 +1,5 @@
 import {Component, Input} from "angular2/core";
-import {Item} from "ionic-framework/ionic";
+import {Item, ItemSliding} from "ionic-framework/ionic";
 
 import {Course} from "../../models/course";
 import {CoursesProvider, Period, Campus, DAYS, MODULES} from "../../providers/courses";
@@ -16,7 +16,7 @@ interface Module {
 @Component({
     selector: "course-item",
     templateUrl: "build/components/course-item/course-item.html",
-    directives: [Item],
+    directives: [Item, ItemSliding],
     providers: [CoursesProvider],
 })
 export class CourseItem {
@@ -36,6 +36,14 @@ export class CourseItem {
                 classroom: this.place(type),
             };
         }) : [];
+    }
+
+    select() {
+        console.log("select() on", this.course.initials);
+    }
+
+    add() {
+        console.log("add() on", this.course.initials);
     }
 
     get teachersName(): string {
