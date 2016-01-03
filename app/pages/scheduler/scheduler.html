@@ -2,22 +2,11 @@
   <ion-title>Mi Horario</ion-title>
 </ion-navbar>
 
-<ion-content scroll="false" class="page-content">
-  <ion-card *ngFor="#schedule of schedules">
-    <ion-card-header>
-      {{schedule.name}}
-    </ion-card-header>
-
-    <ion-segment class="week-segment" [(ngModel)]="current">
-      <ion-segment-button *ngFor="#day of days" [value]="day" (select)="selectDay(day)">{{day}}</ion-segment-button>
-    </ion-segment>
-
-    <ion-card-content>
-      <div class="content">
-        <h1>Hola</h1>
-        <h1>Hola</h1>
-        <h1>Hola</h1>
-      </div>
-    </ion-card-content>
-  </ion-card>
+<ion-content class="page-content">
+  <div class="schedules" *ngIf="schedules">
+    <schedule-view
+    *ngFor="#schedule of schedules"
+    [schedule]="schedule">
+  </schedule-view>
+  </div>
 </ion-content>

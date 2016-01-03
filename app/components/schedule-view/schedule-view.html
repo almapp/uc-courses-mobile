@@ -1,0 +1,13 @@
+<ion-card>
+  <ion-card-header>
+    {{schedule.name}}
+  </ion-card-header>
+
+  <ion-segment class="week-segment" [(ngModel)]="current">
+    <ion-segment-button *ngFor="#day of days" [value]="day" (select)="selectDay(day)">{{day}}</ion-segment-button>
+  </ion-segment>
+
+  <ion-card-content>
+
+  </ion-card-content>
+</ion-card>
