@@ -20,7 +20,7 @@
     </ion-item-divider>
 
     <ion-segment [(ngNodel)]="current" class="select-segment" *ngIf="sections && sections.length > 1">
-      <ion-segment-button *ngFor="#section of sections; #i = index" value="i">
+      <ion-segment-button *ngFor="#section of sections; #i = index" [value]="i">
         {{i + 1}}
       </ion-segment-button>
     </ion-segment>
