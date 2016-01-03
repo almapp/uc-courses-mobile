@@ -3,16 +3,14 @@
     {{schedule.name}}
   </ion-card-header>
 
-  <ion-segment class="week-segment" [(ngModel)]="current">
+  <ion-segment class="week-segment">
     <ion-segment-button *ngFor="#day of days" [value]="day" (select)="selectDay(day)">{{day}}</ion-segment-button>
   </ion-segment>
 
   <ion-card-content>
-    <schedule-block
-      *ngFor="#block of todayBlocks"
-      [day]="current"
-      [block]="cblock.block"
-      [courses]="cblock.courses">
-    </schedule-block>
+    <div class="ewe" *ngFor="#blocks of schedule.week[current]">
+      <schedule-block *ngIf="blocks && blocks.length" [blocks]="blocks">
+      </schedule-block>
+    </div>
   </ion-card-content>
 </ion-card>

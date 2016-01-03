@@ -1,50 +1,66 @@
-import {Component, Input} from "angular2/core";
+import {Component, Input, Pipe} from "angular2/core";
 import {Icon, Item} from "ionic-framework/ionic";
 
-import {Course, DAYS} from "../../models/course";
-import {Schedule} from "../../models/schedule";
+import {Block} from "../../models/schedule";
 import {CoursesProvider} from "../../providers/courses";
-import {SchedulesProvider} from "../../providers/schedules";
 
 interface Hour {
     start: string;
     end: string;
 }
 
-interface CourseModule {
-    course: Course;
-    campus: string;
-    modtype: string;
-    classroom: string;
+@Pipe({
+    name: "fetch",
+    // providers: [CoursesProvider],
+})
+export class FetchPipe {
+    constructor(private provider: CoursesProvider) {
+        // ...
+    }
+
+    transform(blocks: Block[], args: string[]): Promise<Block[]> {
+        return Promise.all(blocks.map(block => {
+            return this.provider.getByNRC(block.NRC).then(course => {
+                block.course = course;
+                return block;
+            });
+        }));
+    }
 }
 
 @Component({
     selector: "schedule-block",
     templateUrl: "build/components/schedule-block/schedule-block.html",
     directives: [Icon, Item],
-    providers: [CoursesProvider, SchedulesProvider],
+    pipes: [FetchPipe],
+    providers: [CoursesProvider],
 })
 export class ScheduleBlock {
-    @Input() day: string;
-    @Input() block: string;
-    @Input() courses: Course[];
+    @Input() blocks: Block[];
 
-    private courseModules: CourseModule[];
+    private block: number;
+    private day: string;
     private hour: Hour;
 
-    constructor(private provider: CoursesProvider, private manager: SchedulesProvider) {
+    static HOURS: Hour[] = [
+        { start: "INVALID", end: "INVALID" },
+        { start: "8:30", end: "9:50" },
+        { start: "10:00", end: "11:20" },
+        { start: "11:30", end: "12:50" },
+        { start: "14:00", end: "15:20" },
+        { start: "15:30", end: "16:50" },
+        { start: "17:00", end: "18:20" },
+        { start: "18:30", end: "19:50" },
+        { start: "20:00", end: "21:20" },
+    ];
+
+    constructor(private provider: CoursesProvider) {
         // ...
     }
 
     ngOnInit() {
-        this.hour = {
-            start: "",
-            end: ""
-        };
-        this.courseModules = []; // this.courses.map(course => {});
-    }
-
-    moduleTypeFor(course: Course): string {
-        return "";
+        this.block = this.blocks[0].block;
+        this.day = this.blocks[0].day;
+        this.hour = ScheduleBlock.HOURS[this.block];
     }
 }

@@ -7,14 +7,14 @@
       {{day}}: {{block}}
     </span>
   </ion-list-header>
-  <ion-item button *ngFor="#cmod of courseModules">
+  <ion-item button *ngFor="#block of (blocks | fetch | async)">
     <icon build item-left></icon>
     <h2>
-      <strong class="identifier">{{cmod.course.initials}}-{{cmod.course-section}}</strong> | {{cmod.modtype}}
+      <strong class="identifier">{{block.course.initials}}-{{block.course.section}}</strong> | {{block.modtype}}
     </h2>
-    <h3 class="name">{{cmod.course.name}}</h3>
+    <h3 class="name">{{block.course.name}}</h3>
     <p class="place">
-      {{cmod.campus}}: {{cmod.classroom}}
+      {{block.course.campus(block.modtype)}}: {{block.course.place(block.modtype)}}
     </p>
   </ion-item>
 </ion-list>
