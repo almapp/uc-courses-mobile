@@ -3,6 +3,7 @@ import {Pipe} from "angular2/core";
 
 import {Course} from "../../models/course";
 import {CoursesProvider, FullSearchQuery, Period, Campus} from "../../providers/courses";
+import {SchedulesProvider} from "../../providers/schedules";
 import {CourseItem} from "../../components/course-item/course-item";
 
 interface CourseGroup {
@@ -32,7 +33,7 @@ export class HumanizePeriodPipe {
     templateUrl: "build/pages/courses/courses.html",
     pipes: [HumanizePeriodPipe],
     directives: [CourseItem],
-    providers: [CoursesProvider],
+    providers: [CoursesProvider, SchedulesProvider],
 })
 export class CoursesPage {
     private period: Period;
@@ -45,9 +46,10 @@ export class CoursesPage {
     private schools: string[];
 
     constructor(
-        private provider: CoursesProvider,
         private actionSheet: ActionSheet,
-        private nav: NavController) {
+        private nav: NavController,
+        private provider: CoursesProvider,
+        private manager: SchedulesProvider) {
 
         this.campuses = [
             { name: "San Joaquín", identifier: "SJ" },
