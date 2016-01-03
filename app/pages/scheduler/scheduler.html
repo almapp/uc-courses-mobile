@@ -15,6 +15,22 @@
     (deleted)="deleteSchedule(schedule)">
   </schedule-view>
   </div>
+
+  <ion-card *ngIf="!schedules">
+    <ion-card-content>
+      Cargando...
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="schedules && schedules.length == 0">
+    <ion-card-content>
+      Veo que no tienes horarios, recuerda que puedes crear cuántos quieras.
+      <ion-item>
+        <button block small (click)="newScheduler()">Crear horario</button>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
   <button fab fab-bottom fab-right *ngIf="platform.is('android')" (click)="newScheduler()">
     <icon add></icon>
   </button>

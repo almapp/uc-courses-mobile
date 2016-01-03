@@ -19,6 +19,7 @@ export class SchedulerPage {
         private popup: Popup,
         private manager: SchedulesProvider) {
 
+        this.schedules = null;
         this.loadSchedules().then(results => {
             if (results.length == 0) {
                 return this.setup();
@@ -26,9 +27,9 @@ export class SchedulerPage {
         });
     }
 
-    setup(): Promise<Schedule> {
+    setup(): Promise<Schedule[]> {
         return this.manager.create("Propio", 0).then(schedule => {
-            this.schedules = [schedule];
+            return this.schedules = [schedule];
         });
     }
 
