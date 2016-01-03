@@ -1,7 +1,8 @@
 import {Page, NavController, Platform, Popup} from "ionic-framework/ionic";
 
 import {Course} from "../../models/course";
-import {SchedulesProvider, Schedule} from "../../providers/schedules";
+import {Schedule} from "../../models/schedule";
+import {SchedulesProvider} from "../../providers/schedules";
 import {ScheduleView} from "../../components/schedule-view/schedule-view";
 
 @Page({

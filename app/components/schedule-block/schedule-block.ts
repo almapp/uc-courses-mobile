@@ -2,8 +2,9 @@ import {Component, Input} from "angular2/core";
 import {Icon, Item} from "ionic-framework/ionic";
 
 import {Course, DAYS} from "../../models/course";
+import {Schedule} from "../../models/schedule";
 import {CoursesProvider} from "../../providers/courses";
-import {SchedulesProvider, Schedule} from "../../providers/schedules";
+import {SchedulesProvider} from "../../providers/schedules";
 
 interface Hour {
     start: string;
