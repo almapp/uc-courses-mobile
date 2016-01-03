@@ -57,6 +57,7 @@ export const DAYS = [
 
 export class Course {
     static NO_PLACE = "?";
+    static NO_CAMPUS = "Sin campus";
 
     _id: string;
     name: string;
@@ -131,6 +132,17 @@ export class Course {
     }
 
     /**
+     * Get the campus name where takes places.
+     * @param  {string} modtype Module type (i.e. AYUD).
+     * @return {string}         Campus name
+     */
+    campus(modtype: string): string {
+        const mod = this.schedule[modtype];
+        const campus = mod ? mod.location.campus : null;
+        return campus ? campus : Course.NO_CAMPUS;
+    }
+
+    /**
      * Get the blocks of classes for a given module type.
      * Ask for CAT and recieve [{ L, [1,3,4] }, { M, [1] }]
      * @param  {string}  modtype Module type (i.e. AYUD).
@@ -141,11 +153,16 @@ export class Course {
         return this.workingDays(modtype).map(day => {
             return {
                 day: day,
-                hours:  mods[day],
+                hours: mods[day],
             };
         });
     }
 
+    /**
+     * Parse a JSON from the REST API to a native object.
+     * @param  {any}    json JSON Object.
+     * @return {Course}      Instance of class.
+     */
     static parse(json: any): Course {
         const course = new Course();
         course._id = json._id;
