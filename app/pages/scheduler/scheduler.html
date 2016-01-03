@@ -1,5 +1,10 @@
 <ion-navbar *navbar>
-  <ion-title>Mi Horario</ion-title>
+  <ion-title>Horarios</ion-title>
+  <ion-buttons right *ngIf="platform.is('ios')">
+    <button (click)="newScheduler()">
+      Nuevo
+    </button>
+  </ion-buttons>
 </ion-navbar>
 
 <ion-content class="page-content">
@@ -9,4 +14,7 @@
     [schedule]="schedule">
   </schedule-view>
   </div>
+  <button fab fab-bottom fab-right *ngIf="platform.is('android')" (click)="newScheduler()">
+    <icon add></icon>
+  </button>
 </ion-content>
