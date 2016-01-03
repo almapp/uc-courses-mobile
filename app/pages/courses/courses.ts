@@ -63,6 +63,8 @@ export class CoursesPage {
         ];
         this.period = this.periods[0];
         this.courses = null;
+
+        this.search("MAT");
     }
 
     course(school: string): Course[] {

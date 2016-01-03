@@ -9,8 +9,10 @@
 
   <ion-card-content>
     <schedule-block
+      *ngFor="#block of todayBlocks"
       [day]="current"
-      [block]="1">
+      [block]="cblock.block"
+      [courses]="cblock.courses">
     </schedule-block>
   </ion-card-content>
 </ion-card>

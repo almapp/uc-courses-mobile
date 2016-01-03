@@ -33,6 +33,7 @@ export class Schedule {
             Object.keys(course.schedule).forEach(modType => {
                 const mod: ScheduleSchema = course.schedule[modType];
                 Object.keys(mod.modules).forEach(day => {
+                    // TODO: Sort
                     this.week[day].push(...mod.modules[day].map(n => {
                         return {
                             day: day,
