@@ -5,6 +5,7 @@ import {Course} from "../../models/course";
 import {CoursesProvider, FullSearchQuery, Period, Campus} from "../../providers/courses";
 import {SchedulesProvider} from "../../providers/schedules";
 import {CourseItem} from "../../components/course-item/course-item";
+import {SectionPage} from "../section/section";
 
 interface CourseGroup {
     [ Identifier: string ]: Course[];
@@ -92,6 +93,10 @@ export class CoursesPage {
             });
             this.schools = Object.keys(this.courses);
         });
+    }
+
+    selectCourse(course: Course) {
+        this.nav.push(SectionPage, course);
     }
 
     selectPeriod() {

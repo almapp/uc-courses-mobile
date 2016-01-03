@@ -1,0 +1,74 @@
+<ion-navbar *navbar>
+  <ion-title>{{course.initials}}</ion-title>
+</ion-navbar>
+
+
+<ion-content class="page-content">
+  <ion-card>
+    <ion-list-header>
+      <icon information-circle item-left></icon>
+      SECCIONES
+    </ion-list-header>
+
+    <ion-segment [(ngNodel)]="current" class="select-segment">
+      <ion-segment-button *ngFor="#section of (sections | async); #i = index" value="i">
+        {{i + 1}}
+      </ion-segment-button>
+    </ion-segment>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-list>
+        <ion-list-header>
+          <icon information-circle item-left></icon>
+          INFORMACIÓN GENERAL
+        </ion-list-header>
+
+        <ion-item>
+          Nombre:
+          <ion-note item-right>
+            {{course.name}}
+          </ion-note>
+        </ion-item>
+
+        <ion-item>
+          Iniciales:
+          <ion-note item-right>
+            {{course.initials}}
+          </ion-note>
+        </ion-item>
+
+        <ion-item>
+          Créditos:
+          <ion-note item-right>
+            {{course.credits}}
+          </ion-note>
+        </ion-item>
+
+        <ion-item>
+          Escuela:
+          <ion-note item-right>
+            {{course.school}}
+          </ion-note>
+        </ion-item>
+
+        <ion-item text-wrap>
+          Información:
+          <p class="information">
+            {{course.information}}
+          </p>
+        </ion-item>
+
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
