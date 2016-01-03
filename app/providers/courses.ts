@@ -1,28 +1,7 @@
 import {Injectable} from "angular2/core";
 import {Http, URLSearchParams} from "angular2/http";
 
-import {Course} from "../models/course";
-
-export const MODULES = [
-    "CAT",
-    "TALL",
-    "LAB",
-    "AYUD",
-    "PRAC",
-    "TERR",
-    "TES",
-    "OTRO",
-];
-
-export const DAYS = [
-    "L",
-    "M",
-    "W",
-    "J",
-    "V",
-    "S",
-    "D",
-];
+import {Course, MODULES, DAYS} from "../models/course";
 
 export interface Period {
     year: number;
@@ -79,7 +58,7 @@ export class CoursesProvider {
             this.http.get(url, {
                 search: params
             }).subscribe(res => {
-                resolve(res.json());
+                resolve(res.json().map(Course.parse));
             });
         });
     }
