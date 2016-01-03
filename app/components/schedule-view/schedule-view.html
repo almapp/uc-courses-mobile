@@ -1,7 +1,12 @@
 <ion-card>
-  <ion-card-header>
-    {{schedule.name}}
-  </ion-card-header>
+  <!-- <ion-card-header> -->
+    <ion-item>
+      {{schedule.name}}
+      <button item-right class="options-button">
+        <icon more></icon>
+      </button>
+    </ion-item>
+  <!-- </ion-card-header> -->
 
   <ion-segment class="week-segment">
     <ion-segment-button *ngFor="#day of days" [value]="day" (select)="selectDay(day)">{{day}}</ion-segment-button>

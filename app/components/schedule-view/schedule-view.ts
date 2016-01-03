@@ -1,5 +1,5 @@
 import {Component, Input} from "angular2/core";
-import {Segment, SegmentButton, Item} from "ionic-framework/ionic";
+import {Segment, SegmentButton, Item, Icon} from "ionic-framework/ionic";
 
 import {DAYS} from "../../models/course";
 import {Schedule} from "../../models/schedule";
@@ -18,7 +18,7 @@ const WEEKDAYS = [
 @Component({
     selector: "schedule-view",
     templateUrl: "build/components/schedule-view/schedule-view.html",
-    directives: [ScheduleBlock, Segment, SegmentButton, Item],
+    directives: [ScheduleBlock, Segment, SegmentButton, Item, Icon],
 })
 export class ScheduleView {
     @Input() schedule: Schedule;
