@@ -29,12 +29,24 @@ export interface SearchQuery {
     places?: string[];
 }
 
+interface Cache {
+    [ Identifier: number ]: Course;
+}
+
 @Injectable()
 export class CoursesProvider {
     private url = "http://localhost:3000/api/v1";
+    private cache: Cache;
 
     constructor(private http: Http) {
-        // ...
+        this.cache = {};
+    }
+
+    getByNRC(NRC: number): Promise<Course> {
+        return (this.cache[NRC]) ? Promise.resolve(this.cache[NRC]) : this.requestByNRC(NRC).then(course => {
+            this.cache[NRC] = course;
+            return course;
+        });
     }
 
     fullSearch(period: Period, query: FullSearchQuery): Promise<Course[]> {
@@ -53,13 +65,22 @@ export class CoursesProvider {
         return this.request(url, params);
     }
 
-    request(url: string, params: URLSearchParams): Promise<Course[]> {
+    request(url: string, params?: URLSearchParams): Promise<Course[] | Course> {
         return new Promise(resolve => {
+            // TODO: Error catch
             this.http.get(url, {
                 search: params
             }).subscribe(res => {
-                resolve(res.json().map(Course.parse));
+                resolve(res.json());
             });
+        }).then(json => {
+            return (json instanceof Array) ? json.map(Course.parse) : Course.parse(json);
         });
+    }
+
+    requestByNRC(NRC: number): Promise<Course> {
+        // TODO: Period?
+        const url = `${this.url}/courses/_/_/NRC/${NRC}`;
+        return this.request(url);
     }
 }
