@@ -1,4 +1,4 @@
-import {Component, Input} from "angular2/core";
+import {Component, Input, Output, EventEmitter} from "angular2/core";
 import {Item, ItemSliding} from "ionic-framework/ionic";
 
 import {Course, Block, DAYS, MODULES} from "../../models/course";
@@ -18,6 +18,7 @@ interface Module {
 })
 export class CourseItem {
     @Input() course: Course;
+    @Output() select = new EventEmitter();
 
     modules: Module[];
 
@@ -35,8 +36,8 @@ export class CourseItem {
         }) : [];
     }
 
-    select() {
-        console.log("select() on", this.course.initials);
+    click() {
+        this.select.emit(null);
     }
 
     add() {
