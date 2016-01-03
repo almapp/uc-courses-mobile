@@ -5,10 +5,11 @@ export interface Block {
     block: number;
     modtype: string;
     NRC: number;
+    course?: Course;
 }
 
 export interface Week {
-    [ Identifier: string ]: Block[];
+    [ Identifier: string ]: Block[][];
 }
 
 export class Schedule {
@@ -28,20 +29,27 @@ export class Schedule {
         }
     }
 
+    cellAt(day: string, block: number): Block[] {
+        const array = this.week[day];
+        if (!array[block]) {
+            return array[block] = [];
+        }
+        return array[block];
+    };
+
     process(courses: Course[]) {
         courses.forEach(course => {
             Object.keys(course.schedule).forEach(modType => {
                 const mod: ScheduleSchema = course.schedule[modType];
                 Object.keys(mod.modules).forEach(day => {
-                    // TODO: Sort
-                    this.week[day].push(...mod.modules[day].map(n => {
-                        return {
+                    mod.modules[day].forEach(n => {
+                        this.cellAt(day, n).push({
                             day: day,
                             block: n,
                             modtype: modType,
                             NRC: course.NRC,
-                        } as Block;
-                    }));
+                        });
+                    });
                 });
             });
         });
