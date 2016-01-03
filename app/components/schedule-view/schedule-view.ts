@@ -1,9 +1,10 @@
 import {Component, Input} from "angular2/core";
-import {Segment, SegmentButton} from "ionic-framework/ionic";
+import {Segment, SegmentButton, Item} from "ionic-framework/ionic";
 
 import {Course, DAYS} from "../../models/course";
 import {CoursesProvider} from "../../providers/courses";
 import {SchedulesProvider, Schedule} from "../../providers/schedules";
+import {ScheduleBlock} from "../schedule-block/schedule-block";
 
 const WEEKDAYS = [
     "D",
@@ -18,7 +19,7 @@ const WEEKDAYS = [
 @Component({
     selector: "schedule-view",
     templateUrl: "build/components/schedule-view/schedule-view.html",
-    directives: [Segment, SegmentButton],
+    directives: [ScheduleBlock, Segment, SegmentButton, Item],
     providers: [CoursesProvider, SchedulesProvider],
 })
 export class ScheduleView {

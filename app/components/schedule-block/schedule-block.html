@@ -1,0 +1,20 @@
+<ion-list>
+  <ion-list-header>
+    <span class="block-hour">
+      {{hour.start}} - {{hour.end}}
+    </span>
+    <span class="block-identifier">
+      {{day}}: {{block}}
+    </span>
+  </ion-list-header>
+  <ion-item button *ngFor="#cmod of courseModules">
+    <icon build item-left></icon>
+    <h2>
+      <strong class="identifier">{{cmod.course.initials}}-{{cmod.course-section}}</strong> | {{cmod.modtype}}
+    </h2>
+    <h3 class="name">{{cmod.course.name}}</h3>
+    <p class="place">
+      {{cmod.campus}}: {{cmod.classroom}}
+    </p>
+  </ion-item>
+</ion-list>
