@@ -4,8 +4,8 @@ import {Http, URLSearchParams} from "angular2/http";
 import {Course, MODULES, DAYS} from "../models/course";
 
 export interface Period {
-    year: number;
-    period: number;
+    year: number | string;
+    period: number | string;
 }
 
 export interface Campus {
