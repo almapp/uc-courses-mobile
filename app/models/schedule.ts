@@ -9,7 +9,7 @@ export interface Block {
 }
 
 export interface Week {
-    [ Identifier: string ]: Block[][];
+    [Identifier: string]: Block[][];
 }
 
 export class Schedule {
