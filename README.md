@@ -1,5 +1,8 @@
 # Buscacursos UC
 
+[![dependencies][dependencies-image]][dependencies-url] [![dev-dependencies][dev-dependencies-image]][dev-dependencies-url]
+
+
 Multi-platform mobile app built with [Ionic2](http://ionicframework.com/docs/v2/getting-started/installation), [Angular2](https://angular.io/) and [Typescript](http://www.typescriptlang.org/).
 
 Client of [almapp/uc-courses](https://github.com/almapp/uc-courses)
@@ -48,3 +51,8 @@ npm run android
 ```
 ionic plugin add <plugin name>
 ```
+
+[dependencies-image]: https://david-dm.org/almapp/buscacursos-uc-mobile.svg
+[dependencies-url]: https://david-dm.org/almapp/buscacursos-uc-mobile
+[dev-dependencies-image]: https://david-dm.org/almapp/buscacursos-uc-mobile/dev-status.svg
+[dev-dependencies-url]: https://david-dm.org/almapp/buscacursos-uc-mobile#info=devDependencies
