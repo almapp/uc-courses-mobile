@@ -11,7 +11,8 @@
   <div class="schedules" *ngIf="schedules">
     <schedule-view
     *ngFor="#schedule of schedules"
-    [schedule]="schedule">
+    [schedule]="schedule"
+    (deleted)="deleteSchedule(schedule)">
   </schedule-view>
   </div>
   <button fab fab-bottom fab-right *ngIf="platform.is('android')" (click)="newScheduler()">

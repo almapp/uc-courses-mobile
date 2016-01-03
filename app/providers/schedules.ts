@@ -9,13 +9,21 @@ export interface Schedules {
     [ Identifier: string ]: Schedule;
 }
 
+const DEBUG = true;
+
+function debug(text: string, obj?: any) {
+    if (DEBUG) {
+        console.log(text, JSON.stringify(obj));
+    }
+}
+
 @Injectable()
 export class SchedulesProvider {
     database: string;
     storage: Storage;
 
     schedules: Schedules;
-    names: string[];
+    IDS: string[];
 
     constructor() {
         this.database = "buscacursos-uc";
@@ -27,6 +35,31 @@ export class SchedulesProvider {
         return createHash("md5").update(name).digest("hex");
     }
 
+    loadIDS(): Promise<string[]> {
+        return (this.IDS && this.IDS.length !== 0) ? Promise.resolve(this.IDS) : this.storage.get("NAMES").then(JSON.parse).then(IDS => {
+            debug("Loaded IDS:", IDS);
+            return this.IDS = IDS || [];
+        });
+    }
+
+    saveIDS(IDS: string[]): Promise<void> {
+        this.IDS = IDS;
+        debug("Saving IDS:", IDS);
+        return this.storage.set("NAMES", JSON.stringify(IDS));
+    }
+
+    delete(schedule: Schedule): Promise<void> {
+        const ID = SchedulesProvider.nameToID(schedule.name);
+        return this.storage.remove(ID)
+            .then(() => {
+                debug("Deleted schedule:", schedule);
+                return this.loadIDS();
+            })
+            .then(IDS => {
+                return this.saveIDS(IDS.filter(i => i !== ID));
+            });
+    }
+
     save(schedule: Schedule): Promise<void> {
         return this.storage.set(SchedulesProvider.nameToID(schedule.name), JSON.stringify(schedule));
     }
@@ -35,148 +68,33 @@ export class SchedulesProvider {
         const schedule = new Schedule(name, position || 0, courses);
         return this.save(schedule).then(() => {
             // Save object
-            return this.loadNames();
+            debug("Created:", schedule);
+            return this.loadIDS();
         }).then(names => {
             // Save name
-            names.push(name);
-            this.names = names;
-            return this.storage.set("NAMES", JSON.stringify(names));
+            names.push(SchedulesProvider.nameToID(name));
+            return this.saveIDS(names);
         }).then(() => {
             // Return on success
             return schedule;
         });
     }
 
-    loadNames(): Promise<string[]> {
-        return (this.names) ? Promise.resolve(this.names) : this.storage.get("NAMES").then(names => {
-            this.names = (names && names.length) ? JSON.parse(names) : ["default"];
-            return this.names;
-        });
-    }
-
-    loadSchedule(name: string): Promise<Schedule> {
-        const ID = SchedulesProvider.nameToID(name);
+    loadSchedule(ID: string): Promise<Schedule> {
         return (this.schedules[ID]) ? Promise.resolve(this.schedules[ID]) : this.storage.get(ID).then(schedule => {
             if (schedule) {
-                this.schedules[ID] = JSON.parse(schedule);
-            } else if (name === "default") {
-                this.schedules[ID] = new Schedule("Propio", 0, [Course.parse(JSON.parse(
-                    `
-
-{
-    "_id": "5687e496b33aaece39c8972e",
-    "updatedAt": "2016-01-02T14:54:14.000Z",
-    "createdAt": "2016-01-02T14:54:14.000Z",
-    "year": 2016,
-    "period": 1,
-    "NRC": 10760,
-    "initials": "IIC2233",
-    "section": 1,
-    "name": "Programación Avanzada",
-    "credits": 10,
-    "school": "Ingeniería",
-    "information": "Este curso enseña técnicas para el diseñar, códificar, probar y evaluar programas que resuelven problemas algorítmicos a partir de las especificaciones detalladas. En particular, el curso enseña algunas construcciones avanzadas de programación orientada a objetos no incluidas en el curso introductorio, algunas estructuras de datos fundamentales, diseño básico de algoritmos y técnicas de análisis. Los estudiantes deben usar una serie de herramientas de programación para desarrollar sus programas.",
-    "requisites": {
-        "relation": null,
-        "equivalences": [
-            "IIC1222"
-        ],
-        "restrictions": [],
-        "requirements": [
-            {
-                "corequisites": [],
-                "prerequisites": [
-                    "IIC1103"
-                ]
-            },
-            {
-                "corequisites": [],
-                "prerequisites": [
-                    "IIC1102"
-                ]
+                debug("Loaded Schedule:", schedule);
+                return this.schedules[ID] = JSON.parse(schedule);
+            } else {
+                debug("Schedule Not Found:", ID);
+                return null;
             }
-        ]
-    },
-    "schedule": {
-        "CAT": {
-            "location": {
-                "campus": "San Joaquin",
-                "place": "L4"
-            },
-            "modules": {
-                "D": [],
-                "S": [],
-                "V": [],
-                "J": [
-                    4,
-                    5
-                ],
-                "W": [],
-                "M": [],
-                "L": []
-            }
-        },
-        "AYUD": {
-            "location": {
-                "campus": "San Joaquin",
-                "place": "BC24"
-            },
-            "modules": {
-                "D": [],
-                "S": [],
-                "V": [],
-                "J": [],
-                "W": [],
-                "M": [],
-                "L": [
-                    6
-                ]
-            }
-        }
-    },
-    "vacancy": {
-        "total": 70,
-        "available": 15
-    },
-    "teachers": [
-        {
-            "name": "Pichara Karim",
-            "photoURL": "http://buscacursos.uc.cl/getFotoProfe.db.php?nombre=Pichara%20Karim&semestre=2016-1&sigla=IIC2233&seccion=1"
-        },
-        {
-            "name": "Reutter Juan",
-            "photoURL": "http://buscacursos.uc.cl/getFotoProfe.db.php?nombre=Reutter%20Juan&semestre=2016-1&sigla=IIC2213&seccion=1"
-        }
-    ],
-    "specialApproval": false,
-    "english": false,
-    "droppable": true,
-    "__v": 0,
-    "links": {
-        "self": {
-            "href": "http://localhost:3000/api/v1/courses/2016/1/NRC/10760"
-        },
-        "course": {
-            "href": "http://localhost:3000/api/v1/courses/2016/1/IIC2233"
-        },
-        "requirements": {
-            "href": "http://localhost:3000/api/v1/courses/2016/1/IIC2233/requirements"
-        },
-        "equivalences": {
-            "href": "http://localhost:3000/api/v1/courses/2016/1/IIC2233/equivalences"
-        }
-    }
-}
-                    `
-                ))]);
-            }
-            return this.schedules[ID];
         });
     }
 
     loadAll(): Promise<Schedule[]> {
-        return this.loadNames().then(names => {
-            return Promise.all(names.map(name => this.loadSchedule(name)));
+        return this.loadIDS().then(IDS => {
+            return Promise.all(IDS.map(ID => this.loadSchedule(ID)));
         });
     }
 }

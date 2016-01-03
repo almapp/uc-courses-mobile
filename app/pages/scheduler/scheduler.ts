@@ -19,8 +19,22 @@ export class SchedulerPage {
         private popup: Popup,
         private manager: SchedulesProvider) {
 
-        this.manager.loadAll().then(schedules => {
-            this.schedules = schedules.sort((a, b) => a.position - b.position);
+        this.loadSchedules().then(results => {
+            if (results.length == 0) {
+                return this.setup();
+            }
+        });
+    }
+
+    setup(): Promise<Schedule> {
+        return this.manager.create("Propio", 0).then(schedule => {
+            this.schedules = [schedule];
+        });
+    }
+
+    loadSchedules(): Promise<Schedule[]> {
+        return this.manager.loadAll().then(schedules => {
+            return this.schedules = schedules.sort((a, b) => a.position - b.position);
         });
     }
 
@@ -41,13 +55,19 @@ export class SchedulerPage {
                 return name;
             }
         }).then(name => {
-            const order = this.schedules[0].position + 1;
+            const order = (this.schedules[0]) ? this.schedules[0].position + 1 : 0;
             return this.manager.create(name, order);
         }).then(schedule => {
             this.schedules.push(schedule);
         }).catch((err: Error) => {
             // FIXME: Error: nav controller actively transitioning
             // return this.alertRepeatedSchedule(err.name);
+        });
+    }
+
+    deleteSchedule(schedule: Schedule) {
+        this.manager.delete(schedule).then(() => {
+            return this.schedules = this.schedules.filter(s => s.name !== schedule.name);
         });
     }
 
