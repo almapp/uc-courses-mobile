@@ -6,6 +6,7 @@ import {Course, ScheduleSchema} from "../models/course";
 export interface Block {
     day: string;
     block: number;
+    modtype: string;
     NRC: number;
 }
 
@@ -39,6 +40,7 @@ export class Schedule {
                         return {
                             day: day,
                             block: n,
+                            modtype: modType,
                             NRC: course.NRC,
                         } as Block;
                     }));
