@@ -53,6 +53,9 @@ export class CoursesPage {
             { name: "San Joaquín", identifier: "SJ" },
             { name: "Casa Central", identifier: "CC" },
             { name: "Lo Contador", identifier: "LC" },
+            { name: "Oriente", identifier: "OR" },
+            { name: "Villarrica", identifier: "VR" },
+            { name: "Campus Externo", identifier: "CE" },
         ];
         this.campus = null;
 
