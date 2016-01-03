@@ -11,7 +11,7 @@ import {SchedulesProvider} from "../../providers/schedules";
 })
 export class SectionPage {
     course: Course;
-    sections: Promise<Course[]>;
+    sections: Course[];
     current: number;
 
     constructor(
@@ -21,7 +21,10 @@ export class SectionPage {
         private manager: SchedulesProvider) {
 
         this.course = this.navParams.data;
+        this.sections = null;
         this.current = this.course.section;
-        this.sections = this.provider.sections({ course: this.course });
+        this.provider.sections({ course: this.course }).then(sections => {
+            this.sections = sections;
+        });
     }
 }

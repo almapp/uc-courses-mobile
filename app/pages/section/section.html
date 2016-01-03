@@ -7,11 +7,20 @@
   <ion-card>
     <ion-list-header>
       <icon information-circle item-left></icon>
-      SECCIONES
+      Secciones
     </ion-list-header>
 
-    <ion-segment [(ngNodel)]="current" class="select-segment">
-      <ion-segment-button *ngFor="#section of (sections | async); #i = index" value="i">
+    <ion-item-divider sticky class="segment-replacement" *ngIf="!sections">
+      <icon refresh item-left></icon>
+      Cargando...
+    </ion-item-divider>
+
+    <ion-item-divider sticky class="segment-replacement" *ngIf="sections && sections.length === 1">
+      <span>Única sección</span>
+    </ion-item-divider>
+
+    <ion-segment [(ngNodel)]="current" class="select-segment" *ngIf="sections && sections.length > 1">
+      <ion-segment-button *ngFor="#section of sections; #i = index" value="i">
         {{i + 1}}
       </ion-segment-button>
     </ion-segment>
@@ -30,7 +39,7 @@
       <ion-list>
         <ion-list-header>
           <icon information-circle item-left></icon>
-          INFORMACIÓN GENERAL
+          Información general
         </ion-list-header>
 
         <ion-item>
