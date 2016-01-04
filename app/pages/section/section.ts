@@ -2,17 +2,28 @@ import {Page, NavController, NavParams} from "ionic-framework/ionic";
 import {Pipe} from "angular2/core";
 
 import {Course} from "../../models/course";
-import {CoursesProvider, FullSearchQuery, Period, Campus} from "../../providers/courses";
+import {Block} from "../../models/schedule";
+import {CoursesProvider} from "../../providers/courses";
 import {SchedulesProvider} from "../../providers/schedules";
+import {SectionView} from "../../components/section-view/section-view";
+
+interface Module {
+    type: string;
+    blocks: Block[];
+    classroom: string;
+}
 
 @Page({
     templateUrl: "build/pages/section/section.html",
+    directives: [SectionView],
     providers: [CoursesProvider, SchedulesProvider],
 })
 export class SectionPage {
     course: Course;
     sections: Course[];
-    current: number;
+    currentSection: number;
+
+    modules: Module[][];
 
     constructor(
         private nav: NavController,
@@ -21,10 +32,16 @@ export class SectionPage {
         private manager: SchedulesProvider) {
 
         this.course = this.navParams.data;
-        this.sections = null;
-        this.current = this.course.section;
+
         this.provider.sections({ course: this.course }).then(sections => {
+            sections = sections.sort((a, b) => a.section - b.section);
+            this.currentSection = sections.map(s => s.section).indexOf(this.course.section);
             this.sections = sections;
         });
+    }
+
+    selectSection(section: number) {
+        this.currentSection = section;
+        this.course = this.sections[this.currentSection];
     }
 }

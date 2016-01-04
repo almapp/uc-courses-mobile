@@ -1,0 +1,64 @@
+<ion-list-header>
+  Profesores
+</ion-list-header>
+
+<ion-list inset>
+  <ion-item *ngFor="#teacher of section.teachers">
+    <ion-avatar item-left>
+      <img src="img/avatar.png">
+    </ion-avatar>
+    <h2>{{teacher.name}}</h2>
+    <p>Alguna información</p>
+  </ion-item>
+</ion-list>
+
+<!-- <ion-list-header>
+  Horario
+</ion-list-header>
+
+<ion-list-header>
+  Datos
+</ion-list-header> -->
+
+<ion-list-header>
+  Información
+</ion-list-header>
+
+<ion-list inset>
+  <ion-item>
+    NRC:
+    <ion-note item-right>
+      {{section.NRC}}
+    </ion-note>
+  </ion-item>
+
+  <!-- <ion-item>
+    Periodo:
+    <ion-note item-right>
+      {{section.year}}-{{section.period}}
+    </ion-note>
+  </ion-item> -->
+
+  <ion-item>
+    Vacantes:
+    <ion-note item-right>
+      {{section.vacancy.available}} / {{section.vacancy.total}}
+    </ion-note>
+  </ion-item>
+
+  <ion-item>
+    Retirable
+    <icon [name]="section.droppable ? 'checkmark' : 'close'" item-right></icon>
+  </ion-item>
+
+  <ion-item>
+    Inglés
+    <icon [name]="section.english ? 'checkmark' : 'close'" item-right></icon>
+  </ion-item>
+
+  <ion-item>
+    Aprobación especial
+    <icon [name]="section.specialApproval ? 'checkmark' : 'close'" item-right></icon>
+  </ion-item>
+
+</ion-list>
