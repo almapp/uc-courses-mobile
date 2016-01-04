@@ -39,8 +39,8 @@ export class Schedule {
 
     has(course: Course): boolean {
         return Object.keys(this.week).some(day => {
-            return this.week[day].some(blocks => {
-                return blocks.some(block => {
+            return this.week[day].filter(Boolean).some(blocks => {
+                return blocks.filter(Boolean).some(block => {
                     return block.NRC == course.NRC;
                 });
             });
