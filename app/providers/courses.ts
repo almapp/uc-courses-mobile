@@ -52,12 +52,12 @@ export class CoursesProvider {
     sections(opts: { course?: Course, initials?: string, period?: Period }): Promise<Course[]> {
         const period = opts.period || { year: "_", period: "_" };
         const initials = opts.course.initials || opts.initials;
-        const url = `${this.url}/courses/${period.year}/${period.period}/${initials}/sections`;
+        const url = `${this.url}/courses/${initials}/${period.year}/${period.period}/sections`;
         return this.request(url);
     }
 
     fullSearch(period: Period, query: FullSearchQuery): Promise<Course[]> {
-        const url = `${this.url}/courses/${period.year}/${period.period}/fullsearch`;
+        const url = `${this.url}/courses`;
         const params = new URLSearchParams();
         if (query.q) { params.set("q", query.q); }
         if (query.campus) { params.set("campus", query.campus.name); }
@@ -65,7 +65,7 @@ export class CoursesProvider {
     }
 
     search(period: Period, query: SearchQuery): Promise<Course[]> {
-        const url = `${this.url}/courses/${period.year}/${period.period}/search`;
+        const url = `${this.url}/courses`;
         const params = new URLSearchParams();
         if (query.initials) { params.set("initials", query.initials); }
         if (query.campus) { params.set("campus", query.campus.name); }
@@ -86,8 +86,7 @@ export class CoursesProvider {
     }
 
     requestByNRC(NRC: number): Promise<Course> {
-        // TODO: Period?
-        const url = `${this.url}/courses/_/_/NRC/${NRC}`;
+        const url = `${this.url}/courses/NRC/${NRC}`;
         return this.request(url);
     }
 }
