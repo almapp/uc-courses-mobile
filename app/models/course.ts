@@ -176,7 +176,7 @@ export class Course {
         course.droppable = json.droppable;
         course.english = json.english;
         course.specialApproval = json.specialApproval;
-        course.teachers = json.teachers;
+        course.teachers = json.teachers || [];
         course.credits = json.credits;
         course.information = json.information;
         course.vacancy = json.vacancy;
