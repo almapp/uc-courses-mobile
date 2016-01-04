@@ -1,14 +1,16 @@
 <ion-list-header>
-  Profesores
+  {{section.teachers.length > 1 ? 'Profesores' : 'Profesor'}}
 </ion-list-header>
 
 <ion-list inset>
   <ion-item *ngFor="#teacher of section.teachers">
-    <ion-avatar item-left>
-      <img src="img/avatar.png">
-    </ion-avatar>
-    <h2>{{teacher.name}}</h2>
-    <p>Alguna información</p>
+    <ion-thumbnail class="teacher-photo" item-left>
+      <img class="photo" [src]="teacher.photoURL">
+    </ion-thumbnail>
+    <div class="teacher-info">
+      <h2>{{teacher.name}}</h2>
+      <p>Alguna información</p>
+    </div>
   </ion-item>
 </ion-list>
 
