@@ -5,7 +5,7 @@
     </h2>
     <small class="nrc">{{course.NRC}}</small>
     <h3 class="name">{{course.name}}</h3>
-    <h4 class="teachers">{{course.teachersNames.join(', ')}}</h4>
+    <h4 class="teachers">{{course.teachers.length > 0 ? course.teachersNames.join(', ') : 'Sin profesores'}}</h4>
 
     <div class="modules" *ngIf="modules?.length > 0">
       <p *ngFor="#mod of modules">
