@@ -26,7 +26,7 @@
           </ion-note>
         </ion-item>
         <ion-item>
-          <button block small (click)="search(query.value)">Buscar</button>
+          <button block small (click)="search(query.value)" [disabled]="query.value.length < 1">Buscar</button>
         </ion-item>
       </ion-list>
     </ion-card-content>
