@@ -6,7 +6,8 @@
     <small class="nrc">{{course.NRC}}</small>
     <h3 class="name">{{course.name}}</h3>
     <h4 class="teachers">{{course.teachersNames.join(', ')}}</h4>
-    <div class="modules">
+
+    <div class="modules" *ngIf="modules?.length > 0">
       <p *ngFor="#mod of modules">
         <strong class="module">{{mod.type}}</strong>:
         <span class="blocks">
@@ -19,6 +20,15 @@
         </span>
       </p>
     </div>
+
+    <div class="modules" *ngIf="modules?.length === 0">
+      <p class="block"><strong>Sin horario</strong></p>
+    </div>
+
+    <div class="modules" *ngIf="!modules">
+      <p class="block"><strong>Sin información del horario</strong></p>
+    </div>
+
   </ion-item>
   <ion-item-options>
     <button (click)="add()">Agregar</button>

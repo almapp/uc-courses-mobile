@@ -1,8 +1,7 @@
 import {Component, Input, Output, EventEmitter} from "angular2/core";
 import {Item, ItemSliding} from "ionic-framework/ionic";
 
-import {Course, Block, DAYS, MODULES} from "../../models/course";
-import {CoursesProvider} from "../../providers/courses";
+import {Course, Block} from "../../models/course";
 
 interface Module {
     type: string;
@@ -14,17 +13,12 @@ interface Module {
     selector: "course-item",
     templateUrl: "build/components/course-item/course-item.html",
     directives: [Item, ItemSliding],
-    providers: [CoursesProvider],
 })
 export class CourseItem {
     @Input() course: Course;
     @Output() select = new EventEmitter();
 
     modules: Module[];
-
-    constructor(private provider: CoursesProvider) {
-        // ...
-    }
 
     ngOnInit() {
         this.modules = this.course.schedule ? this.course.activeModules.map(type => {
