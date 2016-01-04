@@ -61,6 +61,7 @@ export class SchedulesProvider {
     }
 
     save(schedule: Schedule): Promise<void> {
+        debug("Saving:", schedule);
         return this.storage.set(SchedulesProvider.nameToID(schedule.name), JSON.stringify(schedule));
     }
 
@@ -84,7 +85,7 @@ export class SchedulesProvider {
         return (this.schedules[ID]) ? Promise.resolve(this.schedules[ID]) : this.storage.get(ID).then(schedule => {
             if (schedule) {
                 debug("Loaded Schedule:", schedule);
-                return this.schedules[ID] = JSON.parse(schedule);
+                return this.schedules[ID] = Schedule.parse(JSON.parse(schedule));
             } else {
                 debug("Schedule Not Found:", ID);
                 return null;

@@ -37,21 +37,43 @@ export class Schedule {
         return array[block];
     };
 
-    process(courses: Course[]) {
-        courses.forEach(course => {
-            Object.keys(course.schedule).forEach(modType => {
-                const mod: ScheduleSchema = course.schedule[modType];
-                Object.keys(mod.modules).forEach(day => {
-                    mod.modules[day].forEach(n => {
-                        this.cellAt(day, n).push({
-                            day: day,
-                            block: n,
-                            modtype: modType,
-                            NRC: course.NRC,
-                        });
+    has(course: Course): boolean {
+        return Object.keys(this.week).some(day => {
+            return this.week[day].some(blocks => {
+                return blocks.some(block => {
+                    return block.NRC == course.NRC;
+                });
+            });
+        });
+    }
+
+    add(course: Course) {
+        Object.keys(course.schedule).forEach(modType => {
+            const mod: ScheduleSchema = course.schedule[modType];
+            Object.keys(mod.modules).forEach(day => {
+                mod.modules[day].forEach(n => {
+                    this.cellAt(day, n).push({
+                        day: day,
+                        block: n,
+                        modtype: modType,
+                        NRC: course.NRC,
                     });
                 });
             });
         });
+    }
+
+    remove(course: Course) {
+        return null;
+    }
+
+    process(courses: Course[]) {
+        courses.forEach(this.add);
+    }
+
+    static parse(json: any): Schedule {
+        const sch = new Schedule(json.name, json.position);
+        sch.week = json.week;
+        return sch;
     }
 }
