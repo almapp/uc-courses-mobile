@@ -99,11 +99,15 @@ export class CoursesPage {
     }
 
     addToSchedule(course: Course) {
-        this.modal.open(AddRemovePage, course);
+        this.modal.open(AddRemovePage, {
+            course: course
+        });
     }
 
     selectCourse(course: Course) {
-        this.nav.push(SectionPage, course);
+        this.nav.push(SectionPage, {
+            course: course
+        }, { direction: "forward" }, undefined);
     }
 
     selectPeriod() {

@@ -31,7 +31,7 @@ export class SectionPage {
         private provider: CoursesProvider,
         private manager: SchedulesProvider) {
 
-        this.course = this.navParams.data;
+        this.course = this.navParams.get("course");
 
         this.provider.sections({ course: this.course }).then(sections => {
             sections = sections.sort((a, b) => a.section - b.section);

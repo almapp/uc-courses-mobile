@@ -21,7 +21,7 @@ export class AddRemovePage {
         private params: NavParams,
         private manager: SchedulesProvider) {
 
-        this.course = this.params.data;
+        this.course = this.params.get("course");
         this.title = `${this.course.initials}-${this.course.section}`;
         this.manager.loadAll().then(results => {
             this.items = results.map(schedule => {
