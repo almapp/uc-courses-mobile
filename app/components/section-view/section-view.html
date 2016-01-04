@@ -1,5 +1,7 @@
-<ion-list-header>
-  {{section.teachers.length > 1 ? 'Profesores' : 'Profesor'}}
+<ion-list-header [ngSwitch]="section.teachers.length">
+  <span *ngSwitchWhen="0">Sin profesores</span>
+  <span *ngSwitchWhen="1">Profesor</span>
+  <span *ngSwitchDefault>Profesores</span>
 </ion-list-header>
 
 <ion-list inset>
