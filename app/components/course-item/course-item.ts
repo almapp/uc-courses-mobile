@@ -27,7 +27,7 @@ export class CourseItem {
                 blocks: this.course.blocks(type),
                 classroom: this.course.place(type),
             };
-        }) : [];
+        }) : null;
     }
 
     click() {
