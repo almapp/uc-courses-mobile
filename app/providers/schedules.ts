@@ -62,7 +62,9 @@ export class SchedulesProvider {
 
     save(schedule: Schedule): Promise<void> {
         debug("Saving:", schedule);
-        return this.storage.set(SchedulesProvider.nameToID(schedule.name), JSON.stringify(schedule));
+        const ID = SchedulesProvider.nameToID(schedule.name);
+        this.schedules[ID] = schedule;
+        return this.storage.set(ID, JSON.stringify(schedule));
     }
 
     create(name: string, position?: number, courses?: Course[]): Promise<Schedule> {
