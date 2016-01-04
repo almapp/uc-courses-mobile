@@ -26,9 +26,69 @@
     </ion-segment>
 
     <ion-card-content>
-      <ion-list>
-        <ion-item>
+      <ion-list-header>
+        Profesores
+      </ion-list-header>
+
+      <ion-list inset>
+        <ion-item *ngFor="#teacher of course.teachers">
+          <ion-avatar item-left>
+            <img src="img/avatar.png">
+          </ion-avatar>
+          <h2>{{teacher.name}}</h2>
+          <p>Alguna información</p>
         </ion-item>
+      </ion-list>
+
+      <!-- <ion-list-header>
+        Horario
+      </ion-list-header>
+
+      <ion-list-header>
+        Datos
+      </ion-list-header> -->
+
+      <ion-list-header>
+        Información
+      </ion-list-header>
+
+      <ion-list inset>
+        <ion-item>
+          NRC:
+          <ion-note item-right>
+            {{course.NRC}}
+          </ion-note>
+        </ion-item>
+
+        <!-- <ion-item>
+          Periodo:
+          <ion-note item-right>
+            {{course.year}}-{{course.period}}
+          </ion-note>
+        </ion-item> -->
+
+        <ion-item>
+          Vacantes:
+          <ion-note item-right>
+            {{course.vacancy.available}} / {{course.vacancy.total}}
+          </ion-note>
+        </ion-item>
+
+        <ion-item>
+          Aprobación especial
+          <icon [name]="course.specialApproval ? 'checkmark' : 'close'" item-right></icon>
+        </ion-item>
+
+        <ion-item>
+          Inglés
+          <icon [name]="course.english ? 'checkmark' : 'close'" item-right></icon>
+        </ion-item>
+
+        <ion-item>
+          Retirable
+          <icon [name]="course.droppable ? 'checkmark' : 'close'" item-right></icon>
+        </ion-item>
+
       </ion-list>
     </ion-card-content>
 
