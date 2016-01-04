@@ -42,7 +42,8 @@
         <course-item
           *ngFor="#course of courses[school]"
           [course]="course"
-          (select)="selectCourse(course)">
+          (select)="selectCourse(course)"
+          (add)="addToSchedule(course)">
         </course-item>
       </ion-list>
       <p *ngIf="schools.length === 0">

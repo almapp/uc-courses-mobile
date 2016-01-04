@@ -17,6 +17,7 @@ interface Module {
 export class CourseItem {
     @Input() course: Course;
     @Output() select = new EventEmitter();
+    @Output() add = new EventEmitter();
 
     modules: Module[];
 
@@ -34,7 +35,7 @@ export class CourseItem {
         this.select.emit(null);
     }
 
-    add() {
-        console.log("add() on", this.course.initials);
+    slideClick() {
+        this.add.emit(null);
     }
 }

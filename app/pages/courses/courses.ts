@@ -5,6 +5,7 @@ import {Course} from "../../models/course";
 import {CoursesProvider, FullSearchQuery, Period, Campus} from "../../providers/courses";
 import {SchedulesProvider} from "../../providers/schedules";
 import {CourseItem} from "../../components/course-item/course-item";
+
 import {SectionPage} from "../section/section";
 
 interface CourseGroup {
@@ -49,6 +50,7 @@ export class CoursesPage {
     constructor(
         private actionSheet: ActionSheet,
         private nav: NavController,
+        private modal: Modal,
         private provider: CoursesProvider,
         private manager: SchedulesProvider) {
 
@@ -93,6 +95,9 @@ export class CoursesPage {
             });
             this.schools = Object.keys(this.courses);
         });
+    }
+
+    addToSchedule(course: Course) {
     }
 
     selectCourse(course: Course) {
