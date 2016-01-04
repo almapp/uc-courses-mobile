@@ -1,0 +1,49 @@
+<ion-toolbar>
+  <ion-buttons *ngIf="platform.is('ios')">
+    <button (click)="cancel()">
+      Cancelar
+    </button>
+  </ion-buttons>
+
+  <ion-title>
+    {{title}}
+  </ion-title>
+
+  <!-- <ion-buttons right *ngIf="platform.is('ios')">
+    <button (click)="save()">
+      Listo
+    </button>
+  </ion-buttons> -->
+</ion-toolbar>
+
+<ion-content class="has-header">
+  <ion-card>
+    <ion-card-header>
+      Agregar o quitar de horarios
+    </ion-card-header>
+
+    <ion-card-content>
+
+      <ion-list>
+        <ion-checkbox *ngFor="#item of items" [(ngModel)]="item.checked" [(checked)]="item.checked">
+          {{item.schedule.name}}
+        </ion-checkbox>
+
+        <ion-list-header *ngIf="platform.is('ios')">
+          <button block (click)="save()">
+            Guardar
+          </button>
+        </ion-list-header>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <button fab fab-bottom fab-right *ngIf="platform.is('android')" (click)="save()">
+    <icon checkmark></icon>
+  </button>
+
+  <button fab fab-bottom fab-left danger *ngIf="platform.is('android')" (click)="cancel()">
+    <icon close></icon>
+  </button>
+
+</ion-content>

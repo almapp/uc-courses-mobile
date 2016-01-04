@@ -1,4 +1,4 @@
-import {Page, NavController, ActionSheet} from "ionic-framework/ionic";
+import {Page, NavController, Modal, ActionSheet} from "ionic-framework/ionic";
 import {Pipe} from "angular2/core";
 
 import {Course} from "../../models/course";
@@ -7,6 +7,7 @@ import {SchedulesProvider} from "../../providers/schedules";
 import {CourseItem} from "../../components/course-item/course-item";
 
 import {SectionPage} from "../section/section";
+import {AddRemovePage} from "../add-remove/add-remove";
 
 interface CourseGroup {
     [ Identifier: string ]: Course[];
@@ -98,6 +99,7 @@ export class CoursesPage {
     }
 
     addToSchedule(course: Course) {
+        this.modal.open(AddRemovePage, course);
     }
 
     selectCourse(course: Course) {
