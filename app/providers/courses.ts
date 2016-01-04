@@ -50,7 +50,7 @@ export class CoursesProvider {
     }
 
     sections(opts: { course?: Course, initials?: string, period?: Period }): Promise<Course[]> {
-        const period = opts.period || { year: "_", period: "_" };
+        const period = opts.period || { year: opts.course.year, period: opts.course.period };
         const initials = opts.course.initials || opts.initials;
         const url = `${this.url}/courses/${initials}/${period.year}/${period.period}/sections`;
         return this.request(url);
