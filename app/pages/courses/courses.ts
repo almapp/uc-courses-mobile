@@ -97,6 +97,10 @@ export class CoursesPage {
         });
     }
 
+    icon(school: string): string {
+        return Course.icon(school);
+    }
+
     addToSchedule(course: Course) {
         this.modal.open(AddRemovePage, {
             course: course

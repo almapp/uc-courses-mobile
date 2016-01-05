@@ -7,12 +7,14 @@
       {{day}}: {{block}}
     </span>
   </ion-list-header>
+
   <ion-item button *ngFor="#block of (blocks | fetch | async)">
-    <icon build item-left></icon>
+    <icon [name]="icon(block.course)" item-left></icon>
     <h2>
       <strong class="identifier">{{block.course.initials}}-{{block.course.section}}</strong> | {{block.modtype}}
     </h2>
     <h3 class="name">{{block.course.name}}</h3>
+    <!-- <h4 class="teachers-names">{{block.course.teachersNames.join(', ')}}</h4> -->
     <p class="place">
       {{block.course.campus(block.modtype)}}: {{block.course.place(block.modtype)}}
     </p>

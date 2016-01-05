@@ -34,9 +34,8 @@
   <ion-card *ngIf="courses">
     <ion-card-content>
       <ion-list *ngFor="#school of schools">
-        <!-- <ion-item-divider sticky> -->
         <ion-list-header>
-          <icon school item-left></icon>
+          <icon [name]="icon(school)" item-left></icon>
           {{school}}
         </ion-list-header>
         <course-item

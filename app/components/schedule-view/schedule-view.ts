@@ -16,6 +16,16 @@ const WEEKDAYS = [
     "S",
 ];
 
+const NAMES = [
+    "Domingo",
+    "Lunes",
+    "Martes",
+    "Miércoles",
+    "Jueves",
+    "Viernes",
+    "Sábado",
+];
+
 @Component({
     selector: "schedule-view",
     templateUrl: "build/components/schedule-view/schedule-view.html",
@@ -45,6 +55,17 @@ export class ScheduleView implements OnInit {
 
     selectDay(day: string) {
         this.current = day;
+    }
+
+    isBusy(day: string): boolean {
+        const dayBlocks = this.schedule.week[day].filter(Boolean);
+        return dayBlocks.some(blocks => {
+            return blocks.length > 0;
+        });
+    }
+
+    name(day: string): string {
+        return NAMES[WEEKDAYS.indexOf(day)];
     }
 
     options() {

@@ -202,4 +202,46 @@ export class Course {
         course.requisites = json.requisites;
         return course;
     }
+
+    // TODO: review keys (school names)
+    static icon(school: string): string {
+        switch (school.trim().toLowerCase()) {
+            case "actuación": return "bowtie";
+            case "agro": return "leaf";
+            case "arquitectura": return "crop";
+            case "arte": return "color-palette";
+            case "astrofísica": return "planet";
+            case "cara": return "body";
+            case "ciencia política": return "bookmark";
+            case "ciencias biológicas": return "bug";
+            case "ciencias de la salud": return "medkit";
+            case "ciencias económicas y administrativas": return "cash";
+            case "comunicaciones": return "chatbubbles";
+            case "construcción civil": return "settings";
+            case "deportes": return "football";
+            case "derecho": return "briefcase";
+            case "diseño": return "images";
+            case "educación": return "star";
+            case "enfermería": return "pulse";
+            case "estudios urbanos": return "pin";
+            case "estética": return "rose";
+            case "filosofía": return "person";
+            case "física": return "calculator";
+            case "geografía": return "map";
+            case "historia": return "clock";
+            case "ingeniería": return "laptop";
+            case "letras": return "book";
+            case "matemática": return "cube";
+            case "medicina": return "thermometer";
+            case "música": return "musical-note";
+            case "odontología": return "clipboard";
+            case "psicología": return "help";
+            case "química": return "beaker";
+            case "sociología": return "people";
+            case "teología": return "egg";
+            case "trabajo social": return "happy";
+            case "villarica": return "image";
+            default: return "university";
+        }
+    }
 }

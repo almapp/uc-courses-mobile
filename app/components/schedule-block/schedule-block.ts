@@ -2,6 +2,7 @@ import {Component, Input, Pipe, OnInit} from "angular2/core";
 import {Icon, Item} from "ionic-framework/ionic";
 
 import {Block} from "../../models/schedule";
+import {Course} from "../../models/course";
 import {CoursesProvider} from "../../providers/courses";
 
 interface Hour {
@@ -60,5 +61,9 @@ export class ScheduleBlock implements OnInit{
         this.block = this.blocks[0].block;
         this.day = this.blocks[0].day;
         this.hour = ScheduleBlock.HOURS[this.block];
+    }
+
+    icon(course: Course): string {
+        return Course.icon(course.school);
     }
 }

@@ -13,6 +13,8 @@ export interface Week {
 }
 
 export class Schedule {
+    count: number = 0;
+    credits: number = 0;
     week: Week = {
         "L": [],
         "M": [],
@@ -41,13 +43,13 @@ export class Schedule {
         return Object.keys(this.week).some(day => {
             return this.week[day].filter(Boolean).some(blocks => {
                 return blocks.filter(Boolean).some(block => {
-                    return block.NRC == course.NRC;
+                    return block.NRC === course.NRC;
                 });
             });
         });
     }
 
-    add(course: Course) {
+    add(course: Course): this {
         Object.keys(course.schedule).forEach(modType => {
             const mod: ScheduleSchema = course.schedule[modType];
             Object.keys(mod.modules).forEach(day => {
@@ -61,10 +63,22 @@ export class Schedule {
                 });
             });
         });
+        this.count += 1;
+        this.credits += course.credits;
+        return this;
     }
 
-    remove(course: Course) {
-        return null;
+    remove(course: Course): this {
+        Object.keys(this.week).forEach(day => {
+            this.week[day] = this.week[day].filter(Boolean).map(blocks => {
+                return blocks.filter(Boolean).filter(block => {
+                    return block.NRC !== course.NRC;
+                });
+            });
+        });
+        this.count -= 1;
+        this.credits -= course.credits;
+        return this;
     }
 
     process(courses: Course[]) {
@@ -74,6 +88,8 @@ export class Schedule {
     static parse(json: any): Schedule {
         const sch = new Schedule(json.name, json.position);
         sch.week = json.week;
+        sch.count = json.count;
+        sch.credits = json.credits;
         return sch;
     }
 }

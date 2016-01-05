@@ -14,8 +14,26 @@
 
   <ion-card-content>
     <div *ngFor="#blocks of schedule.week[current]">
-      <schedule-block *ngIf="blocks && blocks.length" [blocks]="blocks">
-      </schedule-block>
+      <schedule-block *ngIf="blocks?.length > 0" [blocks]="blocks"></schedule-block>
     </div>
+    <ion-item *ngIf="!isBusy(current)">
+      <icon ios="ion-md-happy" md="ion-md-happy" item-left></icon>
+      {{name(current)}} sin clases
+    </ion-item>
   </ion-card-content>
+
+  <ion-item-divider [ngSwitch]="schedule.count">
+    <p *ngSwitchWhen="0">
+      <span class="course-count">Sin cursos</span>
+      <span class="credits-count">{{schedule.credits}} créditos</span>
+    </p>
+    <p *ngSwitchWhen="1">
+      <span class="course-count">1 curso</span>
+      <span class="credits-count">{{schedule.credits}} créditos</span>
+    </p>
+    <p *ngSwitchDefault>
+      <span class="course-count">{{schedule.count}} cursos</span>
+      <span class="credits-count">{{schedule.credits}} créditos</span>
+    </p>
+  </ion-item-divider>
 </ion-card>

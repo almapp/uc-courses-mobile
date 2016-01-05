@@ -34,12 +34,7 @@ export class AddRemovePage {
 
     save() {
         const changed: Schedule[] = this.items.map(item => {
-            if (item.checked) {
-                item.schedule.add(this.course);
-            } else {
-                item.schedule.remove(this.course);
-            }
-            return item.schedule;
+            return (item.checked) ? item.schedule.add(this.course) : item.schedule.remove(this.course);
         });
         this.title = "Guardando...";
         Promise.all(changed.map(sch => this.manager.save(sch))).then(() => {
