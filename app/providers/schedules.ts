@@ -17,6 +17,10 @@ function debug(text: string, obj?: any) {
     }
 }
 
+function nameToID(name: string): string {
+    return createHash("md5").update(name).digest("hex");
+}
+
 @Injectable()
 export class SchedulesProvider {
     database: string;
@@ -31,15 +35,14 @@ export class SchedulesProvider {
         this.schedules = {};
     }
 
-    static nameToID(name: string): string {
-        return createHash("md5").update(name).digest("hex");
-    }
-
     loadIDS(): Promise<string[]> {
-        return (this.IDS && this.IDS.length !== 0) ? Promise.resolve(this.IDS) : this.storage.get("NAMES").then(JSON.parse).then(IDS => {
-            debug("Loaded IDS:", IDS);
-            return this.IDS = IDS || [];
-        });
+        return (this.IDS && this.IDS.length !== 0) ? Promise.resolve(this.IDS) : this.storage.get("NAMES")
+            .then(JSON.parse)
+            .then(IDS => IDS || [])
+            .then(IDS => {
+                debug("Loaded IDS:", IDS);
+                return this.IDS = IDS;
+            });
     }
 
     saveIDS(IDS: string[]): Promise<void> {
@@ -49,7 +52,7 @@ export class SchedulesProvider {
     }
 
     delete(schedule: Schedule): Promise<void> {
-        const ID = SchedulesProvider.nameToID(schedule.name);
+        const ID = nameToID(schedule.name);
         return this.storage.remove(ID)
             .then(() => {
                 debug("Deleted schedule:", schedule);
@@ -62,7 +65,7 @@ export class SchedulesProvider {
 
     save(schedule: Schedule): Promise<void> {
         debug("Saving:", schedule);
-        const ID = SchedulesProvider.nameToID(schedule.name);
+        const ID = nameToID(schedule.name);
         this.schedules[ID] = schedule;
         return this.storage.set(ID, JSON.stringify(schedule));
     }
@@ -75,7 +78,7 @@ export class SchedulesProvider {
             return this.loadIDS();
         }).then(names => {
             // Save name
-            names.push(SchedulesProvider.nameToID(name));
+            names.push(nameToID(name));
             return this.saveIDS(names);
         }).then(() => {
             // Return on success
