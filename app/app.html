@@ -1,8 +1,5 @@
-
 <ion-tabs>
-  <ion-tab [root]="schedulerTab" tabTitle="Horarios"></ion-tab>
-  <ion-tab [root]="coursesTab" tabTitle="Buscacursos"></ion-tab>
-  <ion-tab [root]="teachersTab" tabTitle="Profesores"></ion-tab>
+  <ion-tab *ngFor="#tab of tabs" [root]="tab.page" [tabTitle]="tab.title"></ion-tab>
 </ion-tabs>
 
 <ion-overlay></ion-overlay>

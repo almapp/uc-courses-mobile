@@ -1,8 +1,14 @@
 import {App, Platform, Page} from "ionic-framework/ionic";
+
+// Pages
 import {CoursesPage} from "./pages/courses/courses";
 import {SchedulerPage} from "./pages/scheduler/scheduler";
 import {TeachersPage} from "./pages/teachers/teachers";
 
+interface Tab {
+    title: string;
+    page: any;
+}
 
 @App({
     templateUrl: "build/app.html",
@@ -12,9 +18,11 @@ import {TeachersPage} from "./pages/teachers/teachers";
     },
 })
 export class MyApp {
-    private coursesTab = CoursesPage;
-    private schedulerTab = SchedulerPage;
-    private teachersTab = TeachersPage;
+    private tabs = [
+        { title: "Buscacursos", page: CoursesPage },
+        { title: "Horarios", page: SchedulerPage },
+        { title: "Profesores", page: TeachersPage },
+    ];
 
     constructor(platform: Platform) {
         platform.ready().then(() => {
