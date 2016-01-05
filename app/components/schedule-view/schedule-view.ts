@@ -3,6 +3,7 @@ import {Segment, SegmentButton, Item, Icon, ActionSheet} from "ionic-framework/i
 
 import {DAYS} from "../../models/course";
 import {Schedule} from "../../models/schedule";
+import {SchedulesProvider} from "../../providers/schedules";
 import {ScheduleBlock} from "../schedule-block/schedule-block";
 
 const WEEKDAYS = [
@@ -28,8 +29,14 @@ export class ScheduleView implements OnInit {
     current: string;
     days: string[] = DAYS;
 
-    constructor(private actionSheet: ActionSheet) {
+    constructor(private actionSheet: ActionSheet, private manager: SchedulesProvider) {
         this.current = this.today;
+    }
+
+    ngOnInit(){
+        this.manager.updated.subscribe(schedule => {
+            if (this.schedule.name === schedule.name) { this.schedule = schedule; }
+        });
     }
 
     get today(): string {

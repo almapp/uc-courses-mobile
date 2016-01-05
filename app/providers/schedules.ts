@@ -1,5 +1,5 @@
 import {Storage, SqlStorage} from "ionic-framework/ionic";
-import {Injectable} from "angular2/core";
+import {Injectable, EventEmitter} from "angular2/core";
 import {createHash} from "crypto";
 
 import {Course, ScheduleSchema} from "../models/course";
@@ -23,11 +23,18 @@ function nameToID(name: string): string {
 
 @Injectable()
 export class SchedulesProvider {
-    database: string;
-    storage: Storage;
+    // Database
+    private database: string;
+    private storage: Storage;
 
-    schedules: Schedules;
-    IDS: string[];
+    // Cache
+    private schedules: Schedules;
+    private IDS: string[];
+
+    // Events
+    public updated: EventEmitter<Schedule> = new EventEmitter<Schedule>();
+    public new: EventEmitter<Schedule> = new EventEmitter<Schedule>();
+    public removed: EventEmitter<Schedule> = new EventEmitter<Schedule>();
 
     constructor() {
         this.database = "buscacursos-uc";
@@ -39,15 +46,11 @@ export class SchedulesProvider {
         return (this.IDS && this.IDS.length !== 0) ? Promise.resolve(this.IDS) : this.storage.get("NAMES")
             .then(JSON.parse)
             .then(IDS => IDS || [])
-            .then(IDS => {
-                debug("Loaded IDS:", IDS);
-                return this.IDS = IDS;
-            });
+            .then(IDS => this.IDS = IDS);
     }
 
     saveIDS(IDS: string[]): Promise<void> {
         this.IDS = IDS;
-        debug("Saving IDS:", IDS);
         return this.storage.set("NAMES", JSON.stringify(IDS));
     }
 
@@ -55,7 +58,6 @@ export class SchedulesProvider {
         const ID = nameToID(schedule.name);
         return this.storage.remove(ID)
             .then(() => {
-                debug("Deleted schedule:", schedule);
                 return this.loadIDS();
             })
             .then(IDS => {
@@ -64,10 +66,10 @@ export class SchedulesProvider {
     }
 
     save(schedule: Schedule): Promise<void> {
-        debug("Saving:", schedule);
         const ID = nameToID(schedule.name);
         this.schedules[ID] = schedule;
-        return this.storage.set(ID, JSON.stringify(schedule));
+        return this.storage.set(ID, JSON.stringify(schedule))
+            .then(() => this.updated.emit(schedule));
     }
 
     create(name: string, position?: number, courses?: Course[]): Promise<Schedule> {
@@ -86,21 +88,15 @@ export class SchedulesProvider {
         });
     }
 
-    loadSchedule(ID: string): Promise<Schedule> {
+    load(ID: string): Promise<Schedule> {
         return (this.schedules[ID]) ? Promise.resolve(this.schedules[ID]) : this.storage.get(ID).then(schedule => {
-            if (schedule) {
-                debug("Loaded Schedule:", schedule);
-                return this.schedules[ID] = Schedule.parse(JSON.parse(schedule));
-            } else {
-                debug("Schedule Not Found:", ID);
-                return null;
-            }
+            return (schedule) ? this.schedules[ID] = Schedule.parse(JSON.parse(schedule)) : null;
         });
     }
 
     loadAll(): Promise<Schedule[]> {
         return this.loadIDS().then(IDS => {
-            return Promise.all(IDS.map(ID => this.loadSchedule(ID)));
+            return Promise.all(IDS.map(ID => this.load(ID)));
         });
     }
 }

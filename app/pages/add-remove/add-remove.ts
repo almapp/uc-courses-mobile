@@ -33,7 +33,6 @@ export class AddRemovePage {
     }
 
     save() {
-        console.log(this.checkeds);
         const changed: Schedule[] = this.items.map(item => {
             if (item.checked) {
                 item.schedule.add(this.course);
@@ -42,11 +41,9 @@ export class AddRemovePage {
             }
             return item.schedule;
         });
-        console.log(JSON.stringify(changed));
         this.title = "Guardando...";
         Promise.all(changed.map(sch => this.manager.save(sch))).then(() => {
             this.title = "Guardado";
-            console.log("Guardado");
             this.close();
         });
     }
@@ -56,7 +53,7 @@ export class AddRemovePage {
     }
 
     close() {
-        const modal = this.modal.get() as any;
+        const modal = this.modal.get(null) as any;
         if (modal) {
             modal.close();
         }
