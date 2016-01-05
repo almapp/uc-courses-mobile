@@ -57,12 +57,9 @@ export class SchedulesProvider {
     delete(schedule: Schedule): Promise<void> {
         const ID = nameToID(schedule.name);
         return this.storage.remove(ID)
-            .then(() => {
-                return this.loadIDS();
-            })
-            .then(IDS => {
-                return this.saveIDS(IDS.filter(i => i !== ID));
-            });
+            .then(() => this.loadIDS())
+            .then(IDS => this.saveIDS(IDS.filter(i => i !== ID)))
+            .then(() => this.removed.emit(schedule));
     }
 
     save(schedule: Schedule): Promise<void> {
@@ -74,18 +71,17 @@ export class SchedulesProvider {
 
     create(name: string, position?: number, courses?: Course[]): Promise<Schedule> {
         const schedule = new Schedule(name, position || 0, courses);
-        return this.save(schedule).then(() => {
-            // Save object
-            debug("Created:", schedule);
-            return this.loadIDS();
-        }).then(names => {
-            // Save name
-            names.push(nameToID(name));
-            return this.saveIDS(names);
-        }).then(() => {
-            // Return on success
-            return schedule;
-        });
+        return this.save(schedule)
+            .then(() => this.loadIDS())
+            .then(IDS => {
+                // Save name
+                IDS.push(nameToID(name));
+                return this.saveIDS(IDS);
+            }).then(() => {
+                // Return on success
+                this.new.emit(schedule);
+                return schedule;
+            });
     }
 
     load(ID: string): Promise<Schedule> {
