@@ -29,8 +29,9 @@ export class MyApp {
         { title: "Profesores", page: TeachersPage },
     ];
 
-    constructor(platform: Platform) {
-        platform.ready().then(() => {
+    constructor(private platform: Platform, private provider: CoursesProvider) {
+        this.provider.url = "http://localhost:3000/api/v1";
+        this.platform.ready().then(() => {
             // Do any necessary cordova or native calls here now that the platform is ready
         });
     }

@@ -35,7 +35,7 @@ interface Cache {
 
 @Injectable()
 export class CoursesProvider {
-    private url = "http://localhost:3000/api/v1";
+    public url: string;
     private cache: Cache;
 
     constructor(private http: Http) {
@@ -73,6 +73,8 @@ export class CoursesProvider {
     }
 
     request(url: string, params?: URLSearchParams): Promise<Course[] | Course> {
+        if (!this.url) throw new Error("No URL has been set");
+
         return new Promise((resolve, reject) => {
             this.http.get(url, {
                 search: params
