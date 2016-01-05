@@ -73,13 +73,10 @@ export class CoursesProvider {
     }
 
     request(url: string, params?: URLSearchParams): Promise<Course[] | Course> {
-        return new Promise(resolve => {
-            // TODO: Error catch
+        return new Promise((resolve, reject) => {
             this.http.get(url, {
                 search: params
-            }).subscribe(res => {
-                resolve(res.json());
-            });
+            }).subscribe(res => resolve(res.json()), err => reject(err), () => console.log(`GET ${url} ${params || ""}`));
         }).then(json => {
             return (json instanceof Array) ? json.map(Course.parse) : Course.parse(json);
         });
