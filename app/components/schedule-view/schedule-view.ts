@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter} from "angular2/core";
+import {Component, Input, Output, EventEmitter, OnInit} from "angular2/core";
 import {Segment, SegmentButton, Item, Icon, ActionSheet} from "ionic-framework/ionic";
 
 import {DAYS} from "../../models/course";
@@ -21,7 +21,7 @@ const WEEKDAYS = [
     events: ["deleted"],
     directives: [ScheduleBlock, Segment, SegmentButton, Item, Icon],
 })
-export class ScheduleView {
+export class ScheduleView implements OnInit {
     @Input() schedule: Schedule;
     @Output() deleted = new EventEmitter();
 

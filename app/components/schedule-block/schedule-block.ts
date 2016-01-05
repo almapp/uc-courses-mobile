@@ -1,4 +1,4 @@
-import {Component, Input, Pipe} from "angular2/core";
+import {Component, Input, Pipe, OnInit} from "angular2/core";
 import {Icon, Item} from "ionic-framework/ionic";
 
 import {Block} from "../../models/schedule";
@@ -33,7 +33,7 @@ export class FetchPipe {
     directives: [Icon, Item],
     pipes: [FetchPipe],
 })
-export class ScheduleBlock {
+export class ScheduleBlock implements OnInit{
     @Input() blocks: Block[];
 
     private block: number;

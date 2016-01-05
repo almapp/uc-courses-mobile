@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter} from "angular2/core";
+import {Component, Input, Output, EventEmitter, OnInit} from "angular2/core";
 import {Item, ItemSliding} from "ionic-framework/ionic";
 
 import {Course, Block} from "../../models/course";
@@ -14,7 +14,7 @@ interface Module {
     templateUrl: "build/components/course-item/course-item.html",
     directives: [Item, ItemSliding],
 })
-export class CourseItem {
+export class CourseItem implements OnInit {
     @Input() course: Course;
     @Output() select = new EventEmitter();
     @Output() add = new EventEmitter();

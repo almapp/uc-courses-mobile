@@ -16,8 +16,4 @@ export class SectionView {
     constructor(private provider: CoursesProvider) {
         // ...
     }
-
-    ngOnInit() {
-        // ...
-    }
 }
