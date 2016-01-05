@@ -10,10 +10,10 @@
 <ion-content class="page-content">
   <div class="schedules" *ngIf="schedules">
     <schedule-view
-    *ngFor="#schedule of schedules"
-    [schedule]="schedule"
-    (deleted)="deleteSchedule(schedule)">
-  </schedule-view>
+      *ngFor="#schedule of schedules"
+      [schedule]="schedule"
+      (deleted)="deleteSchedule(schedule)">
+    </schedule-view>
   </div>
 
   <ion-card *ngIf="!schedules">
