@@ -73,7 +73,9 @@ export class CoursesProvider {
     }
 
     request(url: string, params?: URLSearchParams): Promise<Course[] | Course> {
-        if (!this.url) throw new Error("No URL has been set");
+        if (!this.url) {
+            throw new Error("No URL has been set");
+        }
 
         return new Promise((resolve, reject) => {
             this.http.get(url, {
