@@ -1,7 +1,7 @@
 <ion-navbar *navbar>
   <ion-title>Horarios</ion-title>
   <ion-buttons right *ngIf="platform.is('ios')">
-    <button (click)="newScheduler()">
+    <button (click)="new()">
       Nuevo
     </button>
   </ion-buttons>
@@ -12,7 +12,7 @@
     <schedule-view
       *ngFor="#schedule of schedules"
       [schedule]="schedule"
-      (deleted)="deleteSchedule(schedule)">
+      (deleted)="delete(schedule)">
     </schedule-view>
   </div>
 
@@ -26,12 +26,12 @@
     <ion-card-content>
       Veo que no tienes horarios, recuerda que puedes crear cuántos quieras.
       <ion-item>
-        <button block small (click)="newScheduler()">Crear horario</button>
+        <button block small (click)="new()">Crear horario</button>
       </ion-item>
     </ion-card-content>
   </ion-card>
 
-  <button fab fab-bottom fab-right *ngIf="platform.is('android')" (click)="newScheduler()">
+  <button fab fab-bottom fab-right *ngIf="platform.is('android')" (click)="new()">
     <icon add></icon>
   </button>
 </ion-content>

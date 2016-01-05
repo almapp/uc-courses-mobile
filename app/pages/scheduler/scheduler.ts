@@ -19,7 +19,7 @@ export class SchedulerPage {
         private manager: SchedulesProvider) {
 
         this.schedules = null;
-        this.loadSchedules().then(results => {
+        this.load().then(results => {
             if (results.length == 0) {
                 return this.setup();
             }
@@ -32,13 +32,13 @@ export class SchedulerPage {
         });
     }
 
-    loadSchedules(): Promise<Schedule[]> {
+    load(): Promise<Schedule[]> {
         return this.manager.loadAll().then(schedules => {
             return this.schedules = schedules.sort((a, b) => a.position - b.position);
         });
     }
 
-    newScheduler() {
+    new() {
         return this.popup.prompt({
             title: "Nuevo horario",
             template: "Ingresa un nombre para este",
@@ -61,17 +61,17 @@ export class SchedulerPage {
             this.schedules.push(schedule);
         }).catch((err: Error) => {
             // FIXME: Error: nav controller actively transitioning
-            // return this.alertRepeatedSchedule(err.name);
+            // return this.alertRepeated(err.name);
         });
     }
 
-    deleteSchedule(schedule: Schedule) {
+    delete(schedule: Schedule) {
         this.manager.delete(schedule).then(() => {
             return this.schedules = this.schedules.filter(s => s.name !== schedule.name);
         });
     }
 
-    alertRepeatedSchedule(body: string) {
+    alertRepeated(body: string) {
         return this.popup.alert({
             title: "Problema:",
             template: body,
