@@ -8,7 +8,6 @@ import {ScheduleView} from "../../components/schedule-view/schedule-view";
 @Page({
     templateUrl: "build/pages/scheduler/scheduler.html",
     directives: [ScheduleView],
-    providers: [SchedulesProvider],
 })
 export class SchedulerPage {
     schedules: Schedule[];

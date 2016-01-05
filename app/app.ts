@@ -5,6 +5,10 @@ import {CoursesPage} from "./pages/courses/courses";
 import {SchedulerPage} from "./pages/scheduler/scheduler";
 import {TeachersPage} from "./pages/teachers/teachers";
 
+// Global Providers
+import {CoursesProvider} from "./providers/courses";
+import {SchedulesProvider} from "./providers/schedules";
+
 interface Tab {
     title: string;
     page: any;
@@ -16,6 +20,7 @@ interface Tab {
         // overflowScroll: true,
         // mode: "md",
     },
+    providers: [CoursesProvider, SchedulesProvider],
 })
 export class MyApp {
     private tabs = [

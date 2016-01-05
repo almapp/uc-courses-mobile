@@ -16,7 +16,6 @@ interface Module {
 @Page({
     templateUrl: "build/pages/section/section.html",
     directives: [SectionView],
-    providers: [CoursesProvider, SchedulesProvider],
 })
 export class SectionPage {
     course: Course;

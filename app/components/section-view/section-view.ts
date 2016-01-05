@@ -9,7 +9,6 @@ import {CoursesProvider} from "../../providers/courses";
     selector: "section-view",
     templateUrl: "build/components/section-view/section-view.html",
     directives: [List, Item, Icon],
-    providers: [CoursesProvider],
 })
 export class SectionView {
     @Input() section: Course;

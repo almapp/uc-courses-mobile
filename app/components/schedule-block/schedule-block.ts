@@ -11,7 +11,6 @@ interface Hour {
 
 @Pipe({
     name: "fetch",
-    // providers: [CoursesProvider],
 })
 export class FetchPipe {
     constructor(private provider: CoursesProvider) {
@@ -33,7 +32,6 @@ export class FetchPipe {
     templateUrl: "build/components/schedule-block/schedule-block.html",
     directives: [Icon, Item],
     pipes: [FetchPipe],
-    providers: [CoursesProvider],
 })
 export class ScheduleBlock {
     @Input() blocks: Block[];

@@ -6,7 +6,6 @@ import {SchedulesProvider} from "../../providers/schedules";
 
 @Page({
     templateUrl: "build/pages/add-remove/add-remove.html",
-    providers: [SchedulesProvider],
 })
 export class AddRemovePage {
     items: { schedule: Schedule, checked: boolean }[];

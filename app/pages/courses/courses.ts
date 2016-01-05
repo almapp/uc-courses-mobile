@@ -36,7 +36,6 @@ export class HumanizePeriodPipe {
     templateUrl: "build/pages/courses/courses.html",
     pipes: [HumanizePeriodPipe],
     directives: [CourseItem],
-    providers: [CoursesProvider, SchedulesProvider],
 })
 export class CoursesPage {
     private period: Period;
