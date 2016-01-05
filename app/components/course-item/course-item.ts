@@ -35,7 +35,9 @@ export class CourseItem implements OnInit {
         this.select.emit(null);
     }
 
-    slideClick() {
+    interact(item: any) {
+        // Close sliding item
         this.add.emit(null);
+        item.close();
     }
 }

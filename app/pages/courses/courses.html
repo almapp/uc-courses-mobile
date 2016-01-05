@@ -36,7 +36,7 @@
       <ion-list *ngFor="#school of schools">
         <ion-list-header>
           <icon [name]="icon(school)" item-left></icon>
-          {{school}}
+          {{school | uppercase}}
         </ion-list-header>
         <course-item
           *ngFor="#course of courses[school]"
