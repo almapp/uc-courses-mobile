@@ -6,6 +6,10 @@
     "start": "ionic serve --lab -c -s",
     "android": "ionic run android"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/almapp/buscacursos-uc-mobile.git"
+  },
   "keywords": [
     "ionic",
     "uc",
@@ -15,6 +19,9 @@
   ],
   "author": "Patricio López <patricio@lopezjuri.com> (https://lopezjuri.com)",
   "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/almapp/uc-courses/issues"
+  },
   "dependencies": {
     "angular2": "2.0.0-beta.0",
     "es6-promise": "3.0.2",
