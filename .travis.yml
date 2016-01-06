@@ -1,0 +1,11 @@
+language: node_js
+
+node_js:
+  - "5.3.0"
+
+install:
+  - npm install -g cordova ionic@beta
+  - npm install
+
+script:
+  - ionic build
