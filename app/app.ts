@@ -30,7 +30,7 @@ export class MyApp {
     ];
 
     constructor(private platform: Platform, private provider: CoursesProvider) {
-        this.provider.url = "http://localhost:3000/api/v1";
+        this.provider.url = process.env.API_URL;
         this.platform.ready().then(() => {
             // Do any necessary cordova or native calls here now that the platform is ready
         });

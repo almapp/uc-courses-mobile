@@ -30,6 +30,14 @@ Project dependencies:
 npm install
 ```
 
+### Setup API endpoint
+
+By default, the application will try to connect to `http://localhost:3000/api/v1`. You can change this value by setting the `API_URL` environment variable.
+
+```sh
+export API_URL=http://your.url.com/api/v1
+```
+
 ### Run
 
 To view both Android and iOS views on the browser:

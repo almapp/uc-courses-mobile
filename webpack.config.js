@@ -1,5 +1,5 @@
 var path = require('path');
-
+var webpack = require('webpack');
 
 module.exports = {
   entry: [
@@ -14,6 +14,13 @@ module.exports = {
     filename: 'app.bundle.js',
     pathinfo: false // show module paths in the bundle, handy for debugging
   },
+  plugins: [
+    new webpack.DefinePlugin({
+      "process.env": {
+        API_URL: JSON.stringify(process.env.API_URL || 'http://localhost:3000/api/v1')
+      }
+    }),
+  ],
   module: {
     loaders: [
       {
