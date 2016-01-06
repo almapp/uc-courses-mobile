@@ -1,7 +1,6 @@
 # Buscacursos UC
 
-[![dependencies][dependencies-image]][dependencies-url] [![dev-dependencies][dev-dependencies-image]][dev-dependencies-url]
-
+[![Build Status][ci-image]][ci-url] [![dependencies][dependencies-image]][dependencies-url] [![dev-dependencies][dev-dependencies-image]][dev-dependencies-url]
 
 Multi-platform mobile app built with [Ionic2](http://ionicframework.com/docs/v2/getting-started/installation), [Angular2](https://angular.io/) and [Typescript](http://www.typescriptlang.org/).
 
@@ -60,6 +59,8 @@ npm run android
 ionic plugin add <plugin name>
 ```
 
+[ci-image]: https://travis-ci.org/almapp/buscacursos-uc-mobile.svg
+[ci-url]: https://travis-ci.org/almapp/buscacursos-uc-mobile
 [dependencies-image]: https://david-dm.org/almapp/buscacursos-uc-mobile.svg
 [dependencies-url]: https://david-dm.org/almapp/buscacursos-uc-mobile
 [dev-dependencies-image]: https://david-dm.org/almapp/buscacursos-uc-mobile/dev-status.svg
