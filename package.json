@@ -6,9 +6,10 @@
     "start": "ionic serve --lab -c -s",
     "android": "ionic run android"
   },
+  "homepage": "https://github.com/almapp/buscacursos-uc-mobile#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/almapp/buscacursos-uc-mobile.git"
+    "url": "https://github.com/almapp/buscacursos-uc-mobile.git"
   },
   "keywords": [
     "ionic",
@@ -17,7 +18,14 @@
     "puc",
     "chile"
   ],
-  "author": "Patricio López <patricio@lopezjuri.com> (https://lopezjuri.com)",
+  "author": {
+    "name": "Patricio López Juri",
+    "email": "pelopez2@uc.cl",
+    "url": "https://lopezjuri.com"
+  },
+  "contributors": [
+
+  ],
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/almapp/uc-courses/issues"
@@ -33,6 +41,7 @@
   },
   "devDependencies": {
     "awesome-typescript-loader": "^0.15.9",
+    "file-loader": "^0.8.5",
     "strip-sourcemap-loader": "0.0.1",
     "typescript": "^1.7.3",
     "webpack": "^1.12.9"

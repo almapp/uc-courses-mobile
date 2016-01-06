@@ -3,7 +3,7 @@ import {App, Platform, Page} from "ionic-framework/ionic";
 // Pages
 import {CoursesPage} from "./pages/courses/courses";
 import {SchedulerPage} from "./pages/scheduler/scheduler";
-import {TeachersPage} from "./pages/teachers/teachers";
+import {AboutPage} from "./pages/about/about";
 
 // Global Providers
 import {CoursesProvider} from "./providers/courses";
@@ -24,9 +24,9 @@ interface Tab {
 })
 export class MyApp {
     private tabs = [
-        { title: "Buscacursos", page: CoursesPage },
         { title: "Horarios", page: SchedulerPage },
-        { title: "Profesores", page: TeachersPage },
+        { title: "Buscacursos", page: CoursesPage },
+        { title: "Información", page: AboutPage },
     ];
 
     constructor(private platform: Platform, private provider: CoursesProvider) {

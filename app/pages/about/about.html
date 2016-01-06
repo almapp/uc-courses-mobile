@@ -1,0 +1,98 @@
+<ion-navbar *navbar>
+  <ion-title>Información</ion-title>
+</ion-navbar>
+
+<ion-content class="page-content">
+  <ion-card *ngIf="meta">
+    <ion-card-content>
+      <p>
+        Aplicación <strong>no oficial</strong> para buscar los cursos disponibles de la Universidad Católica de Chile.
+      </p>
+      <p>
+        La información presenta aquí se actualiza con menor frecuencia que el Buscacursos oficial.
+      </p>
+      <p>
+        Esta aplicación es <strong>código abierto</strong> y cualquier persona interesada puede colaborar :)
+      </p>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="meta">
+    <ion-card-content>
+      <ion-list inset>
+        <ion-list-header>
+          Aplicación
+        </ion-list-header>
+
+        <ion-item *ngFor="#tuple of information">
+          {{tuple.name}}:
+          <ion-note item-right>
+            {{tuple.value}}
+          </ion-note>
+        </ion-item>
+
+        <ion-item button (click)="open(meta.repository.url)">
+          Repositorio:
+          <button item-right clear>
+            <icon git-branch></icon>
+            Github
+          </button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="meta">
+    <ion-card-content>
+      <ion-list inset>
+        <ion-list-header>
+          Autor
+        </ion-list-header>
+
+        <ion-item>
+          Nombre:
+          <ion-note item-right>
+            {{meta.author.name}}
+          </ion-note>
+        </ion-item>
+
+        <ion-item>
+          Email:
+          <ion-note item-right>
+            {{meta.author.email}}
+          </ion-note>
+        </ion-item>
+
+        <ion-item button (click)="open(meta.author.url)">
+          URL:
+          <button item-right clear>
+            {{meta.author.url}}
+          </button>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="meta">
+    <ion-card-content>
+      <ion-list inset>
+        <ion-list-header>
+          Contribuyentes
+        </ion-list-header>
+
+        <ion-item button *ngFor="#user of meta.contributors" (click)="open(user.url)">
+          {{user.name}}
+          <button item-right clear>
+            {{meta.author.url}}
+          </button>
+        </ion-item>
+
+        <ion-item *ngIf="meta.contributors.length === 0">
+          <p>
+            Nadie por el momento
+          </p>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
