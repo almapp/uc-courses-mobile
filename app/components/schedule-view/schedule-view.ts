@@ -2,7 +2,7 @@ import {Component, Input, Output, EventEmitter, OnInit} from "angular2/core";
 import {Segment, SegmentButton, Item, Icon, ActionSheet} from "ionic-framework/ionic";
 
 import {DAYS} from "../../models/course";
-import {Schedule} from "../../models/schedule";
+import {Schedule, Block} from "../../models/schedule";
 import {SchedulesProvider} from "../../providers/schedules";
 import {ScheduleBlock} from "../schedule-block/schedule-block";
 
@@ -29,12 +29,12 @@ const NAMES = [
 @Component({
     selector: "schedule-view",
     templateUrl: "build/components/schedule-view/schedule-view.html",
-    events: ["deleted"],
     directives: [ScheduleBlock, Segment, SegmentButton, Item, Icon],
 })
 export class ScheduleView implements OnInit {
     @Input() schedule: Schedule;
-    @Output() deleted = new EventEmitter();
+    @Output() deleted = new EventEmitter<Schedule>();
+    @Output() select = new EventEmitter<Block>();
 
     current: string;
     days: string[] = DAYS;
@@ -80,9 +80,13 @@ export class ScheduleView implements OnInit {
                 return true;
             },
             destructiveButtonClicked: () => {
-                this.deleted.emit(null);
+                this.deleted.emit(this.schedule);
                 return true;
             },
         });
+    }
+
+    selected(block: Block) {
+        this.select.emit(block);
     }
 }

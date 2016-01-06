@@ -12,7 +12,8 @@
     <schedule-view
       *ngFor="#schedule of schedules"
       [schedule]="schedule"
-      (deleted)="delete(schedule)">
+      (deleted)="delete(schedule)"
+      (select)="select($event)">
     </schedule-view>
   </div>
 

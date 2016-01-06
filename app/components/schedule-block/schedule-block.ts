@@ -1,4 +1,4 @@
-import {Component, Input, Pipe, OnInit} from "angular2/core";
+import {Component, Input, Output, Pipe, OnInit, EventEmitter} from "angular2/core";
 import {Icon, Item} from "ionic-framework/ionic";
 
 import {Block} from "../../models/schedule";
@@ -36,6 +36,7 @@ export class FetchPipe {
 })
 export class ScheduleBlock implements OnInit{
     @Input() blocks: Block[];
+    @Output() select = new EventEmitter<Block>();
 
     private block: number;
     private day: string;
@@ -65,5 +66,9 @@ export class ScheduleBlock implements OnInit{
 
     icon(course: Course): string {
         return Course.icon(course.school);
+    }
+
+    click(block: Block) {
+        this.select.emit(block);
     }
 }

@@ -4,6 +4,7 @@ import {Course} from "../../models/course";
 import {Schedule} from "../../models/schedule";
 import {SchedulesProvider} from "../../providers/schedules";
 import {ScheduleView} from "../../components/schedule-view/schedule-view";
+import {SectionPage} from "../section/section";
 
 @Page({
     templateUrl: "build/pages/scheduler/scheduler.html",
@@ -69,6 +70,12 @@ export class SchedulerPage {
         this.manager.delete(schedule).then(() => {
             return this.schedules = this.schedules.filter(s => s.name !== schedule.name);
         });
+    }
+
+    select(block) {
+        this.nav.push(SectionPage, {
+            course: block.course,
+        }, { direction: "forward" }, undefined);
     }
 
     alertRepeated(body: string) {
