@@ -37,13 +37,12 @@
       </ion-list>
     </ion-card-content>
   </ion-card>
-
-  <button fab fab-bottom fab-right *ngIf="platform.is('android')" (click)="save()">
-    <icon checkmark></icon>
-  </button>
-
-  <button fab fab-bottom fab-left danger *ngIf="platform.is('android')" (click)="cancel()">
-    <icon close></icon>
-  </button>
-
 </ion-content>
+
+<button fab fab-bottom fab-right *ngIf="platform.is('android')" (click)="save()">
+  <icon checkmark></icon>
+</button>
+
+<button fab fab-bottom fab-left danger *ngIf="platform.is('android')" (click)="cancel()">
+  <icon close></icon>
+</button>
