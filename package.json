@@ -5,6 +5,8 @@
   "scripts": {
     "start": "ionic serve --lab -c -s",
     "android": "ionic run android",
+    "ios": "ionic emulate ios",
+    "resources": "ionic resources",
     "postinstall": "ionic state restore"
   },
   "homepage": "https://github.com/almapp/buscacursos-uc-mobile#readme",
@@ -24,9 +26,7 @@
     "email": "pelopez2@uc.cl",
     "url": "https://lopezjuri.com"
   },
-  "contributors": [
-
-  ],
+  "contributors": [],
   "license": "GPL-3.0",
   "bugs": {
     "url": "https://github.com/almapp/uc-courses/issues"
