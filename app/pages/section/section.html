@@ -5,9 +5,10 @@
 
 <ion-content class="page-content">
   <ion-card>
-    <ion-list-header>
+    <ion-list-header class="section-header">
       <icon information-circle item-left></icon>
       Secciones
+      <button item-right clear><icon calendar></icon>Agregar o quitar</button>
     </ion-list-header>
 
     <ion-item-divider sticky class="segment-replacement" *ngIf="!sections">
@@ -26,6 +27,9 @@
     </ion-segment>
 
     <ion-card-content>
+      <!-- <ion-item>
+        <button block small>Agregar o quitar</button>
+      </ion-item> -->
       <section-view [section]="course"></section-view>
     </ion-card-content>
 
