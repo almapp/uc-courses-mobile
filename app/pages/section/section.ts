@@ -1,4 +1,4 @@
-import {Page, NavController, NavParams} from "ionic-framework/ionic";
+import {Page, NavController, NavParams, Modal} from "ionic-framework/ionic";
 import {Pipe} from "angular2/core";
 
 import {Course} from "../../models/course";
@@ -6,6 +6,7 @@ import {Block} from "../../models/schedule";
 import {CoursesProvider} from "../../providers/courses";
 import {SchedulesProvider} from "../../providers/schedules";
 import {SectionView} from "../../components/section-view/section-view";
+import {AddRemovePage} from "../add-remove/add-remove";
 
 interface Module {
     type: string;
@@ -27,6 +28,7 @@ export class SectionPage {
     constructor(
         private nav: NavController,
         private navParams: NavParams,
+        private modal: Modal,
         private provider: CoursesProvider,
         private manager: SchedulesProvider) {
 
@@ -42,5 +44,11 @@ export class SectionPage {
     selectSection(section: number) {
         this.currentSection = section;
         this.course = this.sections[this.currentSection];
+    }
+
+    manage() {
+        this.modal.open(AddRemovePage, {
+            course: this.course,
+        });
     }
 }

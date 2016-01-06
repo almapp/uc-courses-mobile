@@ -8,7 +8,7 @@
     <ion-list-header class="section-header">
       <icon information-circle item-left></icon>
       Secciones
-      <button item-right clear><icon calendar></icon>Agregar o quitar</button>
+      <button item-right clear (click)="manage()"><icon calendar></icon>Agregar o quitar</button>
     </ion-list-header>
 
     <ion-item-divider sticky class="segment-replacement" *ngIf="!sections">
