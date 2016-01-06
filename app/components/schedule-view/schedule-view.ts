@@ -53,10 +53,6 @@ export class ScheduleView implements OnInit {
         return WEEKDAYS[new Date().getDay()];
     }
 
-    selectDay(day: string) {
-        this.current = day;
-    }
-
     isBusy(day: string): boolean {
         const dayBlocks = this.schedule.week[day].filter(Boolean);
         return dayBlocks.some(blocks => {

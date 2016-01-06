@@ -21,7 +21,7 @@ interface Module {
 export class SectionPage {
     course: Course;
     sections: Course[];
-    currentSection: number;
+    current: number;
 
     modules: Module[][];
 
@@ -36,14 +36,14 @@ export class SectionPage {
 
         this.provider.sections({ course: this.course }).then(sections => {
             sections = sections.sort((a, b) => a.section - b.section);
-            this.currentSection = sections.map(s => s.section).indexOf(this.course.section);
+            this.current = sections.map(s => s.section).indexOf(this.course.section);
             this.sections = sections;
         });
     }
 
     selectSection(section: number) {
-        this.currentSection = section;
-        this.course = this.sections[this.currentSection];
+        this.current = section;
+        this.course = this.sections[this.current];
     }
 
     manage() {
