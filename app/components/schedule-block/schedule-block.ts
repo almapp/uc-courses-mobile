@@ -1,4 +1,4 @@
-import {Component, Input, Output, Pipe, OnInit, EventEmitter} from "angular2/core";
+import {Component, Input, Output, OnInit, EventEmitter} from "angular2/core";
 import {Icon, Item} from "ionic-framework/ionic";
 
 import {Block} from "../../models/schedule";
@@ -10,31 +10,12 @@ interface Hour {
     end: string;
 }
 
-@Pipe({
-    name: "fetch",
-})
-export class FetchPipe {
-    constructor(private provider: CoursesProvider) {
-        // ...
-    }
-
-    transform(blocks: Block[], args: string[]): Promise<Block[]> {
-        return Promise.all(blocks.map(block => {
-            return this.provider.getByNRC(block.NRC).then(course => {
-                block.course = course;
-                return block;
-            });
-        }));
-    }
-}
-
 @Component({
     selector: "schedule-block",
     templateUrl: "build/components/schedule-block/schedule-block.html",
     directives: [Icon, Item],
-    pipes: [FetchPipe],
 })
-export class ScheduleBlock implements OnInit{
+export class ScheduleBlock implements OnInit {
     @Input() blocks: Block[];
     @Output() select = new EventEmitter<Block>();
 
