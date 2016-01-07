@@ -31,6 +31,31 @@ export class Schedule {
         }
     }
 
+    get NRCs(): number[] {
+        const uniques = {};
+        Object.keys(this.week).forEach(day => {
+            return this.week[day].filter(Boolean).forEach(blocks => {
+                return blocks.filter(Boolean).forEach(block => {
+                    if (!uniques[block.NRC]) {
+                        uniques[block.NRC] = true;
+                    }
+                });
+            });
+        });
+        console.log("uniques", JSON.stringify(uniques));
+        return Object.keys(uniques) as any;
+    }
+
+    get blocks(): Block[] {
+        const result = [];
+        Object.keys(this.week).forEach(day => {
+            this.week[day].filter(Boolean).forEach(blocks => {
+                result.push(...blocks.filter(Boolean));
+            });
+        });
+        return result;
+    }
+
     cellAt(day: string, block: number): Block[] {
         const array = this.week[day];
         if (!array[block]) {
@@ -83,6 +108,13 @@ export class Schedule {
 
     process(courses: Course[]) {
         courses.forEach(this.add);
+    }
+
+    prepareSave(): this {
+        this.blocks.forEach(block => {
+            delete block.course;
+        });
+        return this;
     }
 
     static parse(json: any): Schedule {

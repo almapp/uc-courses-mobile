@@ -5,6 +5,8 @@ import {createHash} from "crypto";
 import {Course, ScheduleSchema} from "../models/course";
 import {Schedule} from "../models/schedule";
 
+import {CoursesProvider} from "./courses";
+
 export interface Schedules {
     [ Identifier: string ]: Schedule;
 }
@@ -65,7 +67,7 @@ export class SchedulesProvider {
     save(schedule: Schedule): Promise<void> {
         const ID = nameToID(schedule.name);
         this.schedules[ID] = schedule;
-        return this.storage.set(ID, JSON.stringify(schedule))
+        return this.storage.set(ID, JSON.stringify(schedule.prepareSave()))
             .then(() => this.updated.emit(schedule));
     }
 
