@@ -66,10 +66,8 @@ export class ScheduleView implements OnInit {
 
     options() {
         this.actionSheet.open({
-            titleText: `Optiones para horario '${this.schedule.name}'`,
-            buttons: [
-                { text: "Compartir" },
-            ],
+            titleText: `Opciones para horario '${this.schedule.name}'`,
+            buttons: [],
             cancelText: "Cancelar",
             destructiveText: "Borrar",
             buttonClicked: (index) => {

@@ -15,7 +15,7 @@ export class AboutPage {
             this.meta = res.json();
             this.information = [
                 { name: "Nombre", value: this.meta.name },
-                { name: "Version", value: this.meta.version },
+                { name: "Versión", value: this.meta.version },
                 { name: "Licencia", value: this.meta.license },
             ];
         });
