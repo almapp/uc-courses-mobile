@@ -7,7 +7,8 @@
     "android": "ionic run android",
     "ios": "ionic emulate ios",
     "resources": "ionic resources",
-    "postinstall": "ionic state restore"
+    "postinstall": "ionic state restore",
+    "deploy-android": "cordova build --release android"
   },
   "homepage": "https://github.com/almapp/buscacursos-uc-mobile#readme",
   "repository": {
