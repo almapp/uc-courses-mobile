@@ -20,11 +20,17 @@
       <span>Única sección</span>
     </ion-item-divider>
 
-    <ion-segment [(ngModel)]="current" class="select-segment" *ngIf="sections?.length > 1">
+    <ion-segment [(ngModel)]="current" class="select-segment" *ngIf="sections?.length > 1 && sections?.length <= 10">
       <ion-segment-button *ngFor="#section of sections; #i = index" [value]="i" (select)="selectSection(i)">
         {{section.section}}
       </ion-segment-button>
     </ion-segment>
+
+    <ion-item>
+      <button block *ngIf="sections?.length > 10" (click)="viewSections()">
+        Ver las {{sections.length}} secciones
+      </button>
+    </ion-item>
 
     <ion-card-content>
       <!-- <ion-item>

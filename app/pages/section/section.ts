@@ -7,6 +7,7 @@ import {CoursesProvider} from "../../providers/courses";
 import {SchedulesProvider} from "../../providers/schedules";
 import {SectionView} from "../../components/section-view/section-view";
 import {AddRemovePage} from "../add-remove/add-remove";
+import {SectionListPage} from "../section-list/section-list";
 
 interface Module {
     type: string;
@@ -38,6 +39,12 @@ export class SectionPage {
             sections = sections.sort((a, b) => a.section - b.section);
             this.current = sections.map(s => s.section).indexOf(this.course.section);
             this.sections = sections;
+        });
+    }
+
+    viewSections() {
+        this.modal.open(SectionListPage, {
+            sections: this.sections,
         });
     }
 

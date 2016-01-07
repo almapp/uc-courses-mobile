@@ -1,0 +1,23 @@
+<ion-toolbar>
+  <ion-title>Secciones {{course.initials}}</ion-title>
+  <ion-buttons end>
+    <button (click)="cancel()">
+      Cancelar
+    </button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content class="page-content">
+  <ion-card>
+    <ion-card-content>
+      <ion-list>
+        <course-item
+          *ngFor="#section of sections"
+          [course]="section"
+          (select)="selectCourse(section)"
+          (add)="addToSchedule(section)">
+        </course-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
