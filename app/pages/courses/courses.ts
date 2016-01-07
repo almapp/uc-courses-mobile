@@ -72,7 +72,13 @@ export class CoursesPage {
         this.period = this.periods[0];
         this.courses = null;
 
-        this.search("MAT");
+        this.manager.loadAll().then(schedules => {
+            const courses = schedules.reduce((array, schedule) => {
+                array.push(...schedule.courses);
+                return array;
+            }, []);
+            this.process(courses);
+        });
     }
 
     course(school: string): Course[] {
@@ -84,17 +90,19 @@ export class CoursesPage {
             q: query,
             campus: this.campus,
         };
-        this.provider.fullSearch(this.period, request).then((results: Course[]) => {
-            this.courses = {};
-            results.forEach(course => {
-                if (!this.courses[course.school]) {
-                    this.courses[course.school] = [course];
-                } else {
-                    this.courses[course.school].push(course);
-                }
-            });
-            this.schools = Object.keys(this.courses);
+        this.provider.fullSearch(this.period, request).then(courses => this.process(courses));
+    }
+
+    process(results: Course[]): string[] {
+        this.courses = {};
+        results.forEach(course => {
+            if (!this.courses[course.school]) {
+                this.courses[course.school] = [course];
+            } else {
+                this.courses[course.school].push(course);
+            }
         });
+        return this.schools = Object.keys(this.courses);
     }
 
     icon(school: string): string {
