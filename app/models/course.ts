@@ -218,7 +218,7 @@ export class Course {
             case "ciencias económicas y administrativas": return "cash";
             case "comunicaciones": return "chatbubbles";
             case "construcción civil": return "settings";
-            case "deportes": return "football";
+            case "cursos deportivos": return "football";
             case "derecho": return "briefcase";
             case "diseño": return "images";
             case "educación": return "star";
