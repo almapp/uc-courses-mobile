@@ -176,7 +176,7 @@ export class Course {
         course.droppable = json.droppable;
         course.english = json.english;
         course.specialApproval = json.specialApproval;
-        course.teachers = json.teachers || [];
+        course.teachers = json.teachers ||  [];
         course.credits = json.credits;
         course.information = json.information;
         course.vacancy = json.vacancy;
@@ -202,46 +202,42 @@ export class Course {
         course.requisites = json.requisites;
         return course;
     }
-
-    // TODO: review keys (school names)
-    static icon(school: string): string {
-        switch (school.trim().toLowerCase()) {
-            case "actuación": return "bowtie";
-            case "agronomia e ing. forestal": return "leaf";
-            case "arquitectura": return "crop";
-            case "arte": return "color-palette";
-            case "astrofisica": return "planet";
-            case "cara": return "body";
-            case "ciencia política": return "bookmark";
-            case "ciencias biológicas": return "bug";
-            case "ciencias de la salud": return "medkit";
-            case "ciencias económicas y administrativas": return "cash";
-            case "comunicaciones": return "chatbubbles";
-            case "construcción civil": return "settings";
-            case "cursos deportivos": return "football";
-            case "derecho": return "briefcase";
-            case "diseño": return "images";
-            case "educación": return "star";
-            case "enfermería": return "pulse";
-            case "estudios urbanos": return "pin";
-            case "estética": return "rose";
-            case "filosofía": return "person";
-            case "física": return "calculator";
-            case "geografía": return "map";
-            case "historia": return "clock";
-            case "ingeniería": return "laptop";
-            case "letras": return "book";
-            case "matemática": return "cube";
-            case "medicina": return "thermometer";
-            case "música": return "musical-note";
-            case "odontología": return "clipboard";
-            case "psicología": return "help";
-            case "química": return "beaker";
-            case "sociología": return "people";
-            case "teología": return "egg";
-            case "trabajo social": return "happy";
-            case "villarica": return "image";
-            default: return "university";
-        }
-    }
 }
+
+export const ICONS = {
+    "actuación": "bowtie",
+    "agronomia e ing. forestal": "leaf",
+    "arquitectura": "crop",
+    "arte": "color-palette",
+    "astrofisica": "planet",
+    "cara": "body",
+    "ciencia política": "bookmark",
+    "ciencias biológicas": "bug",
+    "ciencias de la salud": "medkit",
+    "ciencias económicas y administrativas": "cash",
+    "comunicaciones": "chatbubbles",
+    "construcción civil": "settings",
+    "cursos deportivos": "football",
+    "derecho": "brief",
+    "diseño": "images",
+    "educación": "star",
+    "enfermería": "pulse",
+    "estudios urbanos": "pin",
+    "estética": "rose",
+    "filosofía": "person",
+    "física": "calculator",
+    "geografía": "map",
+    "historia": "clock",
+    "ingeniería": "laptop",
+    "letras": "book",
+    "matemática": "cube",
+    "medicina": "thermometer",
+    "música": "musical-note",
+    "odontología": "clipboard",
+    "psicología": "help",
+    "química": "beaker",
+    "sociología": "people",
+    "teología": "egg",
+    "trabajo social": "happy",
+    "villarica": "image",
+};

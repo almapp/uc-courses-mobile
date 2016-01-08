@@ -1,7 +1,7 @@
 import {Page, NavController, Modal, ActionSheet} from "ionic-framework/ionic";
 import {Pipe} from "angular2/core";
 
-import {Course} from "../../models/course";
+import {Course, ICONS} from "../../models/course";
 import {CoursesProvider, FullSearchQuery, Period, Campus} from "../../providers/courses";
 import {SchedulesProvider} from "../../providers/schedules";
 import {CourseItem} from "../../components/course-item/course-item";
@@ -46,6 +46,7 @@ export class CoursesPage {
 
     private courses: CourseGroup;
     private schools: string[];
+    private icons = ICONS;
 
     constructor(
         private nav: NavController,
@@ -75,7 +76,12 @@ export class CoursesPage {
                 array.push(...schedule.courses);
                 return array;
             }, []);
-            this.process(courses);
+            if (courses.length) {
+                this.process(courses);
+            } else {
+                const placeholders = ["MAT0", "LET0", "DPT", "TTF0", "DNO0", "DER0", "EDU0"];
+                this.search(placeholders[Math.floor(Math.random() * placeholders.length)]);
+            }
         });
     }
 

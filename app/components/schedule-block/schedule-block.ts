@@ -2,7 +2,7 @@ import {Component, Input, Output, OnInit, EventEmitter} from "angular2/core";
 import {Icon, Item} from "ionic-framework/ionic";
 
 import {Block} from "../../models/schedule";
-import {Course} from "../../models/course";
+import {Course, ICONS} from "../../models/course";
 import {CoursesProvider} from "../../providers/courses";
 
 interface Hour {
@@ -22,6 +22,7 @@ export class ScheduleBlock implements OnInit {
     private block: number;
     private day: string;
     private hour: Hour;
+    private icons = ICONS;
 
     static HOURS: Hour[] = [
         { start: "INVALID", end: "INVALID" },

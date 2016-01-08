@@ -35,7 +35,7 @@
     <ion-card-content>
       <ion-list *ngFor="#school of schools">
         <ion-list-header>
-          <ion-icon [name]="icon(school)" item-left></ion-icon>
+          <ion-icon [name]="icons[school.trim().toLowerCase()] || 'university'" item-left></ion-icon>
           {{school | uppercase}}
         </ion-list-header>
         <course-item
