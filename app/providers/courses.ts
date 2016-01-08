@@ -59,6 +59,8 @@ export class CoursesProvider {
     fullSearch(period: Period, query: FullSearchQuery): Promise<Course[]> {
         const url = `${this.url}/courses`;
         const params = new URLSearchParams();
+        params.set("year", String(period.year));
+        params.set("period", String(period.period));
         if (query.q) { params.set("q", query.q); }
         if (query.campus) { params.set("campus", query.campus.name); }
         return this.request(url, params);
@@ -67,6 +69,8 @@ export class CoursesProvider {
     search(period: Period, query: SearchQuery): Promise<Course[]> {
         const url = `${this.url}/courses`;
         const params = new URLSearchParams();
+        params.set("year", String(period.year));
+        params.set("period", String(period.period));
         if (query.initials) { params.set("initials", query.initials); }
         if (query.campus) { params.set("campus", query.campus.name); }
         return this.request(url, params);
