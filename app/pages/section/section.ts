@@ -43,6 +43,12 @@ export class SectionPage {
 
     viewSections() {
         const modal = Modal.create(SectionListPage, { sections: this.sections });
+        modal.onDismiss((section: Course) => {
+            const index = this.sections.indexOf(section);
+            if (index >= 0) {
+                this.selectSection(index);
+            }
+        });
         this.nav.present(modal);
     }
 

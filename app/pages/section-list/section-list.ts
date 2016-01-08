@@ -1,4 +1,4 @@
-import {Page, NavController, Modal, ActionSheet, NavParams} from "ionic-framework/ionic";
+import {Page, NavController, Modal, ViewController, ActionSheet, NavParams} from "ionic-framework/ionic";
 import {Pipe} from "angular2/core";
 
 import {Course} from "../../models/course";
@@ -18,8 +18,8 @@ export class SectionListPage {
     private course: Course;
 
     constructor(
-        private modal: Modal,
         private nav: NavController,
+        private view: ViewController,
         private params: NavParams,
         private provider: CoursesProvider,
         private manager: SchedulesProvider) {
@@ -29,23 +29,19 @@ export class SectionListPage {
     }
 
     addToSchedule(course: Course) {
-        this.modal.open(AddRemovePage, {
-            course: course
-        });
+        const modal = Modal.create(AddRemovePage, { course: course });
+        this.nav.present(modal);
     }
 
     selectCourse(course: Course) {
-
+        this.close(course);
     }
 
     cancel() {
         this.close();
     }
 
-    close() {
-        const modal = this.modal.get(null) as any;
-        if (modal) {
-            modal.close();
-        }
+    close(section?: Course) {
+        this.view.dismiss(section);
     }
 }
