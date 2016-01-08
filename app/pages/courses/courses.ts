@@ -148,7 +148,7 @@ export class CoursesPage {
                     handler: () => this.campus = campus,
                 };
         }).concat({
-            text: "Cancelar",
+            text: "Todos",
             style: "cancel",
             handler: () => this.campus = null,
         });
