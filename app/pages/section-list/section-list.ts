@@ -2,7 +2,7 @@ import {Page, NavController, Modal, ViewController, ActionSheet, NavParams} from
 import {Pipe} from "angular2/core";
 
 import {Course} from "../../models/course";
-import {CoursesProvider, FullSearchQuery, Period, Campus} from "../../providers/courses";
+import {CoursesProvider} from "../../providers/courses";
 import {SchedulesProvider} from "../../providers/schedules";
 import {CourseItem} from "../../components/course-item/course-item";
 

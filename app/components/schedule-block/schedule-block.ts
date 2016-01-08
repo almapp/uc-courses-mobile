@@ -46,10 +46,6 @@ export class ScheduleBlock implements OnInit {
         this.hour = ScheduleBlock.HOURS[this.block];
     }
 
-    icon(course: Course): string {
-        return Course.icon(course.school);
-    }
-
     click(block: Block) {
         this.select.emit(block);
     }

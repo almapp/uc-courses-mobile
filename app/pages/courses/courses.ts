@@ -109,10 +109,6 @@ export class CoursesPage {
         return this.schools = Object.keys(this.courses);
     }
 
-    icon(school: string): string {
-        return Course.icon(school);
-    }
-
     addToSchedule(course: Course) {
         const modal = Modal.create(AddRemovePage, { course: course });
         this.nav.present(modal);
