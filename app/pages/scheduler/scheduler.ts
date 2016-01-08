@@ -47,7 +47,7 @@ export class SchedulerPage {
             ],
             buttons: [
                 { text: "Cancelar" },
-                { text: "Guardar", handler: (name) => this.create(name) },
+                { text: "Guardar", handler: (values) => this.create(values.name) },
             ],
         });
         this.nav.present(alert);
