@@ -207,10 +207,10 @@ export class Course {
     static icon(school: string): string {
         switch (school.trim().toLowerCase()) {
             case "actuación": return "bowtie";
-            case "agro": return "leaf";
+            case "agronomia e ing. forestal": return "leaf";
             case "arquitectura": return "crop";
             case "arte": return "color-palette";
-            case "astrofísica": return "planet";
+            case "astrofisica": return "planet";
             case "cara": return "body";
             case "ciencia política": return "bookmark";
             case "ciencias biológicas": return "bug";
