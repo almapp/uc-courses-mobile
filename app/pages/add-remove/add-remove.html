@@ -29,7 +29,7 @@
           {{item.schedule.name}}
         </ion-checkbox>
 
-        <ion-list-header *ngIf="platform.is('ios')">
+        <ion-list-header *ngIf="!platform.is('android')">
           <button block (click)="save()">
             Guardar
           </button>

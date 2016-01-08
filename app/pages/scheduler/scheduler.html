@@ -1,6 +1,6 @@
 <ion-navbar *navbar>
   <ion-title>Horarios</ion-title>
-  <ion-buttons right *ngIf="platform.is('ios')">
+  <ion-buttons right *ngIf="!platform.is('android')">
     <button (click)="new()">
       Nuevo
     </button>
