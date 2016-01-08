@@ -1,18 +1,11 @@
 import {App, Platform, Page} from "ionic-framework/ionic";
 
-// Pages
-import {CoursesPage} from "./pages/courses/courses";
-import {SchedulerPage} from "./pages/scheduler/scheduler";
-import {AboutPage} from "./pages/about/about";
+// Main page
+import {TabsPage} from "./pages/tabs/tabs";
 
 // Global Providers
 import {CoursesProvider} from "./providers/courses";
 import {SchedulesProvider} from "./providers/schedules";
-
-interface Tab {
-    title: string;
-    page: any;
-}
 
 @App({
     templateUrl: "build/app.html",
@@ -23,13 +16,9 @@ interface Tab {
     providers: [CoursesProvider, SchedulesProvider],
 })
 export class MyApp {
-    private tabs = [
-        { title: "Horarios", page: SchedulerPage },
-        { title: "Buscacursos", page: CoursesPage },
-        { title: "Información", page: AboutPage },
-    ];
+    private root = TabsPage;
 
-    constructor(private platform: Platform, private provider: CoursesProvider) {
+    constructor(private platform: Platform, private provider: CoursesProvider, private manager: SchedulesProvider) {
         this.provider.url = process.env.API_URL;
         this.platform.ready().then(() => {
             // Do any necessary cordova or native calls here now that the platform is ready

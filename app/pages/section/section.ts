@@ -29,7 +29,6 @@ export class SectionPage {
     constructor(
         private nav: NavController,
         private navParams: NavParams,
-        private modal: Modal,
         private provider: CoursesProvider,
         private manager: SchedulesProvider) {
 
@@ -43,9 +42,8 @@ export class SectionPage {
     }
 
     viewSections() {
-        this.modal.open(SectionListPage, {
-            sections: this.sections,
-        });
+        const modal = Modal.create(SectionListPage, { sections: this.sections });
+        this.nav.present(modal);
     }
 
     selectSection(section: number) {
@@ -54,8 +52,7 @@ export class SectionPage {
     }
 
     manage() {
-        this.modal.open(AddRemovePage, {
-            course: this.course,
-        });
+        const modal = Modal.create(AddRemovePage, { course: this.course });
+        this.nav.present(modal);
     }
 }

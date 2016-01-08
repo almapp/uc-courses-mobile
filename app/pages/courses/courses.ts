@@ -17,14 +17,14 @@ interface CourseGroup {
     name: "periodize"
 })
 export class HumanizePeriodPipe {
-    public static table = {
+    public static TABLE = {
         "1": "1",
         "2": "2",
         "3": "TAV",
     };
 
     static transform(period: Period): String {
-        return `${period.year}-${HumanizePeriodPipe.table[period.period]}`;
+        return `${period.year}-${HumanizePeriodPipe.TABLE[period.period]}`;
     }
 
     transform(period: Period, args: string[]): String {
@@ -48,9 +48,7 @@ export class CoursesPage {
     private schools: string[];
 
     constructor(
-        private actionSheet: ActionSheet,
         private nav: NavController,
-        private modal: Modal,
         private provider: CoursesProvider,
         private manager: SchedulesProvider) {
 
@@ -110,9 +108,8 @@ export class CoursesPage {
     }
 
     addToSchedule(course: Course) {
-        this.modal.open(AddRemovePage, {
-            course: course
-        });
+        const modal = Modal.create(AddRemovePage, { course: course });
+        this.nav.present(modal);
     }
 
     selectCourse(course: Course) {
@@ -122,34 +119,42 @@ export class CoursesPage {
     }
 
     selectPeriod() {
-        this.actionSheet.open({
-            titleText: "Selecciona periodo",
-            buttons: this.periods.map(p => {
-                return { text: HumanizePeriodPipe.transform(p) };
-            }),
-            cancelText: "Cancelar",
-            buttonClicked: (index) => {
-                this.period = this.periods[index];
-                return true;
-            },
+        const buttons = this.periods.map(period => {
+            return {
+                text: HumanizePeriodPipe.transform(period),
+                style: null,
+                handler: () => this.period = period,
+            };
+        }).concat({
+            text: "Cancelar",
+            style: "cancel",
+            handler: null,
         });
+
+        const sheet = ActionSheet.create({
+            title: "Selecciona periodo",
+            buttons: buttons,
+        });
+        this.nav.present(sheet);
     }
 
     selectCampus() {
-        this.actionSheet.open({
-            titleText: "Selecciona un campus",
-            buttons: this.campuses.map(c => {
-                return { text: c.name };
-            }),
-            cancelText: "Todos",
-            buttonClicked: (index) => {
-                this.campus = this.campuses[index];
-                return true;
-            },
-            cancel: () => {
-                this.campus = null;
-                return true;
-            },
+        const buttons = this.campuses.map(campus => {
+                return {
+                    text: campus.name,
+                    style: null,
+                    handler: () => this.campus = campus,
+                };
+        }).concat({
+            text: "Cancelar",
+            style: "cancel",
+            handler: () => this.campus = null,
         });
+
+        const sheet = ActionSheet.create({
+            title: "Selecciona un campus",
+            buttons: buttons,
+        });
+        this.nav.present(sheet);
     }
 }

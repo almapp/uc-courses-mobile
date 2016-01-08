@@ -12,7 +12,7 @@
     <schedule-view
       *ngFor="#schedule of schedules"
       [schedule]="schedule"
-      (deleted)="delete(schedule)"
+      (options)="options(schedule)"
       (select)="select($event)">
     </schedule-view>
   </div>
@@ -35,5 +35,5 @@
 </ion-content>
 
 <button fab fab-bottom fab-right *ngIf="platform.is('android')" (click)="new()">
-  <icon add></icon>
+  <ion-icon name="add"></ion-icon>
 </button>

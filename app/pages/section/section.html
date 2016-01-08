@@ -2,17 +2,16 @@
   <ion-title>{{course.initials}}-{{course.section}}</ion-title>
 </ion-navbar>
 
-
 <ion-content class="page-content">
   <ion-card>
     <ion-list-header class="section-header">
-      <icon information-circle item-left></icon>
+      <ion-icon name="information-circle" item-left></ion-icon>
       Secciones
-      <button item-right clear (click)="manage()"><icon calendar></icon>Agregar o quitar</button>
+      <button item-right clear (click)="manage()"><ion-icon name="calendar"></ion-icon>Agregar o quitar</button>
     </ion-list-header>
 
     <ion-item-divider sticky class="segment-replacement" *ngIf="!sections">
-      <icon refresh item-left></icon>
+      <ion-icon name="refresh" item-left></ion-icon>
       Cargando...
     </ion-item-divider>
 
@@ -45,7 +44,7 @@
     <ion-card-content>
       <ion-list>
         <ion-list-header>
-          <icon information-circle item-left></icon>
+          <ion-icon name="information-circle" item-left></ion-icon>
           Información general
         </ion-list-header>
 

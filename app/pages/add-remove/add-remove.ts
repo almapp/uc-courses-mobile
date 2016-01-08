@@ -1,4 +1,4 @@
-import {Page, Platform, Modal, NavController, NavParams} from "ionic-framework/ionic";
+import {Page, Platform, ViewController, NavController, NavParams} from "ionic-framework/ionic";
 
 import {Course} from "../../models/course";
 import {Schedule} from "../../models/schedule";
@@ -15,8 +15,8 @@ export class AddRemovePage {
 
     constructor(
         private platform: Platform,
-        private modal: Modal,
         private nav: NavController,
+        private view: ViewController,
         private params: NavParams,
         private manager: SchedulesProvider) {
 
@@ -48,9 +48,6 @@ export class AddRemovePage {
     }
 
     close() {
-        const modal = this.modal.get(null) as any;
-        if (modal) {
-            modal.close();
-        }
+        this.view.dismiss(null);
     }
 }

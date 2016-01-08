@@ -2,8 +2,8 @@
   <!-- <ion-card-header> -->
     <ion-item>
       {{schedule.name}}
-      <button item-right class="options-button" (click)="options()">
-        <icon more></icon>
+      <button item-right class="options-button" (click)="click()">
+        <ion-icon name="more"></ion-icon>
       </button>
     </ion-item>
   <!-- </ion-card-header> -->
@@ -17,7 +17,7 @@
       <schedule-block *ngIf="blocks?.length > 0" [blocks]="blocks" (select)="selected($event)"></schedule-block>
     </div>
     <ion-item *ngIf="!isBusy(current)">
-      <icon ios="ion-md-happy" md="ion-md-happy" item-left></icon>
+      <ion-icon name="md-happy" item-left></ion-icon>
       {{name(current)}} sin clases
     </ion-item>
   </ion-card-content>

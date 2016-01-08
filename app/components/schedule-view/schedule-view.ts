@@ -33,13 +33,13 @@ const NAMES = [
 })
 export class ScheduleView implements OnInit {
     @Input() schedule: Schedule;
-    @Output() deleted = new EventEmitter<Schedule>();
+    @Output() options = new EventEmitter<Schedule>();
     @Output() select = new EventEmitter<Block>();
 
     current: string;
     days: string[] = DAYS;
 
-    constructor(private actionSheet: ActionSheet, private manager: SchedulesProvider) {
+    constructor(private manager: SchedulesProvider) {
         this.current = this.today;
     }
 
@@ -64,20 +64,8 @@ export class ScheduleView implements OnInit {
         return NAMES[WEEKDAYS.indexOf(day)];
     }
 
-    options() {
-        this.actionSheet.open({
-            titleText: `Opciones para horario '${this.schedule.name}'`,
-            buttons: [],
-            cancelText: "Cancelar",
-            destructiveText: "Borrar",
-            buttonClicked: (index) => {
-                return true;
-            },
-            destructiveButtonClicked: () => {
-                this.deleted.emit(this.schedule);
-                return true;
-            },
-        });
+    click() {
+        this.options.emit(this.schedule);
     }
 
     selected(block: Block) {

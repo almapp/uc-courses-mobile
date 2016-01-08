@@ -40,9 +40,9 @@
 </ion-content>
 
 <button fab fab-bottom fab-right *ngIf="platform.is('android')" (click)="save()">
-  <icon checkmark></icon>
+  <ion-icon name="checkmark"></ion-icon>
 </button>
 
 <button fab fab-bottom fab-left danger *ngIf="platform.is('android')" (click)="cancel()">
-  <icon close></icon>
+  <ion-icon name="close"></ion-icon>
 </button>

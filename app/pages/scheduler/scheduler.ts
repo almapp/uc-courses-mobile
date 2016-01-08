@@ -1,4 +1,4 @@
-import {Page, NavController, Platform, Popup} from "ionic-framework/ionic";
+import {Page, NavController, Platform, Alert, ActionSheet} from "ionic-framework/ionic";
 
 import {Course} from "../../models/course";
 import {Schedule} from "../../models/schedule";
@@ -16,7 +16,6 @@ export class SchedulerPage {
     constructor(
         private platform: Platform,
         private nav: NavController,
-        private popup: Popup,
         private manager: SchedulesProvider) {
 
         this.schedules = null;
@@ -40,30 +39,30 @@ export class SchedulerPage {
     }
 
     new() {
-        return this.popup.prompt({
+        const alert = Alert.create({
             title: "Nuevo horario",
-            template: "Ingresa un nombre para este",
-            inputPlaceholder: "Nombre",
-            okText: "Guardar",
-            okType: "secondary",
-        }).then((name: string) => {
-            const repeated = this.schedules.some(sch => {
-                return sch.name === name;
-            });
-            if (repeated) {
-                throw new Error("Horario con nombre repetido");
-            } else {
-                return name;
-            }
-        }).then(name => {
-            const order = (this.schedules[0]) ? this.schedules[0].position + 1 : 0;
-            return this.manager.create(name, order);
-        }).then(schedule => {
-            this.schedules.push(schedule);
-        }).catch((err: Error) => {
-            // FIXME: Error: nav controller actively transitioning
-            // return this.alertRepeated(err.name);
+            body: "Ingresa un nombre para este",
+            inputs: [
+                { name: "name", placeholder: "Nombre" },
+            ],
+            buttons: [
+                { text: "Cancelar" },
+                { text: "Guardar", handler: (name) => this.create(name) },
+            ],
         });
+        this.nav.present(alert);
+    }
+
+    create(name: string) {
+        const repeated = this.schedules.some(sch => {
+            return sch.name === name;
+        });
+        if (repeated) {
+            this.alertRepeated(name);
+        } else {
+            const order = (this.schedules[0]) ? this.schedules[0].position + 1 : 0;
+            return this.manager.create(name, order).then(schedule => this.schedules.push(schedule));
+        }
     }
 
     delete(schedule: Schedule) {
@@ -78,10 +77,30 @@ export class SchedulerPage {
         }, { direction: "forward" }, undefined);
     }
 
-    alertRepeated(body: string) {
-        return this.popup.alert({
-            title: "Problema:",
-            template: body,
+    options(schedule: Schedule) {
+        const sheet = ActionSheet.create({
+            title: `Optiones para horario '${schedule.name}'`,
+            buttons: [
+                {
+                    text: "Borrar",
+                    style: "destructive",
+                    handler: () => this.delete(schedule),
+                },
+                {
+                    text: "Cancelar",
+                    style: "cancel",
+                },
+            ],
         });
+        this.nav.present(sheet);
+    }
+
+    alertRepeated(name: string) {
+        const alert = Alert.create({
+            title: "Ups!",
+            body: "Ya existe un horario con ese nombre, intenta con otro :)",
+            buttons: ["Ok"],
+        });
+        this.nav.present(alert);
     }
 }

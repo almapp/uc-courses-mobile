@@ -9,7 +9,7 @@
   </ion-list-header>
 
   <ion-item button *ngFor="#block of blocks" (click)="click(block)">
-    <icon [name]="icon(block.course)" item-left></icon>
+    <ion-icon [name]="icon(block.course)" item-left></ion-icon>
     <h2>
       <strong class="identifier">{{block.course.initials}}-{{block.course.section}}</strong> | {{block.modtype}}
     </h2>
