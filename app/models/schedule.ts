@@ -13,8 +13,6 @@ export interface Week {
 }
 
 export class Schedule {
-    count: number = 0;
-    credits: number = 0;
     courses: Course[] = [];
     week: Week = {
         "L": [],
@@ -29,7 +27,17 @@ export class Schedule {
     constructor(public name: string, public position = 0, courses?: Course[]) {
         if (courses) {
             this.process(courses);
+        } else {
+            this.courses = [];
         }
+    }
+
+    get count(): number {
+        return this.courses.length;
+    }
+
+    get credits(): number {
+        return this.courses.map(c => c.credits).reduce((a, b) => a + b, 0);
     }
 
     get NRCs(): number[] {
@@ -55,16 +63,13 @@ export class Schedule {
     };
 
     has(course: Course): boolean {
-        return Object.keys(this.week).some(day => {
-            return this.week[day].filter(Boolean).some(blocks => {
-                return blocks.filter(Boolean).some(block => {
-                    return block.NRC === course.NRC;
-                });
-            });
-        });
+        return this.courses.indexOf(course) > -1;
     }
 
     add(course: Course): this {
+        if (this.has(course)) {
+            return this;
+        }
         Object.keys(course.schedule).forEach(modType => {
             const mod: ScheduleSchema = course.schedule[modType];
             Object.keys(mod.modules).forEach(day => {
@@ -80,12 +85,13 @@ export class Schedule {
             });
         });
         this.courses.push(course);
-        this.count += 1;
-        this.credits += course.credits;
         return this;
     }
 
     remove(course: Course): this {
+        if (!this.has(course)) {
+            return this;
+        }
         Object.keys(this.week).forEach(day => {
             this.week[day] = this.week[day].filter(Boolean).map(blocks => {
                 return blocks.filter(Boolean).filter(block => {
@@ -94,8 +100,6 @@ export class Schedule {
             });
         });
         this.courses = this.courses.filter(c => c.NRC !== c.NRC);
-        this.count -= 1;
-        this.credits -= course.credits;
         return this;
     }
 
