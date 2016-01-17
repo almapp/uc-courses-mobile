@@ -25,8 +25,8 @@
       </ion-segment-button>
     </ion-segment>
 
-    <ion-item>
-      <button block *ngIf="sections?.length > 10" (click)="viewSections()">
+    <ion-item *ngIf="sections?.length > 10">
+      <button block (click)="viewSections()">
         Ver las {{sections.length}} secciones
       </button>
     </ion-item>
