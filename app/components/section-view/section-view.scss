@@ -6,36 +6,3 @@
   min-width: 70px;
   // margin-top: 0px;
 }
-
-.schedule {
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  table-layout: fixed;
-  color: #313131;
-  border-collapse: collapse;
-  border-style: hidden;
-  empty-cells: show;
-
-  tr {
-    line-height: 18px;
-
-    td {
-      font-size: 15pt;
-      color: #8b9798;
-      span {
-        // margin-left: -5px;
-        // margin-right: -5px;
-
-
-      }
-      // background-color: #eef2f3;
-    }
-  }
-
-  td,
-  th {
-    border: 1px solid #c4cace;
-  }
-}
