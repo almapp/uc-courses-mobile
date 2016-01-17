@@ -1,5 +1,6 @@
 import {Page} from "ionic-framework/ionic";
 import {Http} from "angular2/http";
+import * as crypto from "crypto";
 
 var PACKAGE = require("../../../package.json");
 
@@ -8,17 +9,18 @@ var PACKAGE = require("../../../package.json");
 })
 export class AboutPage {
     private meta: any;
-    private information = [];
+    private policy = "https://almapp.github.io/buscacursos-uc-mobile/policy";
 
     constructor(private http: Http) {
         this.http.get("build/js/" + PACKAGE).subscribe(res => {
             this.meta = res.json();
-            this.information = [
-                { name: "Nombre", value: this.meta.name },
-                { name: "Versión", value: this.meta.version },
-                { name: "Licencia", value: this.meta.license },
-            ];
         });
+    }
+
+    image(email: string): string {
+        const hash = crypto.createHash("md5").update(email.trim().toLowerCase()).digest("hex");
+        const url = `http://www.gravatar.com/avatar/${hash}.png`;
+        return url;
     }
 
     open(url: string) {

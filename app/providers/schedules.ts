@@ -11,14 +11,6 @@ export interface Schedules {
     [ Identifier: string ]: Schedule;
 }
 
-const DEBUG = true;
-
-function debug(text: string, obj?: any) {
-    if (DEBUG) {
-        console.log(text, JSON.stringify(obj));
-    }
-}
-
 function nameToID(name: string): string {
     return createHash("md5").update(name).digest("hex");
 }

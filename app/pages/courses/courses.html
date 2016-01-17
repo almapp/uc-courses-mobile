@@ -9,43 +9,57 @@
 
 <ion-content class="page-content">
   <ion-card>
-    <ion-card-header>
-      Búsqueda
-    </ion-card-header>
     <ion-card-content>
       <ion-list>
         <ion-input>
-          <ion-icon name="search" item-left></ion-icon>
-          <input type="text" placeholder="Sigla, nombre o NRC" #query>
+          <ion-icon name="code" item-left></ion-icon>
+          <input type="text" [(value)]="query.initials" placeholder="Sigla">
         </ion-input>
-        <ion-item (click)="selectCampus()">
-          <ion-icon name="md-locate" item-left></ion-icon>
-          Campus
+
+        <ion-input>
+          <ion-icon name="quote" item-left></ion-icon>
+          <input type="text" [(value)]="query.name" placeholder="Nombre">
+        </ion-input>
+
+        <ion-item (click)="selectSchool()">
+          <ion-icon name="school" item-left></ion-icon>
+          Escuela
           <ion-note item-right>
-            {{ campus ? campus.name : "Todos" }}
+            {{ query.school || "Todas" }}
           </ion-note>
         </ion-item>
+
+        <ion-item (click)="selectCampus()">
+          <ion-icon name="compass" item-left></ion-icon>
+          Campus
+          <ion-note item-right>
+            {{ query.campus || "Todos" }}
+          </ion-note>
+        </ion-item>
+
         <ion-item>
-          <button block small (click)="search(query.value)" [disabled]="query.value.length < 1">Buscar</button>
+          <!-- Disable when inputs are empty -->
+          <button block (click)="search()" [disabled]="!query.initials && !query.name">Buscar</button>
         </ion-item>
       </ion-list>
     </ion-card-content>
   </ion-card>
+
   <ion-card *ngIf="courses">
     <ion-card-content>
-      <ion-list *ngFor="#school of schools">
+      <ion-list *ngFor="#group of courses">
         <ion-list-header>
-          <ion-icon [name]="icons[school.trim().toLowerCase()] || 'university'" item-left></ion-icon>
-          {{school | uppercase}}
+          <ion-icon [name]="provider.icon(group[0].school) || 'university'" item-left></ion-icon>
+          {{group[0].school | uppercase}}
         </ion-list-header>
         <course-item
-          *ngFor="#course of courses[school]"
+          *ngFor="#course of group"
           [course]="course"
           (select)="selectCourse(course)"
           (add)="addToSchedule(course)">
         </course-item>
       </ion-list>
-      <p *ngIf="schools.length === 0">
+      <p *ngIf="courses.length === 0">
         Sin resultados
       </p>
     </ion-card-content>

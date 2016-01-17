@@ -9,16 +9,16 @@
   <!-- </ion-card-header> -->
 
   <ion-segment class="select-segment" [(ngModel)]="current">
-    <ion-segment-button *ngFor="#day of days" [value]="day">{{day}}</ion-segment-button>
+    <ion-segment-button *ngFor="#day of days; #i = index" [value]="i">{{day}}</ion-segment-button>
   </ion-segment>
 
   <ion-card-content>
     <div *ngFor="#blocks of schedule.week[current]">
-      <schedule-block *ngIf="blocks?.length > 0" [blocks]="blocks" (select)="selected($event)"></schedule-block>
+      <schedule-block *ngIf="blocks?.length" [blocks]="blocks" [schedule]="schedule" (select)="selected($event)"></schedule-block>
     </div>
     <ion-item *ngIf="!isBusy(current)">
       <ion-icon name="md-happy" item-left></ion-icon>
-      {{name(current)}} sin clases
+      {{names[current]}} sin clases
     </ion-item>
   </ion-card-content>
 

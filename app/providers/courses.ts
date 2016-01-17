@@ -1,33 +1,63 @@
 import {Injectable} from "angular2/core";
 import {Http, URLSearchParams} from "angular2/http";
 
-import {Course, MODULES, DAYS} from "../models/course";
+import {Course} from "../models/course";
 
 export interface Period {
     year: number | string;
     period: number | string;
 }
 
-export interface Campus {
-    name: string;
-    identifier: string;
-}
-
-export interface FullSearchQuery {
-    q: string;
-    campus?: Campus;
-}
-
 export interface SearchQuery {
+    section?: number | string;
+    year?: number | string;
+    period?: number | string;
+    NRC?: number | string;
     name?: string;
     initials?: string;
-    section?: string;
-    NRC?: string;
     school?: string;
-    teacher?: string;
-    campus?: Campus;
+    campus?: string;
     places?: string[];
+    teachers?: string[];
 }
+
+export const ICONS = {
+    "actuación": "bowtie",
+    "agronomia e ing. forestal": "leaf",
+    "arquitectura": "crop",
+    "arte": "color-palette",
+    "astrofisica": "planet",
+    "cara": "body",
+    "ciencia política": "bookmark",
+    "ciencias biológicas": "bug",
+    "ciencias de la salud": "medkit",
+    "ciencias económicas y administrativas": "cash",
+    "comunicaciones": "chatbubbles",
+    "construcción civil": "settings",
+    "cursos deportivos": "football",
+    "derecho": "brief",
+    "diseño": "images",
+    "educación": "star",
+    "enfermería": "pulse",
+    "estudios urbanos": "pin",
+    "estética": "rose",
+    "filosofía": "person",
+    "física": "calculator",
+    "geografía": "map",
+    "historia": "clock",
+    "ingeniería": "laptop",
+    "letras": "book",
+    "matemática": "cube",
+    "medicina": "thermometer",
+    "música": "musical-note",
+    "odontología": "clipboard",
+    "psicología": "help",
+    "química": "beaker",
+    "sociología": "people",
+    "teología": "egg",
+    "trabajo social": "happy",
+    "villarica": "image",
+};
 
 interface Cache {
     [ Identifier: number ]: Course;
@@ -49,49 +79,54 @@ export class CoursesProvider {
         });
     }
 
+    schools(): Promise<string[]> {
+        return this.request(`${this.url}/schools`);
+    }
+
+    campuses(): Promise<string[]> {
+        return this.request(`${this.url}/campuses`);
+    }
+
     sections(opts: { course?: Course, initials?: string, period?: Period }): Promise<Course[]> {
         const period = opts.period || { year: opts.course.year, period: opts.course.period };
         const initials = opts.course.initials || opts.initials;
         const url = `${this.url}/courses/${initials}/${period.year}/${period.period}/sections`;
-        return this.request(url);
+        return this.courses(url);
     }
 
-    fullSearch(period: Period, query: FullSearchQuery): Promise<Course[]> {
+    search(query: SearchQuery): Promise<Course[]> {
         const url = `${this.url}/courses`;
         const params = new URLSearchParams();
-        params.set("year", String(period.year));
-        params.set("period", String(period.period));
-        if (query.q) { params.set("q", query.q); }
-        if (query.campus) { params.set("campus", query.campus.name); }
-        return this.request(url, params);
+        Object.keys(query).forEach(key => {
+            params.set(key, query[key]);
+        });
+        return this.courses(url, params);
     }
 
-    search(period: Period, query: SearchQuery): Promise<Course[]> {
-        const url = `${this.url}/courses`;
-        const params = new URLSearchParams();
-        params.set("year", String(period.year));
-        params.set("period", String(period.period));
-        if (query.initials) { params.set("initials", query.initials); }
-        if (query.campus) { params.set("campus", query.campus.name); }
-        return this.request(url, params);
-    }
-
-    request(url: string, params?: URLSearchParams): Promise<Course[] | Course> {
+    request(url: string, params?: URLSearchParams): Promise<any> {
         if (!this.url) {
             throw new Error("No URL has been set");
         }
-
         return new Promise((resolve, reject) => {
-            this.http.get(url, {
-                search: params
-            }).subscribe(res => resolve(res.json()), err => reject(err), () => console.log(`GET ${url} ${params || ""}`));
-        }).then(json => {
+            this.http.get(url, { search: params }).subscribe(
+                res => resolve(res.json()),
+                err => reject(err),
+                () => console.log(`GET ${url} ${params || ""}`)
+            );
+        });
+    }
+
+    courses(url: string, params?: URLSearchParams): Promise<Course | Course[]> {
+        return this.request(url, params).then(json => {
             return (json instanceof Array) ? json.map(Course.parse) : Course.parse(json);
         });
     }
 
     requestByNRC(NRC: number): Promise<Course> {
-        const url = `${this.url}/courses/NRC/${NRC}`;
-        return this.request(url);
+        return this.courses(`${this.url}/courses/NRC/${NRC}`);
+    }
+
+    icon(school: string): string {
+        return ICONS[school.trim().toLowerCase()];
     }
 }

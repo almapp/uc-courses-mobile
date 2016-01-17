@@ -1,30 +1,9 @@
 import {Component, Input, Output, EventEmitter, OnInit} from "angular2/core";
 import {Segment, SegmentButton, Item, Icon, ActionSheet} from "ionic-framework/ionic";
 
-import {DAYS} from "../../models/course";
 import {Schedule, Block} from "../../models/schedule";
 import {SchedulesProvider} from "../../providers/schedules";
 import {ScheduleBlock} from "../schedule-block/schedule-block";
-
-const WEEKDAYS = [
-    "D",
-    "L",
-    "M",
-    "W",
-    "J",
-    "V",
-    "S",
-];
-
-const NAMES = [
-    "Domingo",
-    "Lunes",
-    "Martes",
-    "Miércoles",
-    "Jueves",
-    "Viernes",
-    "Sábado",
-];
 
 @Component({
     selector: "schedule-view",
@@ -36,10 +15,29 @@ export class ScheduleView implements OnInit {
     @Output() options = new EventEmitter<Schedule>();
     @Output() select = new EventEmitter<Block>();
 
-    current: string;
-    days: string[] = DAYS;
+    current: number;
+    days: string[];
+    names: string[];
 
     constructor(private manager: SchedulesProvider) {
+        this.days = [
+            "D",
+            "L",
+            "M",
+            "W",
+            "J",
+            "V",
+            "S",
+        ];
+        this.names = [
+            "Domingo",
+            "Lunes",
+            "Martes",
+            "Miércoles",
+            "Jueves",
+            "Viernes",
+            "Sábado",
+        ];
         this.current = this.today;
     }
 
@@ -49,19 +47,15 @@ export class ScheduleView implements OnInit {
         });
     }
 
-    get today(): string {
-        return WEEKDAYS[new Date().getDay()];
+    get today(): number {
+        return new Date().getDay();
     }
 
-    isBusy(day: string): boolean {
-        const dayBlocks = this.schedule.week[day].filter(Boolean);
-        return dayBlocks.some(blocks => {
+    isBusy(day: number): boolean {
+        const schedule = this.schedule.week[day] || [];
+        return schedule.some(blocks => {
             return blocks.length > 0;
         });
-    }
-
-    name(day: string): string {
-        return NAMES[WEEKDAYS.indexOf(day)];
     }
 
     click() {

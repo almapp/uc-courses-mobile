@@ -13,7 +13,7 @@
       *ngFor="#schedule of schedules"
       [schedule]="schedule"
       (options)="options(schedule)"
-      (select)="select($event)">
+      (select)="select($event, schedule)">
     </schedule-view>
   </div>
 
@@ -23,7 +23,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-card *ngIf="schedules && schedules.length == 0">
+  <ion-card *ngIf="schedules?.length == 0">
     <ion-card-content>
       Veo que no tienes horarios, recuerda que puedes crear cuántos quieras.
       <ion-item>

@@ -2,16 +2,12 @@ import {Page, NavController, Modal, ActionSheet} from "ionic-framework/ionic";
 import {Pipe} from "angular2/core";
 
 import {Course, ICONS} from "../../models/course";
-import {CoursesProvider, FullSearchQuery, Period, Campus} from "../../providers/courses";
+import {CoursesProvider, SearchQuery, Period} from "../../providers/courses";
 import {SchedulesProvider} from "../../providers/schedules";
 import {CourseItem} from "../../components/course-item/course-item";
 
 import {SectionPage} from "../section/section";
 import {AddRemovePage} from "../add-remove/add-remove";
-
-interface CourseGroup {
-    [ Identifier: string ]: Course[];
-}
 
 @Pipe({
     name: "periodize"
@@ -40,35 +36,35 @@ export class HumanizePeriodPipe {
 export class CoursesPage {
     private period: Period;
     private periods: Period[];
+    private campuses: string[];
 
-    private campus: Campus;
-    private campuses: Campus[];
-
-    private courses: CourseGroup;
+    private courses: Course[][];
     private schools: string[];
-    private icons = ICONS;
+
+    private query = {
+        initials: "",
+        name: "",
+        campus: null,
+        school: null,
+    };
 
     constructor(
         private nav: NavController,
         private provider: CoursesProvider,
         private manager: SchedulesProvider) {
 
-        this.campuses = [
-            { name: "San Joaquín", identifier: "SJ" },
-            { name: "Casa Central", identifier: "CC" },
-            { name: "Lo Contador", identifier: "LC" },
-            { name: "Oriente", identifier: "OR" },
-            { name: "Villarrica", identifier: "VR" },
-            { name: "Campus Externo", identifier: "CE" },
-        ];
-        this.campus = null;
+        this.campuses = [];
+        this.provider.campuses().then(campuses => this.campuses = campuses);
+
+        this.schools = [];
+        this.provider.schools().then(schools => this.schools = schools);
 
         this.periods = [
             { year: 2016, period: 1 },
             { year: 2015, period: 3 },
             { year: 2015, period: 2 },
         ];
-        this.period = this.periods[0];
+        this.period = this.periods[0]; // present
         this.courses = null;
 
         this.manager.loadAll().then(schedules => {
@@ -80,7 +76,8 @@ export class CoursesPage {
                 this.process(courses);
             } else {
                 const placeholders = ["MAT0", "LET0", "DPT", "TTF0", "DNO0", "DER0", "EDU0"];
-                this.search(placeholders[Math.floor(Math.random() * placeholders.length)]);
+                const random = placeholders[Math.floor(Math.random() * placeholders.length)];
+                this.search({ initials: random });
             }
         });
     }
@@ -89,24 +86,28 @@ export class CoursesPage {
         return this.courses[school];
     }
 
-    search(query: string) {
-        const request: FullSearchQuery = {
-            q: query,
-            campus: this.campus,
-        };
-        this.provider.fullSearch(this.period, request).then(courses => this.process(courses));
+    search(query?: SearchQuery) {
+        // undefined's are omited in JSON object
+        const request: SearchQuery = query || {};
+        if (this.query.name) { request.name = this.query.name; }
+        if (this.query.campus) { request.campus = this.query.campus; }
+        if (this.query.school) { request.school = this.query.school; }
+        if (this.query.initials) { request.initials = this.query.initials; }
+        if (this.period.period) { request.period = this.period.period; }
+        if (this.period.year) { request.year = this.period.year; }
+        this.provider.search(request).then(courses => this.process(courses));
     }
 
-    process(results: Course[]): string[] {
-        this.courses = {};
+    process(results: Course[]): Course[][] {
+        const hash = {};
         results.forEach(course => {
-            if (!this.courses[course.school]) {
-                this.courses[course.school] = [course];
+            if (!hash[course.school]) {
+                hash[course.school] = [course];
             } else {
-                this.courses[course.school].push(course);
+                hash[course.school].push(course);
             }
         });
-        return this.schools = Object.keys(this.courses);
+        return this.courses = Object.keys(hash).map(school => hash[school]);
     }
 
     addToSchedule(course: Course) {
@@ -143,18 +144,39 @@ export class CoursesPage {
     selectCampus() {
         const buttons = this.campuses.map(campus => {
                 return {
-                    text: campus.name,
+                    text: campus,
                     style: null,
-                    handler: () => this.campus = campus,
+                    handler: () => this.query.campus = campus,
                 };
         }).concat({
             text: "Todos",
             style: "cancel",
-            handler: () => this.campus = null,
+            handler: () => this.query.campus = null,
         });
 
         const sheet = ActionSheet.create({
             title: "Selecciona un campus",
+            buttons: buttons,
+        });
+        this.nav.present(sheet);
+    }
+
+    selectSchool() {
+        // TODO: Create modal
+        const buttons = this.schools.map(school => {
+                return {
+                    text: school,
+                    style: null,
+                    handler: () => this.query.school = school,
+                };
+        }).concat({
+            text: "Todas",
+            style: "cancel",
+            handler: () => this.query.school = null,
+        });
+
+        const sheet = ActionSheet.create({
+            title: "Selecciona una escuela o facultad",
             buttons: buttons,
         });
         this.nav.present(sheet);

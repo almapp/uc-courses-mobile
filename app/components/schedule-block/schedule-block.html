@@ -9,14 +9,14 @@
   </ion-list-header>
 
   <ion-item button *ngFor="#block of blocks" (click)="click(block)">
-    <ion-icon [name]="icons[block.course.school.trim().toLowerCase()] || 'university'" item-left></ion-icon>
+    <ion-icon [name]="provider.icon(courses[block.NRC].school) || 'university'" item-left></ion-icon>
     <h2>
-      <strong class="identifier">{{block.course.initials}}-{{block.course.section}}</strong> | {{block.modtype}}
+      <strong class="identifier">{{courses[block.NRC].initials}}-{{courses[block.NRC].section}}</strong> | {{block.modtype}}
     </h2>
-    <h3 class="name">{{block.course.name}}</h3>
-    <!-- <h4 class="teachers-names">{{block.course.teachersNames.join(', ')}}</h4> -->
+    <h3 class="name">{{courses[block.NRC].name}}</h3>
+    <!-- <h4 class="teachers-names">{{courses[block.NRC].teachersNames.join(', ')}}</h4> -->
     <p class="place">
-      {{block.course.campus(block.modtype)}}: {{block.course.place(block.modtype)}}
+      {{courses[block.NRC].campus(block.modtype) || 'Sin campus'}}: {{courses[block.NRC].place(block.modtype) || 'Sin sala'}}
     </p>
   </ion-item>
 </ion-list>

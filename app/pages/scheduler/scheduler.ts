@@ -1,7 +1,6 @@
 import {Page, NavController, Platform, Alert, ActionSheet} from "ionic-framework/ionic";
 
-import {Course} from "../../models/course";
-import {Schedule} from "../../models/schedule";
+import {Schedule, Block} from "../../models/schedule";
 import {SchedulesProvider} from "../../providers/schedules";
 import {ScheduleView} from "../../components/schedule-view/schedule-view";
 import {SectionPage} from "../section/section";
@@ -71,9 +70,9 @@ export class SchedulerPage {
         });
     }
 
-    select(block) {
+    select(block: Block, schedule: Schedule) {
         this.nav.push(SectionPage, {
-            course: block.course,
+            course: schedule.course(block.NRC),
         }, { direction: "forward" }, undefined);
     }
 

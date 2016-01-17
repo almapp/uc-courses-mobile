@@ -5,27 +5,27 @@
     </h2>
     <small class="nrc">{{course.NRC}}</small>
     <h3 class="name">{{course.name}}</h3>
-    <h4 class="teachers">{{course.teachers.length > 0 ? course.teachersNames.join(', ') : 'Sin profesores'}}</h4>
+    <h4 class="teachers">{{course.teachers.length ? course.teachersName.join(', ') : 'Sin profesores'}}</h4>
 
-    <div class="modules" *ngIf="modules?.length > 0">
-      <p *ngFor="#mod of modules">
-        <strong class="module">{{mod.type}}</strong>:
+    <div class="modules" *ngIf="schedule?.length > 0">
+      <p *ngFor="#type of schedule">
+        <strong class="module">{{type.identifier}}</strong>:
         <span class="blocks">
-          <span class="block" *ngFor="#block of mod.blocks">
+          <span class="block" *ngFor="#block of type.modules">
             <strong>{{block.day}}</strong>: {{block.hours}}
           </span>
         </span>
         <span class="classroom">
-          {{mod.classroom}}
+          {{type.location.place}}
         </span>
       </p>
     </div>
 
-    <div class="modules" *ngIf="modules?.length === 0">
+    <div class="schedule" *ngIf="schedule?.length === 0">
       <p class="block"><strong>Sin horario</strong></p>
     </div>
 
-    <div class="modules" *ngIf="!modules">
+    <div class="schedule" *ngIf="!schedule">
       <p class="block"><strong>Sin información del horario</strong></p>
     </div>
 

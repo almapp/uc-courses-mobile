@@ -2,18 +2,11 @@ import {Page, NavController, NavParams, Modal} from "ionic-framework/ionic";
 import {Pipe} from "angular2/core";
 
 import {Course} from "../../models/course";
-import {Block} from "../../models/schedule";
 import {CoursesProvider} from "../../providers/courses";
 import {SchedulesProvider} from "../../providers/schedules";
 import {SectionView} from "../../components/section-view/section-view";
 import {AddRemovePage} from "../add-remove/add-remove";
 import {SectionListPage} from "../section-list/section-list";
-
-interface Module {
-    type: string;
-    blocks: Block[];
-    classroom: string;
-}
 
 @Page({
     templateUrl: "build/pages/section/section.html",
@@ -23,8 +16,6 @@ export class SectionPage {
     course: Course;
     sections: Course[];
     current: number;
-
-    modules: Module[][];
 
     constructor(
         private nav: NavController,

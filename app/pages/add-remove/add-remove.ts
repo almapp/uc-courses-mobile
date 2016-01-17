@@ -9,7 +9,6 @@ import {SchedulesProvider} from "../../providers/schedules";
 })
 export class AddRemovePage {
     items: { schedule: Schedule, checked: boolean }[];
-    checkeds: boolean[];
     course: Course;
     title: string;
 

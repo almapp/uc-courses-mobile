@@ -5,15 +5,30 @@
 <ion-content class="page-content">
   <ion-card *ngIf="meta">
     <ion-card-content>
-      <p>
-        Aplicación <strong>no oficial</strong> para buscar los cursos disponibles de la Universidad Católica de Chile.
-      </p>
-      <p>
-        La información presenta aquí se actualiza con menor frecuencia que el Buscacursos oficial.
-      </p>
-      <p>
-        Esta aplicación es <strong>código abierto</strong> y cualquier persona interesada puede colaborar :)
-      </p>
+      <h3>
+        La información presente aquí se actualiza con menor frecuencia que el Buscacursos oficial.
+      </h3>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="meta">
+    <ion-card-content>
+      <ion-list inset>
+        <ion-list-header>
+          Legal
+        </ion-list-header>
+
+        <ion-item>
+          Aplicación no oficial de la PUC
+        </ion-item>
+
+        <ion-item (click)="open(policy)">
+          Política de privacidad
+          <button outline item-right>
+            Ver
+          </button>
+        </ion-item>
+      </ion-list>
     </ion-card-content>
   </ion-card>
 
@@ -24,17 +39,24 @@
           Aplicación
         </ion-list-header>
 
-        <ion-item *ngFor="#tuple of information">
-          {{tuple.name}}:
+        <ion-item>
+          Versión:
           <ion-note item-right>
-            {{tuple.value}}
+            {{meta.version}}
           </ion-note>
         </ion-item>
 
-        <ion-item button (click)="open(meta.repository.url)">
+        <ion-item>
+          Licencia:
+          <ion-note item-right>
+            {{meta.license}}
+          </ion-note>
+        </ion-item>
+
+        <ion-item (click)="open(meta.repository.url)">
           Repositorio:
-          <button item-right clear>
-            <ion-icon name="github-logo"></ion-icon>
+          <button outline item-right>
+            <ion-icon name="git-pull-request"></ion-icon>
             Github
           </button>
         </ion-item>
@@ -50,22 +72,27 @@
         </ion-list-header>
 
         <ion-item>
-          Nombre:
-          <ion-note item-right>
+          <ion-avatar item-left>
+            <img [src]="image(meta.author.email)">
+          </ion-avatar>
+          <h2>
             {{meta.author.name}}
-          </ion-note>
+          </h2>
+          <p>
+            Ingeniería
+          </p>
         </ion-item>
 
-        <ion-item>
+        <ion-item (click)="open('mailto:' + meta.author.url)">
           Email:
-          <ion-note item-right>
+          <button outline item-right>
             {{meta.author.email}}
-          </ion-note>
+          </button>
         </ion-item>
 
-        <ion-item button (click)="open(meta.author.url)">
+        <ion-item (click)="open(meta.author.url)">
           URL:
-          <button item-right clear>
+          <button outline item-right>
             {{meta.author.url}}
           </button>
         </ion-item>

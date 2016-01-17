@@ -1,28 +1,18 @@
-import {Course, ScheduleSchema} from "./course";
+import {Course, ScheduleSchema, ModuleSchema} from "./course";
 
 export interface Block {
     day: string;
     block: number;
     modtype: string;
     NRC: number;
-    course: Course;
+    // course: Course;
 }
 
-export interface Week {
-    [Identifier: string]: Block[][];
-}
+const DAYMAP = ["D", "L", "M", "W", "J", "V", "S"];
 
 export class Schedule {
-    courses: Course[] = [];
-    week: Week = {
-        "L": [],
-        "M": [],
-        "W": [],
-        "J": [],
-        "V": [],
-        "S": [],
-        "D": [],
-    };
+    public courses: Course[] = [];
+    public week: Block[][][] = DAYMAP.map(_ => []); // Start with empty week
 
     constructor(public name: string, public position = 0, courses?: Course[]) {
         if (courses) {
@@ -46,92 +36,71 @@ export class Schedule {
 
     get blocks(): Block[] {
         const result = [];
-        Object.keys(this.week).forEach(day => {
-            this.week[day].filter(Boolean).forEach(blocks => {
-                result.push(...blocks.filter(Boolean));
-            });
-        });
+        this.week.forEach(day => day.forEach(blocks => result.push(...blocks)));
         return result;
     }
 
-    cellAt(day: string, block: number): Block[] {
-        const array = this.week[day];
-        if (!array[block]) {
-            return array[block] = [];
-        }
-        return array[block];
-    };
+    course(NRC: number): Course {
+        return this.courses.find(course => course.NRC === NRC);
+    }
+
+    day(day: string): Block[][] {
+        return this.week[DAYMAP.indexOf(day)];
+    }
+
+    block(day: string, number: number): Block[] {
+        return this.day(day)[number];
+    }
+
+    setBlock(day: string, number: number, type: string, course: Course) {
+        const blocks = this.block(day, number) || [];
+        blocks.push({
+            day: day,
+            block: number,
+            modtype: type,
+            NRC: course.NRC,
+            // course: course,
+        });
+        this.day(day).splice(number, 0, blocks);
+    }
 
     has(course: Course): boolean {
         return this.courses.indexOf(course) > -1;
     }
 
-    add(course: Course): this {
-        if (this.has(course)) {
-            return this;
-        }
-        Object.keys(course.schedule).forEach(modType => {
-            const mod: ScheduleSchema = course.schedule[modType];
-            Object.keys(mod.modules).forEach(day => {
-                mod.modules[day].forEach(n => {
-                    this.cellAt(day, n).push({
-                        day: day,
-                        block: n,
-                        modtype: modType,
-                        NRC: course.NRC,
-                        course: course,
+    add(...courses: Course[]): this {
+        courses.filter(course => !this.has(course)).forEach(course => {
+            course.schedule.forEach(type => {
+                type.modules.forEach(mod => {
+                    mod.hours.forEach(hour => {
+                        this.setBlock(mod.day, hour, type.identifier, course);
                     });
                 });
             });
+            this.courses.push(course);
         });
-        this.courses.push(course);
         return this;
     }
 
-    remove(course: Course): this {
-        if (!this.has(course)) {
-            return this;
-        }
-        Object.keys(this.week).forEach(day => {
-            this.week[day] = this.week[day].filter(Boolean).map(blocks => {
-                return blocks.filter(Boolean).filter(block => {
-                    return block.NRC !== course.NRC;
-                });
-            });
-        });
-        this.courses = this.courses.filter(c => c.NRC !== c.NRC);
+    remove(...courses: Course[]): this {
+        // TODO: improve performance
+        const NRCs = courses.map(course => course.NRC);
+        this.courses = this.courses.filter(c => NRCs.indexOf(c.NRC) === -1);
+        this.week = DAYMAP.map(_ => []);
+        this.add(...this.courses);
         return this;
     }
 
     process(courses: Course[]) {
-        courses.forEach(c => this.add(c));
+        this.add(...courses);
+    }
+
+    prepareSave(): JSON {
+        return Schedule.toJSON(this) as any;
     }
 
     static toJSON(scheudle: Schedule): JSON {
         return JSON.parse(JSON.stringify(scheudle));
-    }
-
-    prepareSave(): JSON {
-        // Clone
-        const json = Schedule.toJSON(this) as any;
-        // Replace week by a clone without courses
-        json.week = {};
-        Object.keys(this.week).forEach(day => {
-            json.week[day] = this.week[day].map(blocks => {
-                if (!blocks) {
-                    return null;
-                }
-                return blocks.map(block => {
-                    return {
-                        day: block.day,
-                        block: block.block,
-                        modtype: block.modtype,
-                        NRC: block.NRC,
-                    };
-                });
-            });
-        });
-        return json;
     }
 
     static parse(json: any): Schedule {

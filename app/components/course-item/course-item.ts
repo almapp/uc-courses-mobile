@@ -1,13 +1,7 @@
 import {Component, Input, Output, EventEmitter, OnInit} from "angular2/core";
 import {Item, ItemSliding} from "ionic-framework/ionic";
 
-import {Course, Block} from "../../models/course";
-
-interface Module {
-    type: string;
-    blocks: Block[];
-    classroom: string;
-}
+import {Course, ScheduleSchema} from "../../models/course";
 
 @Component({
     selector: "course-item",
@@ -19,16 +13,10 @@ export class CourseItem implements OnInit {
     @Output() select = new EventEmitter();
     @Output() add = new EventEmitter();
 
-    modules: Module[];
+    schedule: ScheduleSchema[];
 
     ngOnInit() {
-        this.modules = this.course.schedule ? this.course.activeModules.map(type => {
-            return {
-                type: type,
-                blocks: this.course.blocks(type),
-                classroom: this.course.place(type),
-            };
-        }) : null;
+        this.schedule = this.course.schedule;
     }
 
     click() {

@@ -1,4 +1,4 @@
-import {Page, Nav} from "ionic-framework/ionic";
+import {Platform, Page, Nav} from "ionic-framework/ionic";
 
 // Pages
 import {CoursesPage} from "../courses/courses";
@@ -10,12 +10,14 @@ import {AboutPage} from "../about/about";
 })
 export class TabsPage {
     private tabs = [
-        { title: "Horarios", page: SchedulerPage },
-        { title: "Buscacursos", page: CoursesPage },
-        { title: "Información", page: AboutPage },
+        { title: "Horarios", page: SchedulerPage, icon: "calendar" },
+        { title: "Buscacursos", page: CoursesPage, icon: "search" },
+        { title: "Información", page: AboutPage, icon: "information-circle" },
     ];
 
-    constructor() {
-        // ...
+    constructor(platform: Platform) {
+        if (!platform.is("ios")) {
+            this.tabs.forEach( t => delete t.icon );
+        }
     }
 }
