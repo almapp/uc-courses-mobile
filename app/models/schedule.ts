@@ -61,7 +61,7 @@ export class Schedule {
             NRC: course.NRC,
             // course: course,
         });
-        this.day(day).splice(number, 0, blocks);
+        this.day(day)[number] = blocks;
     }
 
     has(course: Course): boolean {

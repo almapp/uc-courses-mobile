@@ -45,9 +45,14 @@ export class ScheduleBlock implements OnInit {
         this.block = this.blocks[0].block;
         this.day = this.blocks[0].day;
         this.hour = ScheduleBlock.HOURS[this.block];
-        this.blocks.forEach(block => {
-            this.courses[block.NRC] = this.schedule.course(block.NRC);
-        });
+    }
+
+    course(block: Block): Course {
+        const result = this.courses[block.NRC];
+        if (!result) {
+            return this.courses[block.NRC] = this.schedule.course(block.NRC);
+        }
+        return result;
     }
 
     click(block: Block) {

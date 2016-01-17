@@ -1,22 +1,25 @@
 <ion-list>
-  <ion-list-header>
+  <!-- <ion-list-header>
     <span class="block-hour">
       {{hour.start}} - {{hour.end}}
     </span>
     <span class="block-identifier">
       {{day}}: {{block}}
     </span>
-  </ion-list-header>
+  </ion-list-header> -->
 
   <ion-item button *ngFor="#block of blocks" (click)="click(block)">
-    <ion-icon [name]="provider.icon(courses[block.NRC].school) || 'university'" item-left></ion-icon>
+    <ion-icon [name]="provider.icon(course(block).school) || 'university'" item-left></ion-icon>
     <h2>
-      <strong class="identifier">{{courses[block.NRC].initials}}-{{courses[block.NRC].section}}</strong> | {{block.modtype}}
+      <strong class="identifier">{{course(block).initials}}-{{course(block).section}}</strong> | {{block.modtype}}
+      <p class="block-hour">
+        {{hour.start}} - {{hour.end}}
+      </p>
     </h2>
-    <h3 class="name">{{courses[block.NRC].name}}</h3>
-    <!-- <h4 class="teachers-names">{{courses[block.NRC].teachersNames.join(', ')}}</h4> -->
+    <h3 class="name">{{course(block).name}}</h3>
+    <!-- <h4 class="teachers-names">{{course(block).teachersNames.join(', ')}}</h4> -->
     <p class="place">
-      {{courses[block.NRC].campus(block.modtype) || 'Sin campus'}}: {{courses[block.NRC].place(block.modtype) || 'Sin sala'}}
+      {{course(block).campus(block.modtype) || 'Sin campus'}}: {{course(block).place(block.modtype) || 'Sin sala'}}
     </p>
   </ion-item>
 </ion-list>
