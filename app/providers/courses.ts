@@ -59,6 +59,17 @@ export const ICONS = {
     "villarica": "image",
 };
 
+export const COLORS = {
+    "CAT": "#fdb12e",
+    "TALL": "#6755aa",
+    "LAB": "#368cbf",
+    "AYUD": "#37b66e",
+    "PRAC": "#9ab837",
+    "TERR": "#f389c9",
+    "TES": "#a5b5d8",
+    "OTRO": "#dc6067",
+};
+
 interface Cache {
     [ Identifier: number ]: Course;
 }
@@ -128,5 +139,9 @@ export class CoursesProvider {
 
     icon(school: string): string {
         return ICONS[school.trim().toLowerCase()];
+    }
+
+    color(modtype: string): string {
+        return COLORS[modtype];
     }
 }

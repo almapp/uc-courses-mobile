@@ -1,8 +1,29 @@
 
 .block-hour {
   float: right;
+  font-size: 12px;
+  font-weight: lighter;
+  margin-top: 1px;
+}
+
+.type {
+  font-weight: 200;
+}
+
+.dot {
+  font-size: 100%;
 }
 
 .place {
   padding-top: 3px;
+}
+
+.rectangle {
+  float: left;
+  height: 62px;
+  width: 5px;
+}
+
+.cell-content {
+  margin-left: 15px;
 }

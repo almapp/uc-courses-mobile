@@ -8,18 +8,21 @@
     </span>
   </ion-list-header> -->
 
-  <ion-item button *ngFor="#block of blocks" (click)="click(block)">
+  <ion-item button *ngFor="#block of blocks" (click)="click(block)" class="cell">
     <ion-icon [name]="provider.icon(course(block).school) || 'university'" item-left></ion-icon>
-    <h2>
-      <strong class="identifier">{{course(block).initials}}-{{course(block).section}}</strong> | {{block.modtype}}
-      <p class="block-hour">
-        {{hour.start}} - {{hour.end}}
+    <div class="rectangle" [style.background]="provider.color(block.modtype)"></div>
+    <div class="cell-content">
+      <h2>
+        <strong class="identifier">{{course(block).initials}}-{{course(block).section}}</strong> | <span class="type">{{block.modtype}}</span>
+        <span class="block-hour">
+          {{hour.start}} - {{hour.end}}
+        </span>
+      </h2>
+      <h3 class="name">{{course(block).name}}</h3>
+      <!-- <h4 class="teachers-names">{{course(block).teachersNames.join(', ')}}</h4> -->
+      <p class="place">
+        {{course(block).campus(block.modtype) || 'Sin campus'}}: {{course(block).place(block.modtype) || 'Sin sala'}}
       </p>
-    </h2>
-    <h3 class="name">{{course(block).name}}</h3>
-    <!-- <h4 class="teachers-names">{{course(block).teachersNames.join(', ')}}</h4> -->
-    <p class="place">
-      {{course(block).campus(block.modtype) || 'Sin campus'}}: {{course(block).place(block.modtype) || 'Sin sala'}}
-    </p>
+    </div>
   </ion-item>
 </ion-list>
