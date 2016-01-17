@@ -9,7 +9,7 @@
   <!-- </ion-card-header> -->
 
   <ion-segment class="select-segment" [(ngModel)]="current">
-    <ion-segment-button *ngFor="#day of days; #i = index" [value]="i">{{day}}</ion-segment-button>
+    <ion-segment-button *ngFor="#day of days; #i = index" [value]="i + 1">{{day}}</ion-segment-button>
   </ion-segment>
 
   <ion-card-content>

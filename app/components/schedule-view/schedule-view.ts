@@ -21,7 +21,7 @@ export class ScheduleView implements OnInit {
 
     constructor(private manager: SchedulesProvider) {
         this.days = [
-            "D",
+            // "D", // add +1 offset
             "L",
             "M",
             "W",
