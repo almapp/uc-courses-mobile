@@ -1,3 +1,5 @@
+import {Block} from "./schedule";
+
 export interface Teacher {
     name: string;
     photoURL: string;
@@ -62,6 +64,23 @@ export class Course {
         return this.teachers.map(t => t.name);
     }
 
+    get blocks(): Block[] {
+        const blocks = [];
+        this.schedule.forEach(schedule => {
+            schedule.modules.forEach(mod => {
+                mod.hours.forEach(hour => {
+                    blocks.push({
+                        day: mod.day,
+                        block: hour,
+                        modtype: schedule.identifier,
+                        NRC: this.NRC,
+                    });
+                });
+            });
+        });
+        return blocks;
+    }
+
     /**
      * Get all modules that has classes in it.
      * For example, LAB is ignored if lab has no hours.
@@ -99,22 +118,6 @@ export class Course {
         const mod = this.schedule.find(s => s.identifier === modtype);
         return mod ? mod.location.campus : null;
     }
-
-    /**
-     * Get the blocks of classes for a given module type.
-     * Ask for CAT and recieve [{ L, [1,3,4] }, { M, [1] }]
-     * @param  {string}  modtype Module type (i.e. AYUD).
-     * @return {Block[]}         Blocks
-     */
-    // blocks(modtype: string): Block[] {
-    //     const mods = this.schedule[modtype].modules;
-    //     return this.workingDays(modtype).map(day => {
-    //         return {
-    //             day: day,
-    //             hours: mods[day],
-    //         };
-    //     });
-    // }
 
     /**
      * Parse a JSON from the REST API to a native object.

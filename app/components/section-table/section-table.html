@@ -1,0 +1,16 @@
+<table class="schedule">
+  <thead>
+    <tr>
+      <th *ngFor="#day of days">{{day}}</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="table">
+    <tr *ngFor="#module of modules; #i = index">
+      <td *ngFor="#name of days; #day = index" [style.backgroundColor]="table[i][day].length ? '#eef2f3' : 'transparent'"> <!-- #c4cace vs #eef2f3 -->
+        <span *ngFor="#block of table[i][day]" [style.opacity]="0.3" [style.color]="provider.color(block.modtype)">&#x25cf;</span>
+        <span *ngFor="#block of mapping[i][day]" [style.opacity]="1.0" [style.color]="provider.color(block.modtype)">&#x25cf;</span>
+        <span *ngIf="table[i][day].length === 0 && mapping[i][day].length === 0">&nbsp;</span>
+      </td>
+    </tr>
+  </tbody>
+</table>

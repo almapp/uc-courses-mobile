@@ -8,11 +8,12 @@ export interface Block {
     // course: Course;
 }
 
-const DAYMAP = ["D", "L", "M", "W", "J", "V", "S"];
+export const DAYS = ["D", "L", "M", "W", "J", "V", "S"];
+export const MODULES = [1, 2, 3, 4, 5, 6, 7, 8];
 
 export class Schedule {
     public courses: Course[] = [];
-    public week: Block[][][] = DAYMAP.map(_ => []); // Start with empty week
+    public week: Block[][][] = DAYS.map(_ => []); // Start with empty week
 
     constructor(public name: string, public position = 0, courses?: Course[]) {
         if (courses) {
@@ -45,7 +46,7 @@ export class Schedule {
     }
 
     day(day: string): Block[][] {
-        return this.week[DAYMAP.indexOf(day)];
+        return this.week[DAYS.indexOf(day)];
     }
 
     block(day: string, number: number): Block[] {
@@ -86,7 +87,7 @@ export class Schedule {
         // TODO: improve performance
         const NRCs = courses.map(course => course.NRC);
         this.courses = this.courses.filter(c => NRCs.indexOf(c.NRC) === -1);
-        this.week = DAYMAP.map(_ => []);
+        this.week = DAYS.map(_ => []);
         this.add(...this.courses);
         return this;
     }

@@ -1,12 +1,3 @@
-.photo {
-  border-radius: 20%;
-  max-height: none;
-  max-width: 70px;
-  min-height: 94px;
-  min-width: 70px;
-  // margin-top: 0px;
-}
-
 .schedule {
   width: 100%;
   margin-left: auto;
@@ -22,15 +13,8 @@
     line-height: 18px;
 
     td {
-      font-size: 15pt;
       color: #8b9798;
-      span {
-        // margin-left: -5px;
-        // margin-right: -5px;
-
-
-      }
-      // background-color: #eef2f3;
+      font-size: 15pt;
     }
   }
 

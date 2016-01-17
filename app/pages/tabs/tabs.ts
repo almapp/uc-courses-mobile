@@ -10,8 +10,8 @@ import {AboutPage} from "../about/about";
 })
 export class TabsPage {
     private tabs = [
-        { title: "Horarios", page: SchedulerPage, icon: "calendar" },
         { title: "Buscacursos", page: CoursesPage, icon: "search" },
+        { title: "Horarios", page: SchedulerPage, icon: "calendar" },
         { title: "Información", page: AboutPage, icon: "information-circle" },
     ];
 
