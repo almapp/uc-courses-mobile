@@ -33,7 +33,7 @@ export const ICONS = {
     "ciencias de la salud": "medkit",
     "ciencias económicas y administrativas": "cash",
     "comunicaciones": "chatbubbles",
-    "construcción civil": "settings",
+    "construcción civil": "hammer",
     "cursos deportivos": "football",
     "derecho": "briefcase",
     "diseño": "images",
@@ -56,7 +56,7 @@ export const ICONS = {
     "sociología": "people",
     "teología": "egg",
     "trabajo social": "happy",
-    "villarica": "image",
+    "villarrica": "image",
 };
 
 export const COLORS = {

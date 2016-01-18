@@ -48,7 +48,7 @@
     <ion-card-content>
       <ion-list *ngFor="#group of courses">
         <ion-list-header>
-          <ion-icon [name]="provider.icon(group[0].school) || 'university'" item-left></ion-icon>
+          <ion-icon [name]="provider.icon(group[0].school) || 'school'" item-left></ion-icon>
           {{group[0].school | uppercase}}
         </ion-list-header>
         <course-item

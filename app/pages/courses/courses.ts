@@ -188,7 +188,8 @@ export class CoursesPage {
 
     <ion-content>
       <ion-list>
-        <ion-item *ngFor="#school of schools" (click)="selected(school)">
+        <ion-item *ngFor="#school of schools" (click)="close(school)">
+          <ion-icon [name]="provider.icon(school) || 'school'" item-left></ion-icon>
           {{school}}
         </ion-item>
       </ion-list>
@@ -196,13 +197,10 @@ export class CoursesPage {
     `,
 })
 export class SchoolListPage {
-    schools: string[];
-    constructor(private view: ViewController, private params: NavParams) {
-        this.schools = this.params.get("schools");
-    }
+    private schools: string[];
 
-    selected(school: string) {
-        this.close(school);
+    constructor(private view: ViewController, private params: NavParams, private provider: CoursesProvider) {
+        this.schools = this.params.get("schools");
     }
 
     close(school?: string) {

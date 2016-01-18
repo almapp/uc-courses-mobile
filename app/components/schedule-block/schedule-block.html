@@ -9,7 +9,7 @@
   </ion-list-header> -->
 
   <ion-item button *ngFor="#block of blocks" (click)="click(block)" class="cell">
-    <ion-icon [name]="provider.icon(course(block).school) || 'university'" item-left></ion-icon>
+    <ion-icon [name]="provider.icon(course(block).school) || 'school'" item-left></ion-icon>
     <div class="rectangle" [style.background]="provider.color(block.modtype)"></div>
     <div class="cell-content">
       <h2>
