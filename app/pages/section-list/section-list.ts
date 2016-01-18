@@ -5,13 +5,14 @@ import {Course} from "../../models/course";
 import {CoursesProvider} from "../../providers/courses";
 import {SchedulesProvider} from "../../providers/schedules";
 import {CourseItem} from "../../components/course-item/course-item";
+import {ScheduleTable} from "../../components/schedule-table/schedule-table";
 
 import {SectionPage} from "../section/section";
 import {AddRemovePage} from "../add-remove/add-remove";
 
 @Page({
     templateUrl: "build/pages/section-list/section-list.html",
-    directives: [CourseItem],
+    directives: [CourseItem, ScheduleTable],
 })
 export class SectionListPage {
     private sections: Course[];

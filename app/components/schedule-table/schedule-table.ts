@@ -10,7 +10,7 @@ import {Schedule, Block, DAYS, MODULES} from "../../models/schedule";
 })
 export class ScheduleTable implements OnChanges {
     @Input() schedule: Schedule;
-    @Input() highlight: Course[];
+    @Input() highlight: Course[] = [];
 
     private table: Block[][][];
     private mapping: Block[][][];
@@ -26,16 +26,18 @@ export class ScheduleTable implements OnChanges {
         this.table = this.modules.map(row => this.days.map(day => [])); // create matrix
         this.mapping = this.modules.map(row => this.days.map(day => [])); // create matrix
 
-        this.schedule.week.forEach((day, i) => {
-            day.forEach((blocks, j) => {
-                blocks.forEach(block => {
-                    if (this.highlight.every(section => block.NRC !== section.NRC)) {
-                        // skip module '0'
-                        this.table[j - 1][i].push(block);
-                    }
+        if (this.schedule) {
+            this.schedule.week.forEach((day, i) => {
+                day.forEach((blocks, j) => {
+                    blocks.forEach(block => {
+                        if (this.highlight.every(section => block.NRC !== section.NRC)) {
+                            // skip module '0'
+                            this.table[j - 1][i].push(block);
+                        }
+                    });
                 });
             });
-        });
+        }
         this.highlight.forEach(section => section.blocks.forEach(block => {
             this.mapping[block.block - 1][this.days.indexOf(block.day)].push(block);
         }));
