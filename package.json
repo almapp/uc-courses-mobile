@@ -1,8 +1,9 @@
 {
   "name": "buscacursos-uc-mobile",
   "description": "Buscacursos: An Ionic project",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "scripts": {
+    "build": "ionic build",
     "start": "ionic serve --lab -c -s",
     "android": "ionic run android",
     "ios": "ionic emulate ios",
