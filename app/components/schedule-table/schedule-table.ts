@@ -3,7 +3,6 @@ import {Component, Input, OnChanges} from "angular2/core";
 import {Course} from "../../models/course";
 import {CoursesProvider} from "../../providers/courses";
 import {Schedule, Block, DAYS, MODULES} from "../../models/schedule";
-import {SchedulesProvider} from "../../providers/schedules";
 
 @Component({
     selector: "schedule-table",
@@ -19,7 +18,7 @@ export class ScheduleTable implements OnChanges {
     private days = DAYS;
     private modules = MODULES;
 
-    constructor(private provider: CoursesProvider, private manager: SchedulesProvider) {
+    constructor(private provider: CoursesProvider) {
         // ...
     }
 

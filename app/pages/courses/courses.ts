@@ -1,7 +1,7 @@
 import {Page, NavController, Modal, ActionSheet} from "ionic-framework/ionic";
 import {Pipe} from "angular2/core";
 
-import {Course, ICONS} from "../../models/course";
+import {Course} from "../../models/course";
 import {CoursesProvider, SearchQuery, Period} from "../../providers/courses";
 import {SchedulesProvider} from "../../providers/schedules";
 import {CourseItem} from "../../components/course-item/course-item";

@@ -1,8 +1,9 @@
-import {Page, NavController, NavParams, Modal} from "ionic-framework/ionic";
+import {Page, NavController, Platform, NavParams, Modal, ActionSheet} from "ionic-framework/ionic";
 import {Pipe} from "angular2/core";
 
 import {Course} from "../../models/course";
 import {CoursesProvider} from "../../providers/courses";
+import {Schedule, Block} from "../../models/schedule";
 import {SchedulesProvider} from "../../providers/schedules";
 import {SectionView} from "../../components/section-view/section-view";
 import {AddRemovePage} from "../add-remove/add-remove";
@@ -13,11 +14,15 @@ import {SectionListPage} from "../section-list/section-list";
     directives: [SectionView],
 })
 export class SectionPage {
-    course: Course;
-    sections: Course[];
-    current: number;
+    private course: Course;
+    private sections: Course[];
+    private current: number;
+
+    private schedules: Schedule[];
+    private schedule: Schedule;
 
     constructor(
+        private platform: Platform,
         private nav: NavController,
         private navParams: NavParams,
         private provider: CoursesProvider,
@@ -29,6 +34,33 @@ export class SectionPage {
             sections = sections.sort((a, b) => a.section - b.section);
             this.current = sections.map(s => s.section).indexOf(this.course.section);
             this.sections = sections;
+        });
+
+        this.schedules = [];
+        this.loadSchedules();
+
+        this.manager.updated.subscribe(shc => {
+            this.schedule = this.schedules[this.schedules.map(s => s.name).indexOf(shc.name)] = shc;
+        });
+        this.manager.new.subscribe(shc => {
+            this.schedules.push(shc);
+        });
+        this.manager.removed.subscribe(shc => {
+            this.schedules = this.schedules.filter(s => s.name !== shc.name);
+            if (!this.schedule || shc.name === this.schedule.name) {
+                this.schedule = this.schedules[0];
+            }
+        });
+    }
+
+    loadSchedules() {
+        this.manager.loadAll().then(schedules => {
+            if (schedules.length) {
+                if (!this.schedule || schedules.map(s => s.name).indexOf(this.schedule.name) < 0) {
+                    this.schedule = schedules[0];
+                }
+                this.schedules = schedules;
+            }
         });
     }
 
@@ -46,6 +78,39 @@ export class SectionPage {
     selectSection(section: number) {
         this.current = section;
         this.course = this.sections[this.current];
+    }
+
+    selectSchedule() {
+        const buttons = this.schedules.map(schedule => {
+            return {
+                text: schedule.name,
+                style: null,
+                handler: () => this.schedule = schedule,
+            };
+        });
+        const sheet = ActionSheet.create({
+            title: "Selecciona horario",
+            buttons: [...buttons, {
+                text: "Cancelar",
+                style: "cancel",
+                handler: null,
+            }],
+        });
+        this.nav.present(sheet);
+    }
+
+    addSection(section: Course) {
+        this.schedule.add(section);
+        this.manager.save(this.schedule).then(() => {
+            // done
+        });
+    }
+
+    removeSection(section: Course) {
+        this.schedule.remove(section);
+        this.manager.save(this.schedule).then(() => {
+            // done
+        });
     }
 
     manage() {

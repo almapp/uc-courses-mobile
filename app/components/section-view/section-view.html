@@ -1,4 +1,4 @@
-<ion-list-header>
+<ion-list-header *ngIf="schedule">
   Horario
 </ion-list-header>
 
@@ -12,8 +12,8 @@
   </ion-item>
 </ion-list> -->
 
-<div padding *ngIf="schedules">
-  <schedule-table [schedule]="schedules[0]" [highlight]="[section]"></schedule-table>
+<div padding *ngIf="schedule">
+  <schedule-table [schedule]="schedule" [highlight]="[section]"></schedule-table>
 </div>
 
 <ion-list-header [ngSwitch]="section.teachers.length">
