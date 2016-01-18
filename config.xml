@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.lopezjuri.buscacursosuc" version="1.2.1" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns="http://www.w3.org/ns/widgets">
+<widget id="com.lopezjuri.buscacursosuc" version="1.2.2" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns="http://www.w3.org/ns/widgets">
   <name>
     Cursos UC
   </name>
