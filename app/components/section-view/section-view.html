@@ -37,6 +37,18 @@
         Remover Sección {{section.section}}
       </button>
     </ion-item>
+
+    <ion-item *ngFor="#sch of section.schedule">
+      <div class="mini-rectangle" [style.background]="provider.color(sch.identifier)"></div>
+      <div class="sch-content">
+        <p>
+          <strong>{{sch.identifier}}</strong> <span class="sch-modules" *ngFor="#module of sch.modules"><strong>{{module.day}}</strong>: {{module.hours}}</span>
+        </p>
+        <p>
+          {{sch.location.campus || 'Sin campus'}}: {{sch.location.place || '?'}}
+        </p>
+      </div>
+    </ion-item>
   </ion-card>
 
   <ion-list-header [ngSwitch]="section.teachers.length">

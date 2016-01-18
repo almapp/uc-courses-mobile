@@ -3,6 +3,7 @@ import {Item, Icon, List, Button} from "ionic-framework/ionic";
 
 import {Course} from "../../models/course";
 import {Schedule} from "../../models/schedule";
+import {CoursesProvider} from "../../providers/courses";
 import {ScheduleTable} from "../schedule-table/schedule-table";
 
 @Component({
@@ -17,4 +18,8 @@ export class SectionView {
     @Output() selectSchedule = new EventEmitter<void>();
     @Output() add = new EventEmitter<Course>();
     @Output() remove = new EventEmitter<Course>();
+
+    constructor(private provider: CoursesProvider) {
+        // ...
+    }
 }

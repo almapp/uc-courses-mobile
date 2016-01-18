@@ -6,3 +6,19 @@
   min-width: 70px;
   // margin-top: 0px;
 }
+
+.sch-content {
+  margin-left: 10px;
+
+  .sch-modules {
+    float: right;
+    padding-left: 6px;
+  }
+}
+
+.mini-rectangle {
+  float: left;
+  height: 29px;
+  margin-top: 2px;
+  width: 4px;
+}
