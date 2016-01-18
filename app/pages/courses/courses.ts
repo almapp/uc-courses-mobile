@@ -1,4 +1,4 @@
-import {Page, NavController, Modal, ActionSheet} from "ionic-framework/ionic";
+import {Page, NavController, NavParams, Modal, ActionSheet, ViewController} from "ionic-framework/ionic";
 import {Pipe} from "angular2/core";
 
 import {Course} from "../../models/course";
@@ -55,10 +55,10 @@ export class CoursesPage {
         private manager: SchedulesProvider) {
 
         this.campuses = [];
-        this.provider.campuses().then(campuses => this.campuses = campuses);
+        this.provider.campuses().then(campuses => this.campuses = campuses.sort());
 
         this.schools = [];
-        this.provider.schools().then(schools => this.schools = schools);
+        this.provider.schools().then(schools => this.schools = schools.sort());
 
         this.periods = [
             { year: 2016, period: 1 },
@@ -169,23 +169,43 @@ export class CoursesPage {
     }
 
     selectSchool() {
-        // TODO: Create modal
-        const buttons = this.schools.map(school => {
-                return {
-                    text: school,
-                    style: null,
-                    handler: () => this.query.school = school,
-                };
-        }).concat({
-            text: "Todas",
-            style: "cancel",
-            handler: () => this.query.school = null,
-        });
+        const modal = Modal.create(SchoolListPage, { schools: this.schools });
+        modal.onDismiss((school: string) => this.query.school = school);
+        this.nav.present(modal);
+    }
+}
 
-        const sheet = ActionSheet.create({
-            title: "Selecciona una escuela o facultad",
-            buttons: buttons,
-        });
-        this.nav.present(sheet);
+@Page({
+    template: `
+    <ion-toolbar>
+      <ion-buttons end>
+        <button (click)="close()">
+          Todas
+        </button>
+      </ion-buttons>
+      <ion-title>Escuelas</ion-title>
+    </ion-toolbar>
+
+    <ion-content>
+      <ion-list>
+        <ion-item *ngFor="#school of schools" (click)="selected(school)">
+          {{school}}
+        </ion-item>
+      </ion-list>
+    </ion-content>
+    `,
+})
+export class SchoolListPage {
+    schools: string[];
+    constructor(private view: ViewController, private params: NavParams) {
+        this.schools = this.params.get("schools");
+    }
+
+    selected(school: string) {
+        this.close(school);
+    }
+
+    close(school?: string) {
+        this.view.dismiss(school);
     }
 }
