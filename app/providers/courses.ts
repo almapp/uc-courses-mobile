@@ -35,7 +35,7 @@ export const ICONS = {
     "comunicaciones": "chatbubbles",
     "construcción civil": "settings",
     "cursos deportivos": "football",
-    "derecho": "brief",
+    "derecho": "briefcase",
     "diseño": "images",
     "educación": "star",
     "enfermería": "pulse",
