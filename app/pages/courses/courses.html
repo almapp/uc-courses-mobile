@@ -38,8 +38,7 @@
         </ion-item>
 
         <ion-item>
-          <!-- Disable when inputs are empty -->
-          <button block (click)="search()" [disabled]="!query.initials && !query.name">Buscar</button>
+          <button block (click)="search()" [disabled]="operation">{{operation ? 'Buscando...' : 'Buscar'}}</button>
         </ion-item>
       </ion-list>
     </ion-card-content>

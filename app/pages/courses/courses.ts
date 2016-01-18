@@ -47,6 +47,7 @@ export class CoursesPage {
         campus: null,
         school: null,
     };
+    private operation: Promise<any>;
 
     constructor(
         private nav: NavController,
@@ -74,6 +75,7 @@ export class CoursesPage {
             }, []);
             if (courses.length) {
                 this.process(courses);
+                this.operation = null;
             } else {
                 const placeholders = ["MAT0", "LET0", "DPT", "TTF0", "DNO0", "DER0", "EDU0"];
                 const random = placeholders[Math.floor(Math.random() * placeholders.length)];
@@ -95,7 +97,12 @@ export class CoursesPage {
         if (this.query.initials) { request.initials = this.query.initials; }
         if (this.period.period) { request.period = this.period.period; }
         if (this.period.year) { request.year = this.period.year; }
-        this.provider.search(request).then(courses => this.process(courses));
+        this.operation = this.provider.search(request).then(courses => {
+            this.process(courses);
+            this.operation = null;
+        }).catch(err => {
+            this.operation = null;
+        });
     }
 
     process(results: Course[]): Course[][] {
