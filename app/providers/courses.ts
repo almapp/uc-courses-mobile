@@ -76,6 +76,7 @@ interface Cache {
 
 @Injectable()
 export class CoursesProvider {
+    public static LIMIT = 30;
     public url: string;
     private cache: Cache;
 
@@ -111,6 +112,7 @@ export class CoursesProvider {
         Object.keys(query).forEach(key => {
             params.set(key, query[key]);
         });
+        params.set("limit", String(CoursesProvider.LIMIT));
         return this.courses(url, params);
     }
 
