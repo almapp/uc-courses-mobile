@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter, OnInit} from "angular2/core";
+import {Component, Input, Output, EventEmitter, OnChanges} from "angular2/core";
 import {Segment, SegmentButton, Item, Icon, ActionSheet, Button} from "ionic-framework/ionic";
 
 import {Schedule, Block} from "../../models/schedule";
@@ -10,7 +10,7 @@ import {ScheduleBlock} from "../schedule-block/schedule-block";
     templateUrl: "build/components/schedule-view/schedule-view.html",
     directives: [ScheduleBlock, Segment, SegmentButton, Item, Icon, Button],
 })
-export class ScheduleView implements OnInit {
+export class ScheduleView implements OnChanges {
     @Input() schedule: Schedule;
 
     @Output() options = new EventEmitter<Schedule>();
@@ -43,7 +43,7 @@ export class ScheduleView implements OnInit {
         this.current = this.today;
     }
 
-    ngOnInit(){
+    ngOnChanges(changeRecord) {
         this.manager.updated.subscribe(schedule => {
             if (this.schedule.name === schedule.name) { this.schedule = schedule; }
         });

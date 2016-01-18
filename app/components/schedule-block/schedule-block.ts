@@ -1,4 +1,4 @@
-import {Component, Input, Output, OnInit, EventEmitter} from "angular2/core";
+import {Component, Input, Output, OnChanges, EventEmitter} from "angular2/core";
 import {Icon, Item} from "ionic-framework/ionic";
 
 import {Schedule, Block} from "../../models/schedule";
@@ -15,7 +15,7 @@ interface Hour {
     templateUrl: "build/components/schedule-block/schedule-block.html",
     directives: [Icon, Item],
 })
-export class ScheduleBlock implements OnInit {
+export class ScheduleBlock implements OnChanges {
     @Input() schedule: Schedule;
     @Input() blocks: Block[];
     @Output() select = new EventEmitter<Block>();
@@ -41,7 +41,7 @@ export class ScheduleBlock implements OnInit {
         // ...
     }
 
-    ngOnInit() {
+    ngOnChanges(changeRecord) {
         this.block = this.blocks[0].block;
         this.day = this.blocks[0].day;
         this.hour = ScheduleBlock.HOURS[this.block];

@@ -1,7 +1,7 @@
 {
   "name": "buscacursos-uc-mobile",
   "description": "Buscacursos: An Ionic project",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "scripts": {
     "build": "ionic build",
     "start": "ionic serve --lab -c -s",
@@ -9,7 +9,9 @@
     "ios": "ionic emulate ios",
     "resources": "ionic resources",
     "postinstall": "ionic state restore",
-    "deploy-android": "cordova build --release android"
+    "release-android": "ionic build --release android",
+    "release-ios": "ionic build --release ios",
+    "release": "ionic build --release"
   },
   "homepage": "https://github.com/almapp/buscacursos-uc-mobile#readme",
   "repository": {

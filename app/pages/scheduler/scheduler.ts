@@ -1,5 +1,6 @@
 import {Page, NavController, Platform, Alert, ActionSheet, Modal} from "ionic-framework/ionic";
 
+import {Course} from "../../models/course";
 import {Schedule, Block} from "../../models/schedule";
 import {SchedulesProvider} from "../../providers/schedules";
 import {ScheduleView} from "../../components/schedule-view/schedule-view";
@@ -40,6 +41,9 @@ export class SchedulerPage {
 
     seeCourses(schedule: Schedule) {
         const modal = Modal.create(SectionListPage, { sections: schedule.courses });
+        modal.onDismiss((section: Course) => {
+            this.seeCourse(section);
+        });
         this.nav.present(modal);
     }
 
@@ -77,8 +81,12 @@ export class SchedulerPage {
     }
 
     select(block: Block, schedule: Schedule) {
+        this.seeCourse(schedule.course(block.NRC));
+    }
+
+    seeCourse(course: Course) {
         this.nav.push(SectionPage, {
-            course: schedule.course(block.NRC),
+            course: course,
         }, { direction: "forward" }, undefined);
     }
 
