@@ -1,8 +1,5 @@
-<ion-list-header *ngIf="schedule">
-  Horario
-</ion-list-header>
-
-<!-- <ion-list inset>
+<ion-list>
+  <!-- <ion-list inset>
   <ion-item *ngFor="#schedule of section.schedule">
     <h2>{{schedule.identifier}}</h2>
     <h3>{{schedule.location.campus || 'Sin campus'}}: {{schedule.location.place || '?'}}</h3>
@@ -12,60 +9,85 @@
   </ion-item>
 </ion-list> -->
 
-<div padding *ngIf="schedule">
-  <schedule-table [schedule]="schedule" [highlight]="[section]"></schedule-table>
-</div>
+  <ion-card *ngIf="schedule">
+    <ion-card-content>
+      <schedule-table [schedule]="schedule" [highlight]="[section]"></schedule-table>
+    </ion-card-content>
 
-<ion-list-header [ngSwitch]="section.teachers.length">
-  <span *ngSwitchWhen="0">Sin profesores</span>
-  <span *ngSwitchWhen="1">Profesor</span>
-  <span *ngSwitchDefault>Profesores</span>
-</ion-list-header>
+    <ion-item actions *ngIf="!schedule.has(section)">
+      <button outline item-left (click)="selectSchedule.emit();">
+        <!-- <ion-icon name="calendar"></ion-icon> -->
+        {{schedule.name}}
+      </button>
 
-<ion-list inset>
-  <ion-item *ngFor="#teacher of section.teachers">
-    <ion-thumbnail class="teacher-photo" item-left>
-      <img class="photo" [src]="teacher.photoURL">
-    </ion-thumbnail>
-    <div class="teacher-info">
-      <h2>{{teacher.name}}</h2>
-      <p>Alguna información</p>
-    </div>
-  </ion-item>
-</ion-list>
+      <button item-right clear (click)="add.emit(section)">
+        <ion-icon name="add"></ion-icon>
+        Agregar Sección {{section.section}}
+      </button>
+    </ion-item>
 
-<ion-list-header>
-  Información
-</ion-list-header>
+    <ion-item actions *ngIf="schedule.has(section)">
+      <button outline item-left (click)="selectSchedule.emit();">
+        <!-- <ion-icon name="calendar"></ion-icon> -->
+        {{schedule.name}}
+      </button>
 
-<ion-list inset>
-  <ion-item>
-    NRC:
-    <ion-note item-right>
-      {{section.NRC}}
-    </ion-note>
-  </ion-item>
+      <button item-right clear danger (click)="remove.emit(section)">
+        <ion-icon name="remove"></ion-icon>
+        Remover Sección {{section.section}}
+      </button>
+    </ion-item>
+  </ion-card>
 
-  <ion-item>
-    Vacantes:
-    <ion-note item-right>
-      {{section.vacancy.available}} / {{section.vacancy.total}}
-    </ion-note>
-  </ion-item>
+  <ion-list-header [ngSwitch]="section.teachers.length">
+    <span *ngSwitchWhen="0">Sin profesores</span>
+    <span *ngSwitchWhen="1">Profesor</span>
+    <span *ngSwitchDefault>Profesores</span>
+  </ion-list-header>
 
-  <ion-item>
-    Retirable:
-    <ion-icon [name]="section.droppable ? 'checkmark' : 'close'" is-active="false" item-right></ion-icon>
-  </ion-item>
+  <div padding>
+    <ion-item *ngFor="#teacher of section.teachers">
+      <ion-thumbnail class="teacher-photo" item-left>
+        <img class="photo" [src]="teacher.photoURL">
+      </ion-thumbnail>
+      <div class="teacher-info">
+        <h2>{{teacher.name}}</h2>
+        <p>Alguna información</p>
+      </div>
+    </ion-item>
+  </div>
 
-  <ion-item>
-    Inglés:
-    <ion-icon [name]="section.english ? 'checkmark' : 'close'" is-active="false" item-right></ion-icon>
-  </ion-item>
+  <ion-list-header>
+    Información
+  </ion-list-header>
+  <div padding>
+    <ion-item>
+      NRC:
+      <ion-note item-right>
+        {{section.NRC}}
+      </ion-note>
+    </ion-item>
 
-  <ion-item>
-    Aprobación especial:
-    <ion-icon [name]="section.specialApproval ? 'checkmark' : 'close'" is-active="false" item-right></ion-icon>
-  </ion-item>
+    <ion-item>
+      Vacantes:
+      <ion-note item-right>
+        {{section.vacancy.available}} / {{section.vacancy.total}}
+      </ion-note>
+    </ion-item>
 
+    <ion-item>
+      Retirable:
+      <ion-icon [name]="section.droppable ? 'checkmark' : 'close'" is-active="false" item-right></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      Inglés:
+      <ion-icon [name]="section.english ? 'checkmark' : 'close'" is-active="false" item-right></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      Aprobación especial:
+      <ion-icon [name]="section.specialApproval ? 'checkmark' : 'close'" is-active="false" item-right></ion-icon>
+    </ion-item>
+  </div>
 </ion-list>

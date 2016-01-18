@@ -66,7 +66,7 @@ export class Schedule {
     }
 
     has(course: Course): boolean {
-        return this.courses.indexOf(course) > -1;
+        return this.courses.map(c => c.NRC).indexOf(course.NRC) > -1;
     }
 
     add(...courses: Course[]): this {

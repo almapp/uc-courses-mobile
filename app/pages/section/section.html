@@ -2,14 +2,14 @@
   <ion-title>
     {{course.initials}}-{{course.section}}
   </ion-title>
-  <ion-buttons right *ngIf="!platform.is('android') && schedule">
+  <!-- <ion-buttons right *ngIf="!platform.is('android') && schedule">
     <button small *ngIf="!schedule.has(course)" (click)="addSection(course)">
       Agregar
     </button>
     <button small danger *ngIf="schedule.has(course)" (click)="removeSection(course)">
       Remover
     </button>
-  </ion-buttons>
+  </ion-buttons> -->
 </ion-navbar>
 
 <ion-content class="page-content">
@@ -41,10 +41,10 @@
     </ion-item>
 
     <ion-card-content>
-      <!-- <ion-item>
-        <button block small>Agregar o quitar</button>
-      </ion-item> -->
-      <section-view [section]="course" [schedule]="schedule"></section-view>
+      <section-view
+        [section]="course" [schedule]="schedule"
+        (selectSchedule)="selectSchedule()" (add)="addSection($event)" (remove)="removeSection($event)">
+      </section-view>
     </ion-card-content>
 
   </ion-card>
@@ -104,11 +104,11 @@
   </ion-card>
 </ion-content>
 
-<div *ngIf="platform.is('android') && schedule">
+<!-- <div *ngIf="platform.is('android') && schedule">
   <button fab fab-bottom fab-right *ngIf="!schedule.has(course)" (click)="addSection(course)">
     <ion-icon name="add"></ion-icon>
   </button>
   <button fab fab-bottom fab-right danger *ngIf="schedule.has(course)" (click)="removeSection(course)">
     <ion-icon name="remove"></ion-icon>
   </button>
-</div>
+</div> -->
