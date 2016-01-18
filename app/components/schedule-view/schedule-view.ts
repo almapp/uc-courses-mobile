@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter, OnInit} from "angular2/core";
-import {Segment, SegmentButton, Item, Icon, ActionSheet} from "ionic-framework/ionic";
+import {Segment, SegmentButton, Item, Icon, ActionSheet, Button} from "ionic-framework/ionic";
 
 import {Schedule, Block} from "../../models/schedule";
 import {SchedulesProvider} from "../../providers/schedules";
@@ -8,12 +8,14 @@ import {ScheduleBlock} from "../schedule-block/schedule-block";
 @Component({
     selector: "schedule-view",
     templateUrl: "build/components/schedule-view/schedule-view.html",
-    directives: [ScheduleBlock, Segment, SegmentButton, Item, Icon],
+    directives: [ScheduleBlock, Segment, SegmentButton, Item, Icon, Button],
 })
 export class ScheduleView implements OnInit {
     @Input() schedule: Schedule;
+
     @Output() options = new EventEmitter<Schedule>();
     @Output() select = new EventEmitter<Block>();
+    @Output() courses = new EventEmitter<void>();
 
     current: number;
     days: string[];

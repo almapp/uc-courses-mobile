@@ -1,9 +1,10 @@
-import {Page, NavController, Platform, Alert, ActionSheet} from "ionic-framework/ionic";
+import {Page, NavController, Platform, Alert, ActionSheet, Modal} from "ionic-framework/ionic";
 
 import {Schedule, Block} from "../../models/schedule";
 import {SchedulesProvider} from "../../providers/schedules";
 import {ScheduleView} from "../../components/schedule-view/schedule-view";
 import {SectionPage} from "../section/section";
+import {SectionListPage} from "../section-list/section-list";
 
 @Page({
     templateUrl: "build/pages/scheduler/scheduler.html",
@@ -35,6 +36,11 @@ export class SchedulerPage {
         return this.manager.loadAll().then(schedules => {
             return this.schedules = schedules.sort((a, b) => a.position - b.position);
         });
+    }
+
+    seeCourses(schedule: Schedule) {
+        const modal = Modal.create(SectionListPage, { sections: schedule.courses });
+        this.nav.present(modal);
     }
 
     new() {

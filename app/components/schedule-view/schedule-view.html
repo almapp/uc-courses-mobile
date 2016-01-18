@@ -2,7 +2,7 @@
   <!-- <ion-card-header> -->
     <ion-item>
       {{schedule.name}}
-      <button item-right class="options-button" (click)="click()">
+      <button item-right clear class="options-button" (click)="click()">
         <ion-icon name="more"></ion-icon>
       </button>
     </ion-item>
@@ -24,15 +24,15 @@
 
   <ion-item-divider [ngSwitch]="schedule.count">
     <p *ngSwitchWhen="0">
-      <span class="course-count">Sin cursos</span>
+      <button disabled outline small class="course-count">Sin cursos</button>
       <span class="credits-count">{{schedule.credits}} créditos</span>
     </p>
     <p *ngSwitchWhen="1">
-      <span class="course-count">1 curso</span>
+      <button outline small class="course-count" (click)="courses.emit()">1 curso</button>
       <span class="credits-count">{{schedule.credits}} créditos</span>
     </p>
     <p *ngSwitchDefault>
-      <span class="course-count">{{schedule.count}} cursos</span>
+      <button outline small class="course-count" (click)="courses.emit()">{{schedule.count}} cursos</button>
       <span class="credits-count">{{schedule.credits}} créditos</span>
     </p>
   </ion-item-divider>

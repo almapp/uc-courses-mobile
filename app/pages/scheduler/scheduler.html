@@ -13,6 +13,7 @@
       *ngFor="#schedule of schedules"
       [schedule]="schedule"
       (options)="options(schedule)"
+      (courses)="seeCourses(schedule)"
       (select)="select($event, schedule)">
     </schedule-view>
   </div>
