@@ -35,7 +35,7 @@ export class SchedulesProvider {
     }
 
     setup(): Storage {
-        return this.storage = new Storage(SqlStorage);
+        return this.storage = new Storage(SqlStorage, { name: "buscacursos-uc" });
     }
 
     loadIDS(): Promise<string[]> {
