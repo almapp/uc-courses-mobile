@@ -2,14 +2,17 @@ module.exports = {
   proxies: null,
 
   paths: {
-    html : {
+    html: {
       src: ['app/**/*.html'],
       dest: "www/build"
     },
     sass: {
-      src: ['app/app.+(ios|md).scss'],
+      src: ['app/theme/app.+(ios|md).scss'],
       dest: 'www/build/css',
-      include: ['node_modules/ionic-framework']
+      include: [
+        'node_modules/ionic-framework',
+        'node_modules/ionicons/dist/scss'
+      ]
     },
     fonts: {
       src: ['node_modules/ionic-framework/fonts/**/*.+(ttf|woff|woff2)'],

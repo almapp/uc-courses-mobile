@@ -18,7 +18,6 @@ function nameToID(name: string): string {
 @Injectable()
 export class SchedulesProvider {
     // Database
-    private database: string;
     private storage: Storage;
 
     // Cache
@@ -31,21 +30,23 @@ export class SchedulesProvider {
     public removed: EventEmitter<Schedule> = new EventEmitter<Schedule>();
 
     constructor() {
-        this.database = "buscacursos-uc";
-        this.storage = new Storage(<any>SqlStorage, { name: this.database });
         this.schedules = {};
+        this.setup();
+    }
+
+    setup(): Storage {
+        return this.storage = new Storage(SqlStorage);
     }
 
     loadIDS(): Promise<string[]> {
-        return (this.IDS && this.IDS.length !== 0) ? Promise.resolve(this.IDS) : this.storage.get("NAMES")
-            .then(JSON.parse)
+        return (this.IDS && this.IDS.length !== 0) ? Promise.resolve(this.IDS) : this.storage.getJson("NAMES")
             .then(IDS => IDS || [])
             .then(IDS => this.IDS = IDS);
     }
 
     saveIDS(IDS: string[]): Promise<void> {
         this.IDS = IDS;
-        return this.storage.set("NAMES", JSON.stringify(IDS));
+        return this.storage.setJson("NAMES", IDS);
     }
 
     delete(schedule: Schedule): Promise<void> {
@@ -59,7 +60,7 @@ export class SchedulesProvider {
     save(schedule: Schedule): Promise<void> {
         const ID = nameToID(schedule.name);
         this.schedules[ID] = schedule;
-        return this.storage.set(ID, JSON.stringify(schedule.prepareSave()))
+        return this.storage.setJson(ID, schedule.prepareSave())
             .then(() => this.updated.emit(schedule));
     }
 
@@ -79,8 +80,8 @@ export class SchedulesProvider {
     }
 
     load(ID: string): Promise<Schedule> {
-        return (this.schedules[ID]) ? Promise.resolve(this.schedules[ID]) : this.storage.get(ID).then(schedule => {
-            return (schedule) ? this.schedules[ID] = Schedule.parse(JSON.parse(schedule)) : null;
+        return (this.schedules[ID]) ? Promise.resolve(this.schedules[ID]) : this.storage.getJson(ID).then(schedule => {
+            return (schedule) ? this.schedules[ID] = Schedule.parse(schedule) : null;
         });
     }
 
