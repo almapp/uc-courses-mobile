@@ -123,9 +123,7 @@ export class CoursesPage {
     }
 
     selectCourse(course: Course) {
-        this.nav.push(SectionPage, {
-            course: course
-        }, { direction: "forward" }, undefined);
+        this.nav.push(SectionPage, { course: course });
     }
 
     selectPeriod() {
