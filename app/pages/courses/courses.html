@@ -11,35 +11,37 @@
   <ion-card>
     <ion-card-content>
       <ion-list>
-        <ion-input>
-          <ion-icon name="code" item-left></ion-icon>
-          <input type="text" [(value)]="query.initials" placeholder="Sigla">
-        </ion-input>
+        <form #loginForm="ngForm" novalidate>
+          <ion-input>
+            <ion-icon name="code" item-left></ion-icon>
+            <input [(ngModel)]="query.initials" ngControl="initials" type="text" #initials="ngForm" placeholder="Sigla">
+          </ion-input>
 
-        <ion-input>
-          <ion-icon name="quote" item-left></ion-icon>
-          <input type="text" [(value)]="query.name" placeholder="Nombre">
-        </ion-input>
+          <ion-input>
+            <ion-icon name="quote" item-left></ion-icon>
+            <input [(ngModel)]="query.name" ngControl="name" type="text" #name="ngForm" placeholder="Nombre">
+          </ion-input>
 
-        <ion-item (click)="selectSchool()">
-          <ion-icon name="school" item-left></ion-icon>
-          Escuela
-          <ion-note item-right>
-            {{ query.school || "Todas" }}
-          </ion-note>
-        </ion-item>
+          <ion-item (click)="selectSchool()">
+            <ion-icon name="school" item-left></ion-icon>
+            Escuela
+            <ion-note item-right>
+              {{ query.school || "Todas" }}
+            </ion-note>
+          </ion-item>
 
-        <ion-item (click)="selectCampus()">
-          <ion-icon name="compass" item-left></ion-icon>
-          Campus
-          <ion-note item-right>
-            {{ query.campus || "Todos" }}
-          </ion-note>
-        </ion-item>
+          <ion-item (click)="selectCampus()">
+            <ion-icon name="compass" item-left></ion-icon>
+            Campus
+            <ion-note item-right>
+              {{ query.campus || "Todos" }}
+            </ion-note>
+          </ion-item>
 
-        <ion-item>
-          <button block (click)="search()" [disabled]="operation">{{operation ? 'Buscando...' : 'Buscar'}}</button>
-        </ion-item>
+          <ion-item>
+            <button block type="submit" (click)="search()" [disabled]="operation">{{operation ? 'Buscando...' : 'Buscar'}}</button>
+          </ion-item>
+        </form>
       </ion-list>
     </ion-card-content>
   </ion-card>
