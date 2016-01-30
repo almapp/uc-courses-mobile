@@ -42,7 +42,7 @@ export class SchedulerPage {
     seeCourses(schedule: Schedule) {
         const modal = Modal.create(SectionListPage, { sections: schedule.courses });
         modal.onDismiss((section: Course) => {
-            this.seeCourse(section);
+            if (section) { this.seeCourse(section); }
         });
         this.nav.present(modal);
     }
@@ -50,7 +50,7 @@ export class SchedulerPage {
     new() {
         const alert = Alert.create({
             title: "Nuevo horario",
-            body: "Ingresa un nombre para este",
+            subTitle: "Ingresa un nombre para este",
             inputs: [
                 { name: "name", placeholder: "Nombre" },
             ],
@@ -85,9 +85,7 @@ export class SchedulerPage {
     }
 
     seeCourse(course: Course) {
-        this.nav.push(SectionPage, {
-            course: course,
-        }, { direction: "forward" }, undefined);
+        this.nav.push(SectionPage, { course: course });
     }
 
     options(schedule: Schedule) {
@@ -111,7 +109,7 @@ export class SchedulerPage {
     alertRepeated(name: string) {
         const alert = Alert.create({
             title: "Ups!",
-            body: "Ya existe un horario con ese nombre, intenta con otro :)",
+            subTitle: "Ya existe un horario con ese nombre, intenta con otro :)",
             buttons: ["Ok"],
         });
         this.nav.present(alert);

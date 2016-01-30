@@ -1,9 +1,9 @@
 <ion-item-sliding #item>
-  <ion-item button (click)="click()">
+  <ion-item class="course-item" button (click)="click()">
+    <small class="nrc">{{course.NRC}}</small>
     <h2>
       <strong class="identifier">{{course.initials}}-{{course.section}}</strong>
     </h2>
-    <small class="nrc">{{course.NRC}}</small>
     <h3 class="name">{{course.name}}</h3>
     <h4 class="teachers">{{course.teachers.length ? course.teachersName.join(', ') : 'Sin profesores'}}</h4>
 

@@ -1,39 +1,37 @@
-ion-item-content {
-  position: relative;
+.nrc {
+  margin-right: 10px;
+  margin-top: 3px;
+  position: absolute;
+  right: 0;
+  top: 20;
+}
 
-  .nrc {
+.name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.teachers {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.modules {
+  padding-top: 7px;
+
+  .module {
+    display: inline-block;
+    width: 40px;
+
+  }
+
+  .blocks {
+    display: inline-block;
+    width: 80px;
+  }
+
+  .classroom {
     position: absolute;
     right: 0;
-    top: 0;
-  }
-
-  .name {
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .teachers {
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .modules {
-    padding-top: 7px;
-
-    .module {
-      display: inline-block;
-      width: 40px;
-
-    }
-
-    .blocks {
-      display: inline-block;
-      width: 80px;
-    }
-
-    .classroom {
-      position: absolute;
-      right: 0;
-    }
   }
 }

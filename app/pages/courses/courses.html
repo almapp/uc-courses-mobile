@@ -12,15 +12,15 @@
     <ion-card-content>
       <ion-list>
         <form #loginForm="ngForm" novalidate>
-          <ion-input>
+          <ion-item>
             <ion-icon name="code" item-left></ion-icon>
-            <input [(ngModel)]="query.initials" ngControl="initials" type="text" #initials="ngForm" placeholder="Sigla">
-          </ion-input>
+            <ion-input [(ngModel)]="query.initials" ngControl="initials" type="text" #initials="ngForm" placeholder="Sigla"></ion-input>
+          </ion-item>
 
-          <ion-input>
+          <ion-item>
             <ion-icon name="quote" item-left></ion-icon>
-            <input [(ngModel)]="query.name" ngControl="name" type="text" #name="ngForm" placeholder="Nombre">
-          </ion-input>
+            <ion-input [(ngModel)]="query.name" ngControl="name" type="text" #name="ngForm" placeholder="Nombre"></ion-input>
+          </ion-item>
 
           <ion-item (click)="selectSchool()">
             <ion-icon name="school" item-left></ion-icon>

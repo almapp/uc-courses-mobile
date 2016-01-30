@@ -1,0 +1,33 @@
+// http://ionicframework.com/docs/v2/theming/
+
+
+// App Shared Imports
+// --------------------------------------------------
+// These are the imports which make up the design of this app.
+// By default each design mode includes these shared imports.
+// App Shared Sass variables belong in app.variables.scss.
+
+.ios .select-segment {
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-top: 10px;
+}
+
+@import '../components/course-item/course-item';
+@import '../components/section-view/section-view';
+@import '../components/schedule-block/schedule-block';
+@import '../components/schedule-table/schedule-table';
+@import '../components/schedule-view/schedule-view';
+
+@import '../pages/courses/courses';
+@import '../pages/section/section';
+@import '../pages/scheduler/scheduler';
+@import '../pages/about/about';
+@import '../pages/add-remove/add-remove';
+@import '../pages/section-list/section-list';
+
+.page-content {
+  scroll-content {
+    overflow: auto;
+  }
+}

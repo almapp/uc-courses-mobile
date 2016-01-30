@@ -25,9 +25,10 @@
     <ion-card-content>
 
       <ion-list>
-        <ion-checkbox *ngFor="#item of items" [(ngModel)]="item.checked" [(checked)]="item.checked">
-          {{item.schedule.name}}
-        </ion-checkbox>
+        <ion-item *ngFor="#item of items">
+          <ion-label>{{item.schedule.name}}</ion-label>
+          <ion-checkbox [(ngModel)]="item.checked"></ion-checkbox>
+        </ion-item>
 
         <ion-list-header *ngIf="!platform.is('android')">
           <button block (click)="save()">
