@@ -1,0 +1,10 @@
+Cursos UC forma parte de la segunda versión de Alma Máter UC, que en su versión anterior alcanzó más de 15.000 descargas.
+
+Busca los cursos, profesores y ten tu horario siempre a mano con esta aplicación.
+
+Esta aplicación no es oficial y está hecha por la comunidad, para la comunidad.
+
+¿Eres desarrollador?
+Esta aplicación es Open Source y su código está disponible bajo licencia GPL-3.0 en:
+https://github.com/almapp/buscacursos-uc-mobile
+
