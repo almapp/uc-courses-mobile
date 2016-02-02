@@ -6,6 +6,9 @@ Multi-platform mobile app built with [Ionic2](http://ionicframework.com/docs/v2/
 
 Client of [almapp/uc-courses](https://github.com/almapp/uc-courses)
 
+[![AppStore][appstore-image]][appstore-url]
+[![PlayStore][playstore-image]][playstore-url]
+
 ## Development
 
 Clone this repository:
@@ -59,6 +62,10 @@ npm run android
 ionic plugin add <plugin name>
 ```
 
+[appstore-image]: http://mrpatiwi.github.io/app-badges/appstore.png
+[appstore-url]: https://itunes.apple.com/cl/app/cursos-uc/id1076219796
+[playstore-image]: http://mrpatiwi.github.io/app-badges/playstore.png
+[playstore-url]: https://play.google.com/store/apps/details?id=com.almapp.uccourses
 [ci-image]: https://travis-ci.org/almapp/uc-courses-mobile.svg
 [ci-url]: https://travis-ci.org/almapp/uc-courses-mobile
 [dependencies-image]: https://david-dm.org/almapp/uc-courses-mobile.svg
