@@ -88,21 +88,23 @@ export class CoursesPage {
         return this.courses[school];
     }
 
-    search(query?: SearchQuery) {
-        // undefined's are omited in JSON object
-        const request: SearchQuery = query || {};
-        if (this.query.name) { request.name = this.query.name; }
-        if (this.query.campus) { request.campus = this.query.campus; }
-        if (this.query.school) { request.school = this.query.school; }
-        if (this.query.initials) { request.initials = this.query.initials; }
-        if (this.period.period) { request.period = this.period.period; }
-        if (this.period.year) { request.year = this.period.year; }
+    search(query?) {
+        query = query || this.query;
+        const request: SearchQuery = {
+            period: this.period.period,
+            year: this.period.year,
+        };
+
+        const valid = (input) => (typeof(input) === "string" || input instanceof String) && input.length !== 0;
+        if (valid(query.name)) { request.name = query.name; }
+        if (valid(query.campus)) { request.campus = query.campus; }
+        if (valid(query.school)) { request.school = query.school; }
+        if (valid(query.initials)) { request.initials = query.initials; }
+
         this.operation = this.provider.search(request).then(courses => {
             this.process(courses);
             this.operation = null;
-        }).catch(err => {
-            this.operation = null;
-        });
+        }).catch(err => this.operation = null);
     }
 
     process(results: Course[]): Course[][] {
