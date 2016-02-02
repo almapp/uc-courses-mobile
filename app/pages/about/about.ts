@@ -9,7 +9,6 @@ var PACKAGE = require("../../../package.json");
 })
 export class AboutPage {
     private meta: any;
-    private policy = "https://almapp.github.io/buscacursos-uc-mobile/policy";
 
     constructor(private http: Http) {
         this.http.get("build/js/" + PACKAGE).subscribe(res => {
