@@ -44,8 +44,8 @@ export class CoursesPage {
     private query = {
         initials: "",
         name: "",
-        campus: null,
-        school: null,
+        campus: "",
+        school: "",
     };
     private operation: Promise<any>;
 

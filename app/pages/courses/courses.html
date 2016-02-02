@@ -28,7 +28,7 @@
               Escuela
             </ion-label>
             <ion-select [(ngModel)]="query.school">
-              <ion-option [value]="null">
+              <ion-option [value]="''">
                 Todas
               </ion-option>
               <ion-option *ngFor="#school of schools" [value]="school">
@@ -42,8 +42,8 @@
             <ion-label>
               Campus
             </ion-label>
-            <ion-select [(ngModel)]="query.campus">
-              <ion-option [value]="null">
+            <ion-select [(ngModel)]="query.campus" cancelText="Cancelar">
+              <ion-option [value]="''">
                 Todos
               </ion-option>
               <ion-option *ngFor="#campus of campuses" [value]="campus">
