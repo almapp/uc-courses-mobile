@@ -81,18 +81,16 @@ export class SectionPage {
     }
 
     selectSchedule() {
-        const buttons = this.schedules.map(schedule => {
-            return {
-                text: schedule.name,
-                style: null,
-                handler: () => this.schedule = schedule,
-            };
-        });
+        const buttons = this.schedules.map(schedule => ({
+            text: schedule.name,
+            role: null,
+            handler: () => this.schedule = schedule,
+        }));
         const sheet = ActionSheet.create({
             title: "Selecciona horario",
             buttons: [...buttons, {
                 text: "Cancelar",
-                style: "cancel",
+                role: "cancel",
                 handler: null,
             }],
         });

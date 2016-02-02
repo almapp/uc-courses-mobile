@@ -127,17 +127,15 @@ export class CoursesPage {
     }
 
     selectPeriod() {
-        const buttons = this.periods.map(period => {
-            return {
-                text: HumanizePeriodPipe.transform(period),
-                style: null,
-                handler: () => this.period = period,
-            };
-        }).concat({
+        const buttons = [...this.periods.map(period => ({
+            text: HumanizePeriodPipe.transform(period),
+            role: null,
+            handler: () => this.period = period,
+        })), {
             text: "Cancelar",
-            style: "cancel",
+            role: "cancel",
             handler: null,
-        });
+        }];
 
         const sheet = ActionSheet.create({
             title: "Selecciona periodo",
@@ -147,17 +145,15 @@ export class CoursesPage {
     }
 
     selectCampus() {
-        const buttons = this.campuses.map(campus => {
-                return {
-                    text: campus,
-                    style: null,
-                    handler: () => this.query.campus = campus,
-                };
-        }).concat({
+        const buttons = [...this.campuses.map(campus => ({
+            text: campus,
+            role: null,
+            handler: () => this.query.campus = campus,
+        })), {
             text: "Todos",
-            style: "cancel",
+            role: "cancel",
             handler: () => this.query.campus = null,
-        });
+        }];
 
         const sheet = ActionSheet.create({
             title: "Selecciona un campus",
