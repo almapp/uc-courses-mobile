@@ -22,12 +22,10 @@ export class AddRemovePage {
         this.course = this.params.get("course");
         this.title = `${this.course.initials}-${this.course.section}`;
         this.manager.loadAll().then(results => {
-            this.items = results.map(schedule => {
-                return {
-                    schedule: schedule,
-                    checked: schedule.has(this.course),
-                };
-            });
+            this.items = results.map(schedule => ({
+                schedule: schedule,
+                checked: schedule.has(this.course),
+            }));
         });
     }
 

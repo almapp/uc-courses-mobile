@@ -94,12 +94,12 @@ export class SchedulerPage {
             buttons: [
                 {
                     text: "Borrar",
-                    style: "destructive",
+                    role: "destructive",
                     handler: () => this.delete(schedule),
                 },
                 {
                     text: "Cancelar",
-                    style: "cancel",
+                    role: "cancel",
                 },
             ],
         });
