@@ -11,8 +11,8 @@ Client of [almapp/uc-courses](https://github.com/almapp/uc-courses)
 Clone this repository:
 
 ```sh
-git clone https://github.com/almapp/buscacursos-uc-mobile.git
-cd buscacursos-uc-mobile
+git clone https://github.com/almapp/uc-courses-mobile.git
+cd uc-courses-mobile
 ```
 
 ### Dependencies
@@ -59,9 +59,9 @@ npm run android
 ionic plugin add <plugin name>
 ```
 
-[ci-image]: https://travis-ci.org/almapp/buscacursos-uc-mobile.svg
-[ci-url]: https://travis-ci.org/almapp/buscacursos-uc-mobile
-[dependencies-image]: https://david-dm.org/almapp/buscacursos-uc-mobile.svg
-[dependencies-url]: https://david-dm.org/almapp/buscacursos-uc-mobile
-[dev-dependencies-image]: https://david-dm.org/almapp/buscacursos-uc-mobile/dev-status.svg
-[dev-dependencies-url]: https://david-dm.org/almapp/buscacursos-uc-mobile#info=devDependencies
+[ci-image]: https://travis-ci.org/almapp/uc-courses-mobile.svg
+[ci-url]: https://travis-ci.org/almapp/uc-courses-mobile
+[dependencies-image]: https://david-dm.org/almapp/uc-courses-mobile.svg
+[dependencies-url]: https://david-dm.org/almapp/uc-courses-mobile
+[dev-dependencies-image]: https://david-dm.org/almapp/uc-courses-mobile/dev-status.svg
+[dev-dependencies-url]: https://david-dm.org/almapp/uc-courses-mobile#info=devDependencies

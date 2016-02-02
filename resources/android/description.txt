@@ -10,4 +10,4 @@ Próximamente:
 
 ¿Eres desarrollador?
 Esta aplicación es Open Source y su código está disponible bajo licencia GPL-3.0 en:
-https://github.com/almapp/buscacursos-uc-mobile
+https://github.com/almapp/uc-courses-mobile

@@ -1,5 +1,5 @@
 {
-  "name": "buscacursos-uc-mobile",
+  "name": "uc-courses-mobile",
   "description": "Buscacursos: An Ionic project",
   "version": "1.2.4",
   "scripts": {
@@ -13,10 +13,10 @@
     "release-ios": "ionic prepare ios && ionic build --release ios",
     "release": "ionic prepare && ionic build --release"
   },
-  "homepage": "https://github.com/almapp/buscacursos-uc-mobile#readme",
+  "homepage": "https://github.com/almapp/uc-courses-mobile#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/almapp/buscacursos-uc-mobile.git"
+    "url": "https://github.com/almapp/uc-courses-mobile.git"
   },
   "keywords": [
     "ionic",
