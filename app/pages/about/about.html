@@ -20,6 +20,9 @@
 
         <ion-item>
           Aplicación no oficial de la PUC
+          <p>
+            Por y para la comunidad
+          </p>
         </ion-item>
 
         <ion-item (click)="open(meta.policy)">
@@ -95,29 +98,6 @@
           <button outline item-right>
             {{meta.author.url}}
           </button>
-        </ion-item>
-      </ion-list>
-    </ion-card-content>
-  </ion-card>
-
-  <ion-card *ngIf="meta">
-    <ion-card-content>
-      <ion-list>
-        <ion-list-header>
-          Colaboradores
-        </ion-list-header>
-
-        <ion-item button *ngFor="#user of meta.contributors" (click)="open(user.url)">
-          {{user.name}}
-          <button item-right clear>
-            {{meta.author.url}}
-          </button>
-        </ion-item>
-
-        <ion-item *ngIf="meta.contributors.length === 0">
-          <p>
-            Nadie por el momento
-          </p>
         </ion-item>
       </ion-list>
     </ion-card-content>
