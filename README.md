@@ -64,10 +64,22 @@ ionic plugin add <plugin name>
 
 ### Releasing
 
-Run:
+Make sure to enable `production` mode as `NODE_ENV`.
+
+```sh
+export NODE_ENV=production
+```
+
+Then run:
 
 ```sh
 npm run release
+```
+
+Or in one line:
+
+```sh
+NODE_ENV=production npm run release
 ```
 
 #### Android

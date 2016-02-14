@@ -1,4 +1,5 @@
 import {App, Platform, Page} from "ionic-framework/ionic";
+import {enableProdMode} from "angular2/core";
 
 // Main page
 import {TabsPage} from "./pages/tabs/tabs";
@@ -6,6 +7,10 @@ import {TabsPage} from "./pages/tabs/tabs";
 // Global Providers
 import {CoursesProvider} from "./providers/courses";
 import {SchedulesProvider} from "./providers/schedules";
+
+if (process.env.NODE_ENV === "production") {
+    enableProdMode();
+}
 
 @App({
     templateUrl: "build/app.html",
