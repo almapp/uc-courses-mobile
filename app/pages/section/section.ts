@@ -1,4 +1,4 @@
-import {Page, NavController, Platform, NavParams, Modal, ActionSheet} from "ionic-framework/ionic";
+import {Page, NavController, Platform, NavParams, Modal, Alert} from "ionic-framework/ionic";
 import {Pipe} from "angular2/core";
 
 import {Course} from "../../models/course";
@@ -81,20 +81,24 @@ export class SectionPage {
     }
 
     selectSchedule() {
-        const buttons = this.schedules.map(schedule => ({
-            text: schedule.name,
-            role: null,
-            handler: () => this.schedule = schedule,
-        }));
-        const sheet = ActionSheet.create({
-            title: "Selecciona horario",
-            buttons: [...buttons, {
-                text: "Cancelar",
-                role: "cancel",
-                handler: null,
-            }],
+        const alert = Alert.create({
+            title: "Selecciona periodo",
+            inputs: this.schedules.map((schedule, index) => ({
+                type: "radio",
+                value: String(index),
+                label: schedule.name,
+                checked: this.schedule.name === schedule.name,
+            })),
+            buttons: [
+                "Cancelar",
+                {
+                    text: "Seleccionar",
+                    handler: data => this.schedule = this.schedules[Number(data)],
+                }
+            ],
+            enableBackdropDismiss: true,
         });
-        this.nav.present(sheet);
+        this.nav.present(alert);
     }
 
     addSection(section: Course) {
