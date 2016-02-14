@@ -16,6 +16,12 @@
 // --------------------------------------------------
 // Custom App variables must be declared before importing Ionic.
 // Ionic will use its default values when a custom variable isn't provided.
+
+$toolbar-md-background: map-get($colors, primary);
+$toolbar-md-button-color: #ddd;
+$toolbar-md-text-color: #fff;
+$toolbar-md-active-color: #fff;
+
 @import 'ionic.md';
 
 
