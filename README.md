@@ -1,4 +1,4 @@
-# Buscacursos UC
+# UC Courses Mobile App
 
 [![Build Status][ci-image]][ci-url] [![dependencies][dependencies-image]][dependencies-url] [![dev-dependencies][dev-dependencies-image]][dev-dependencies-url]
 
@@ -61,6 +61,41 @@ npm run android
 ```
 ionic plugin add <plugin name>
 ```
+
+### Releasing
+
+Run:
+
+```sh
+npm run release
+```
+
+#### Android
+
+The Android `.apk` will be generated at `platforms/android/build/outputs/apk/android-release-unsigned.apk`. To sign it:
+
+```sh
+cd platforms/android/build/outputs/apk
+
+# Generate keystore (if you don't have one)
+keytool -genkey -v -keystore release.keystore -alias almapp -keyalg RSA -keysize 2048 -validity 10000
+
+# Sign in
+jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore release.keystore android-release-unsigned.apk almapp
+
+# Build release .apk
+rm app.apk; zipalign -v 4 android-release-unsigned.apk app.apk
+```
+
+The release .apk is located at: `platforms/android/build/outputs/apk/app.apk` and it's ready to be uploaded to the AppStore.
+
+#### iOS
+
+0. Open `platforms/ios/Cursos UC.xcodeproj` with XCode.
+0. Select `Generic iOS Device`
+0. Go to `Product -> Archive`
+
+The final product should appear on the `Organizer`.
 
 [appstore-image]: http://mrpatiwi.github.io/app-badges/appstore.png
 [appstore-url]: https://itunes.apple.com/cl/app/cursos-uc/id1076219796
