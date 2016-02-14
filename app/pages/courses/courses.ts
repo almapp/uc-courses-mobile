@@ -1,4 +1,4 @@
-import {Page, NavController, NavParams, Modal, ActionSheet, ViewController} from "ionic-framework/ionic";
+import {Page, NavController, NavParams, Modal, Alert, ViewController} from "ionic-framework/ionic";
 import {Pipe} from "angular2/core";
 
 import {Course} from "../../models/course";
@@ -19,11 +19,11 @@ export class HumanizePeriodPipe {
         "3": "TAV",
     };
 
-    static transform(period: Period): String {
+    static transform(period: Period): string {
         return `${period.year}-${HumanizePeriodPipe.TABLE[period.period]}`;
     }
 
-    transform(period: Period, args: string[]): String {
+    transform(period: Period, args: string[]): string {
         return HumanizePeriodPipe.transform(period);
     }
 }
@@ -129,77 +129,23 @@ export class CoursesPage {
     }
 
     selectPeriod() {
-        const buttons = [...this.periods.map(period => ({
-            text: HumanizePeriodPipe.transform(period),
-            role: null,
-            handler: () => this.period = period,
-        })), {
-            text: "Cancelar",
-            role: "cancel",
-            handler: null,
-        }];
-
-        const sheet = ActionSheet.create({
+        const alert = Alert.create({
             title: "Selecciona periodo",
-            buttons: buttons,
+            inputs: this.periods.map((period, index) => ({
+                type: "radio",
+                value: String(index),
+                label: HumanizePeriodPipe.transform(period),
+                checked: this.period === period,
+            })),
+            buttons: [
+                "Cancelar",
+                {
+                    text: "Seleccionar",
+                    handler: data => this.period = this.periods[Number(data)],
+                }
+            ],
+            enableBackdropDismiss: true,
         });
-        this.nav.present(sheet);
-    }
-
-    selectCampus() {
-        const buttons = [...this.campuses.map(campus => ({
-            text: campus,
-            role: null,
-            handler: () => this.query.campus = campus,
-        })), {
-            text: "Todos",
-            role: "cancel",
-            handler: () => this.query.campus = null,
-        }];
-
-        const sheet = ActionSheet.create({
-            title: "Selecciona un campus",
-            buttons: buttons,
-        });
-        this.nav.present(sheet);
-    }
-
-    selectSchool() {
-        const modal = Modal.create(SchoolListPage, { schools: this.schools });
-        modal.onDismiss((school: string) => this.query.school = school);
-        this.nav.present(modal);
-    }
-}
-
-@Page({
-    template: `
-    <ion-toolbar>
-      <ion-buttons end>
-        <button (click)="close()">
-          Todas
-        </button>
-      </ion-buttons>
-      <ion-title>Escuelas</ion-title>
-    </ion-toolbar>
-
-    <ion-content>
-      <ion-list>
-        <ion-item *ngFor="#school of schools" (click)="close(school)">
-          <ion-icon [name]="provider.icon(school) || 'school'" item-left></ion-icon>
-          {{school}}
-        </ion-item>
-      </ion-list>
-    </ion-content>
-    `,
-})
-export class SchoolListPage {
-    private schools: string[];
-
-    constructor(private view: ViewController, private params: NavParams, private provider: CoursesProvider) {
-        this.schools = this.params.get("schools");
-    }
-
-    close(school?: string) {
-        this.view.dismiss(school);
+        this.nav.present(alert);
     }
 }
