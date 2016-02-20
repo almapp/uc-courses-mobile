@@ -11,51 +11,49 @@
   <ion-card>
     <ion-card-content>
       <ion-list>
-        <form #loginForm="ngForm" novalidate>
-          <ion-item>
-            <ion-icon name="code" item-left></ion-icon>
-            <ion-input [(ngModel)]="query.initials" ngControl="initials" type="text" #initials="ngForm" placeholder="Sigla"></ion-input>
-          </ion-item>
+        <ion-item>
+          <ion-icon name="code" item-left></ion-icon>
+          <ion-input [(ngModel)]="query.initials" type="text" placeholder="Sigla"></ion-input>
+        </ion-item>
 
-          <ion-item>
-            <ion-icon name="quote" item-left></ion-icon>
-            <ion-input [(ngModel)]="query.name" ngControl="name" type="text" #name="ngForm" placeholder="Nombre"></ion-input>
-          </ion-item>
+        <ion-item>
+          <ion-icon name="quote" item-left></ion-icon>
+          <ion-input [(ngModel)]="query.name" type="text" placeholder="Nombre"></ion-input>
+        </ion-item>
 
-          <ion-item>
-            <ion-icon name="school" item-left></ion-icon>
-            <ion-label>
-              Escuela
-            </ion-label>
-            <ion-select [(ngModel)]="query.school">
-              <ion-option value="">
-                Todas
-              </ion-option>
-              <ion-option *ngFor="#school of schools" [value]="school">
-                {{school}}
-              </ion-option>
-            </ion-select>
-          </ion-item>
+        <ion-item>
+          <ion-icon name="school" item-left></ion-icon>
+          <ion-label>
+            Escuela
+          </ion-label>
+          <ion-select [(ngModel)]="query.school">
+            <ion-option value="">
+              Todas
+            </ion-option>
+            <ion-option *ngFor="#school of schools" [value]="school">
+              {{school}}
+            </ion-option>
+          </ion-select>
+        </ion-item>
 
-          <ion-item>
-            <ion-icon name="compass" item-left></ion-icon>
-            <ion-label>
-              Campus
-            </ion-label>
-            <ion-select [(ngModel)]="query.campus" cancelText="Cancelar">
-              <ion-option value="">
-                Todos
-              </ion-option>
-              <ion-option *ngFor="#campus of campuses" [value]="campus">
-                {{campus}}
-              </ion-option>
-            </ion-select>
-          </ion-item>
+        <ion-item>
+          <ion-icon name="compass" item-left></ion-icon>
+          <ion-label>
+            Campus
+          </ion-label>
+          <ion-select [(ngModel)]="query.campus" cancelText="Cancelar">
+            <ion-option value="">
+              Todos
+            </ion-option>
+            <ion-option *ngFor="#campus of campuses" [value]="campus">
+              {{campus}}
+            </ion-option>
+          </ion-select>
+        </ion-item>
 
-          <ion-item>
-            <button block type="submit" (click)="search()" [disabled]="operation">{{operation ? 'Buscando...' : 'Buscar'}}</button>
-          </ion-item>
-        </form>
+        <ion-item>
+          <button block type="submit" (click)="search()" [disabled]="operation">{{operation ? 'Buscando...' : 'Buscar'}}</button>
+        </ion-item>
       </ion-list>
     </ion-card-content>
   </ion-card>
