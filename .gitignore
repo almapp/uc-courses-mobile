@@ -10,8 +10,9 @@ plugins/
 Thumbs.db
 
 #####=== Typescript ===#####
-typings/main
+typings/browser.d.ts
 typings/browser
+typings/main
 
 #####=== Node ===#####
 
