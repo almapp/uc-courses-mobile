@@ -9,6 +9,10 @@ plugins/
 .DS_Store
 Thumbs.db
 
+#####=== Typescript ===#####
+typings/main
+typings/browser
+
 #####=== Node ===#####
 
 # Logs

@@ -20,10 +20,10 @@ cd uc-courses-mobile
 
 ### Dependencies
 
-Make sure you have installed Ionic2 and [Cordova](https://cordova.apache.org):
+Make sure you have installed Ionic2, [Cordova](https://cordova.apache.org) and Typescript's [Typings](https://github.com/typings/typings):
 
 ```sh
-npm install -g cordova ionic@beta
+npm install -g cordova ionic@beta typings
 ```
 
 Project dependencies:

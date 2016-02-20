@@ -16,7 +16,7 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       "process.env": {
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV) || 'development',
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development'),
         API_URL: JSON.stringify(process.env.API_URL || 'http://uc-courses.lopezjuri.com/api/v1')
       }
     }),
@@ -27,7 +27,9 @@ module.exports = {
         test: /\.ts$/,
         loader: 'awesome-typescript',
         query: {
-          doTypeCheck: false
+          doTypeCheck: true,
+          resolveGlobs: false,
+          externals: ["typings/main.d.ts"]
         },
         include: path.resolve('app'),
         exclude: /node_modules/
