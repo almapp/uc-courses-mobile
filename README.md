@@ -104,7 +104,7 @@ The release .apk is located at: `platforms/android/build/outputs/apk/app.apk` an
 #### iOS
 
 0. Open `platforms/ios/Cursos UC.xcodeproj` with XCode.
-0. Select `Generic iOS Device`
+0. Select `Cursos UC -> Generic iOS Device`
 0. Go to `Product -> Archive`
 
 The final product should appear on the `Organizer`.
