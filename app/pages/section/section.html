@@ -54,7 +54,7 @@
       <ion-list>
         <ion-list-header>
           <ion-icon name="information-circle" item-left></ion-icon>
-          Información general
+          Ramo
         </ion-list-header>
 
         <ion-item>
@@ -98,17 +98,56 @@
             {{course.information}}
           </p>
         </ion-item>
-
       </ion-list>
+
+      <ion-list *ngIf="course.requisites?.requirements?.length">
+        <ion-list-header>
+          <ion-icon name="information-circle" item-left></ion-icon>
+          Opciones de Requisitos
+        </ion-list-header>
+
+        <ion-item *ngFor="#requirement of course.requisites.requirements">
+          <div *ngIf="requirement.prerequisites?.length">
+            <h2>Prerequisitos</h2>
+            <p *ngFor="#prerequisite of requirement.prerequisites">
+              {{prerequisite}}
+            </p>
+          </div>
+
+          <div *ngIf="requirement.corequisites?.length">
+            <h2>Correquisitos</h2>
+            <p *ngFor="#corequisite of requirement.corequisites">
+              {{corequisite}}
+            </p>
+          </div>
+        </ion-item>
+      </ion-list>
+
+      <ion-list *ngIf="course.requisites?.restrictions?.length">
+        <ion-list-header>
+          <ion-icon name="information-circle" item-left></ion-icon>
+          Restricciones
+        </ion-list-header>
+
+        <ion-item *ngFor="#restriction of course.requisites.restrictions">
+          {{restriction.type}}:
+          <ion-note item-right>
+            {{restriction.value}}:
+          </ion-note>
+        </ion-item>
+      </ion-list>
+
+      <ion-list *ngIf="course.requisites?.equivalences?.length">
+        <ion-list-header>
+          <ion-icon name="information-circle" item-left></ion-icon>
+          Equivalencias
+        </ion-list-header>
+
+        <ion-item *ngFor="#equivalence of course.requisites.equivalences" (click)="viewCourse(equivalence)">
+          {{equivalence}}
+        </ion-item>
+      </ion-list>
+
     </ion-card-content>
   </ion-card>
 </ion-content>
-
-<!-- <div *ngIf="platform.is('android') && schedule">
-  <button fab fab-bottom fab-right *ngIf="!schedule.has(course)" (click)="addSection(course)">
-    <ion-icon name="add"></ion-icon>
-  </button>
-  <button fab fab-bottom fab-right danger *ngIf="schedule.has(course)" (click)="removeSection(course)">
-    <ion-icon name="remove"></ion-icon>
-  </button>
-</div> -->

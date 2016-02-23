@@ -1,12 +1,10 @@
 <ion-card>
-  <!-- <ion-card-header> -->
-    <ion-item>
-      {{schedule.name}}
-      <button item-right clear class="options-button" (click)="click()">
-        <ion-icon name="more"></ion-icon>
-      </button>
-    </ion-item>
-  <!-- </ion-card-header> -->
+  <ion-item>
+    {{schedule.name}}
+    <button item-right clear class="options-button" (click)="click()">
+      <ion-icon name="more"></ion-icon>
+    </button>
+  </ion-item>
 
   <ion-segment class="select-segment" [(ngModel)]="current">
     <ion-segment-button *ngFor="#day of days; #i = index" [value]="i + 1">{{day}}</ion-segment-button>
