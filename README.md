@@ -110,7 +110,7 @@ The release .apk is located at: `platforms/android/build/outputs/apk/app.apk` an
 The final product should appear on the `Organizer`.
 
 [appstore-image]: http://mrpatiwi.github.io/app-badges/appstore.png
-[appstore-url]: https://itunes.apple.com/cl/app/cursos-uc/id1076219796
+[appstore-url]: https://itunes.apple.com/us/app/cursos-uc/id1086360304?mt=8
 [playstore-image]: http://mrpatiwi.github.io/app-badges/playstore.png
 [playstore-url]: https://play.google.com/store/apps/details?id=com.almapp.uccourses
 [ci-image]: https://travis-ci.org/almapp/uc-courses-mobile.svg
