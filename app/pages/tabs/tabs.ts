@@ -1,4 +1,4 @@
-import {Platform, Page, Nav} from "ionic-framework/ionic";
+import {Platform, Page, Nav} from "ionic-angular";
 
 // Pages
 import {CoursesPage} from "../courses/courses";

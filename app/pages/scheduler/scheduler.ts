@@ -1,4 +1,4 @@
-import {Page, NavController, Platform, Alert, ActionSheet, Modal} from "ionic-framework/ionic";
+import {Page, NavController, Platform, Alert, ActionSheet, Modal} from "ionic-angular";
 
 import {Course} from "../../models/course";
 import {Schedule, Block} from "../../models/schedule";
@@ -21,7 +21,7 @@ export class SchedulerPage {
 
         this.schedules = null;
         this.load().then(results => {
-            if (results.length == 0) {
+            if (results.length === 0) {
                 return this.setup();
             }
         });

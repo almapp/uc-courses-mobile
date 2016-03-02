@@ -1,4 +1,4 @@
-import {Page, Platform, ViewController, NavController, NavParams} from "ionic-framework/ionic";
+import {Page, Platform, ViewController, NavController, NavParams} from "ionic-angular";
 
 import {Course} from "../../models/course";
 import {Schedule} from "../../models/schedule";

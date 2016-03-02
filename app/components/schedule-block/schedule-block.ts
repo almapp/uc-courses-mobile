@@ -1,5 +1,5 @@
 import {Component, Input, Output, OnChanges, EventEmitter} from "angular2/core";
-import {Icon, Item} from "ionic-framework/ionic";
+import {Icon, Item} from "ionic-angular";
 
 import {Schedule, Block} from "../../models/schedule";
 import {Course} from "../../models/course";

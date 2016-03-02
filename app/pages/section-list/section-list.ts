@@ -1,4 +1,4 @@
-import {Page, NavController, Modal, ViewController, ActionSheet, NavParams} from "ionic-framework/ionic";
+import {Page, NavController, Modal, ViewController, ActionSheet, NavParams} from "ionic-angular";
 import {Pipe} from "angular2/core";
 
 import {Course} from "../../models/course";

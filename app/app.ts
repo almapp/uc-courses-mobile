@@ -1,5 +1,4 @@
-import {App, Platform, Page} from "ionic-framework/ionic";
-import {enableProdMode} from "angular2/core";
+import {App, Platform, Page} from "ionic-angular";
 
 // Main page
 import {TabsPage} from "./pages/tabs/tabs";
@@ -8,16 +7,13 @@ import {TabsPage} from "./pages/tabs/tabs";
 import {CoursesProvider} from "./providers/courses";
 import {SchedulesProvider} from "./providers/schedules";
 
-if (process.env.NODE_ENV === "production") {
-    enableProdMode();
-}
-
 @App({
     templateUrl: "build/app.html",
     config: {
         // overflowScroll: true,
         // mode: "md",
     },
+    prodMode: process.env.NODE_ENV === "production",
     providers: [CoursesProvider, SchedulesProvider],
 })
 export class MyApp {
@@ -27,7 +23,6 @@ export class MyApp {
         this.provider.url = process.env.API_URL;
         this.platform.ready().then(() => {
             // Do any necessary cordova or native calls here now that the platform is ready
-            manager.setup();
         });
     }
 }

@@ -1,5 +1,5 @@
 import {Component, Input, Output, EventEmitter, OnChanges} from "angular2/core";
-import {Segment, SegmentButton, Item, Icon, ActionSheet, Button} from "ionic-framework/ionic";
+import {Segment, SegmentButton, Item, Icon, ActionSheet, Button} from "ionic-angular";
 
 import {Schedule, Block} from "../../models/schedule";
 import {SchedulesProvider} from "../../providers/schedules";
@@ -54,7 +54,7 @@ export class ScheduleView implements OnChanges {
     }
 
     isBusy(day: number): boolean {
-        const schedule = this.schedule.week[day] || [];
+        const schedule = this.schedule.week[day] || [];
         return schedule.some(blocks => {
             return blocks.length > 0;
         });

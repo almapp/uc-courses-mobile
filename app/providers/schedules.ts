@@ -1,4 +1,4 @@
-import {Storage, SqlStorage} from "ionic-framework/ionic";
+import {Storage, SqlStorage} from "ionic-angular";
 import {Injectable, EventEmitter} from "angular2/core";
 import {createHash} from "crypto";
 

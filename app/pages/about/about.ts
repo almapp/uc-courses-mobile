@@ -1,8 +1,8 @@
-import {Page} from "ionic-framework/ionic";
+import {Page} from "ionic-angular";
 import {Http} from "angular2/http";
 import * as crypto from "crypto";
 
-var PACKAGE = require("../../../package.json");
+const PACKAGE = require("../../../package.json");
 
 @Page({
     templateUrl: "build/pages/about/about.html",

@@ -1,4 +1,4 @@
-import {Page, NavController, Platform, NavParams, Modal, Alert} from "ionic-framework/ionic";
+import {Page, NavController, Platform, NavParams, Modal, Alert} from "ionic-angular";
 import {Pipe} from "angular2/core";
 
 import {Course} from "../../models/course";
@@ -47,7 +47,7 @@ export class SectionPage {
         });
         this.manager.removed.subscribe(shc => {
             this.schedules = this.schedules.filter(s => s.name !== shc.name);
-            if (!this.schedule || shc.name === this.schedule.name) {
+            if (!this.schedule || shc.name === this.schedule.name) {
                 this.schedule = this.schedules[0];
             }
         });

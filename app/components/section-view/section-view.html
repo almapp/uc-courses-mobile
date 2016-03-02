@@ -2,7 +2,7 @@
   <!-- <ion-list inset>
   <ion-item *ngFor="#schedule of section.schedule">
     <h2>{{schedule.identifier}}</h2>
-    <h3>{{schedule.location.campus || 'Sin campus'}}: {{schedule.location.place || '?'}}</h3>
+    <h3>{{schedule.location.campus || 'Sin campus'}}: {{schedule.location.place || '?'}}</h3>
     <p *ngFor="#module of schedule.modules">
       <span>{{module.day}}</span>: {{module.hours}}
     </p>
@@ -45,7 +45,7 @@
           <strong>{{sch.identifier}}</strong> <span class="sch-modules" *ngFor="#module of sch.modules"><strong>{{module.day}}</strong>: {{module.hours}}</span>
         </p>
         <p>
-          {{sch.location.campus || 'Sin campus'}}: {{sch.location.place || '?'}}
+          {{sch.location.campus || 'Sin campus'}}: {{sch.location.place || '?'}}
         </p>
       </div>
     </ion-item>

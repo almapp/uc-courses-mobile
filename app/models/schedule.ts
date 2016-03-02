@@ -49,20 +49,20 @@ export class Schedule {
         return this.week[DAYS.indexOf(day)];
     }
 
-    block(day: string, number: number): Block[] {
-        return this.day(day)[number];
+    block(day: string, block: number): Block[] {
+        return this.day(day)[block];
     }
 
-    setBlock(day: string, number: number, type: string, course: Course) {
-        const blocks = this.block(day, number) || [];
+    setBlock(day: string, block: number, type: string, course: Course) {
+        const blocks = this.block(day, block) || [];
         blocks.push({
             day: day,
-            block: number,
+            block: block,
             modtype: type,
             NRC: course.NRC,
             // course: course,
         });
-        this.day(day)[number] = blocks;
+        this.day(day)[block] = blocks;
     }
 
     has(course: Course): boolean {

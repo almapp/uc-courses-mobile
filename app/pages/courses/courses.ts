@@ -1,4 +1,4 @@
-import {Page, NavController, NavParams, Modal, Alert, ViewController} from "ionic-framework/ionic";
+import {Page, NavController, NavParams, Modal, Alert, ViewController} from "ionic-angular";
 import {Pipe} from "angular2/core";
 
 import {Course} from "../../models/course";
@@ -89,7 +89,7 @@ export class CoursesPage {
     }
 
     search(query?) {
-        query = query || this.query;
+        query = query || this.query;
         const request: SearchQuery = {
             period: this.period.period,
             year: this.period.year,
