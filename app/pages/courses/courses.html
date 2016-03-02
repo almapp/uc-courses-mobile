@@ -11,15 +11,6 @@
   <ion-card>
     <ion-card-content>
       <ion-list>
-        <ion-item>
-          <ion-icon name="code" item-left></ion-icon>
-          <ion-input [(ngModel)]="query.initials" type="text" placeholder="Sigla"></ion-input>
-        </ion-item>
-
-        <ion-item>
-          <ion-icon name="quote" item-left></ion-icon>
-          <ion-input [(ngModel)]="query.name" type="text" placeholder="Nombre"></ion-input>
-        </ion-item>
 
         <ion-item>
           <ion-icon name="school" item-left></ion-icon>
@@ -51,9 +42,21 @@
           </ion-select>
         </ion-item>
 
-        <ion-item>
-          <button block type="submit" (click)="search()" [disabled]="operation">{{operation ? 'Buscando...' : 'Buscar'}}</button>
-        </ion-item>
+        <form #searchForm="ngForm" (ngSubmit)="onSearch(searchForm.value)">
+          <ion-item>
+            <ion-icon name="code" item-left></ion-icon>
+            <ion-input ngControl="initials" type="text" placeholder="Sigla"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-icon name="quote" item-left></ion-icon>
+            <ion-input ngControl="name" type="text" placeholder="Nombre"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <button block type="submit" [disabled]="operation">{{operation ? 'Buscando...' : 'Buscar'}}</button>
+          </ion-item>
+        </form>
       </ion-list>
     </ion-card-content>
   </ion-card>

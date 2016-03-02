@@ -1,5 +1,6 @@
-import {Page, NavController, NavParams, Modal, Alert, ViewController} from "ionic-angular";
+import {Page, NavController, NavParams, Modal, Alert, ViewController, Keyboard} from "ionic-angular";
 import {Pipe} from "angular2/core";
+import {FORM_DIRECTIVES} from "angular2/common";
 
 import {Course} from "../../models/course";
 import {CoursesProvider, SearchQuery, Period} from "../../providers/courses";
@@ -31,7 +32,7 @@ export class HumanizePeriodPipe {
 @Page({
     templateUrl: "build/pages/courses/courses.html",
     pipes: [HumanizePeriodPipe],
-    directives: [CourseItem],
+    directives: [FORM_DIRECTIVES, CourseItem],
 })
 export class CoursesPage {
     private period: Period;
@@ -42,8 +43,6 @@ export class CoursesPage {
     private schools: string[];
 
     private query = {
-        initials: "",
-        name: "",
         campus: "",
         school: "",
     };
@@ -52,7 +51,8 @@ export class CoursesPage {
     constructor(
         private nav: NavController,
         private provider: CoursesProvider,
-        private manager: SchedulesProvider) {
+        private manager: SchedulesProvider,
+        private keyboard: Keyboard) {
 
         this.campuses = [];
         this.provider.campuses().then(campuses => this.campuses = campuses.sort());
@@ -86,6 +86,13 @@ export class CoursesPage {
 
     course(school: string): Course[] {
         return this.courses[school];
+    }
+
+    onSearch(query) {
+        if (this.keyboard.isOpen()) {
+            this.keyboard.close();
+        }
+        this.search(Object.assign(query, this.query));
     }
 
     search(query?) {
