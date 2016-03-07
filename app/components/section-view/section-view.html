@@ -9,12 +9,12 @@
   </ion-item>
 </ion-list> -->
 
-  <ion-card *ngIf="schedule">
+  <ion-card>
     <ion-card-content>
       <schedule-table [schedule]="schedule" [highlight]="[section]"></schedule-table>
     </ion-card-content>
 
-    <ion-item actions *ngIf="!schedule.has(section)">
+    <ion-item actions *ngIf="schedule && !schedule.has(section)">
       <button outline item-left (click)="selectSchedule.emit();">
         <!-- <ion-icon name="calendar"></ion-icon> -->
         {{schedule.name}}
@@ -26,7 +26,7 @@
       </button>
     </ion-item>
 
-    <ion-item actions *ngIf="schedule.has(section)">
+    <ion-item actions *ngIf="schedule && schedule.has(section)">
       <button outline item-left (click)="selectSchedule.emit();">
         <!-- <ion-icon name="calendar"></ion-icon> -->
         {{schedule.name}}
