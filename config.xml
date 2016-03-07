@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.almapp.uccourses" version="1.5.1" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns="http://www.w3.org/ns/widgets">
+<widget id="com.almapp.uccourses" version="2.0.0" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns="http://www.w3.org/ns/widgets">
   <name>
     Cursos UC
   </name>
@@ -59,7 +59,7 @@
     <splash src="resources/ios/splash/Default@2x~iphone.png" width="640" height="960"/>
     <splash src="resources/ios/splash/Default~iphone.png" width="320" height="480"/>
   </platform>
-  <preference name="deployment-target" value="7.0" />
+  <preference name="deployment-target" value="8.0" />
   <preference name="webviewbounce" value="false"/>
   <preference name="Orientation" value="portrait"/>
   <preference name="UIWebViewBounce" value="false"/>

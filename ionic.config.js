@@ -32,7 +32,7 @@ module.exports = {
   autoPrefixerOptions: {
     browsers: [
       'last 2 versions',
-      'iOS >= 7',
+      'iOS >= 8',
       'Android >= 4',
       'Explorer >= 10',
       'ExplorerMobile >= 11'
