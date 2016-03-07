@@ -1,7 +1,7 @@
 {
   "name": "uc-courses-mobile",
   "description": "Buscacursos: An Ionic project",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "scripts": {
     "build": "ionic build",
     "watch": "gulp watch",
