@@ -28,8 +28,8 @@ export class ScheduleTable implements OnChanges {
 
         if (this.schedule) {
             this.schedule.week.forEach((day, i) => {
-                day.forEach((blocks, j) => {
-                    blocks.forEach(block => {
+                (day || []).forEach((blocks, j) => {
+                    (blocks || []).forEach(block => {
                         if (this.highlight.every(section => block.NRC !== section.NRC)) {
                             // skip module '0'
                             this.table[j - 1][i].push(block);

@@ -44,9 +44,10 @@ export class ScheduleView implements OnChanges {
     }
 
     ngOnChanges(changeRecord) {
-        this.manager.updated.subscribe(schedule => {
-            if (this.schedule.name === schedule.name) { this.schedule = schedule; }
-        });
+        // debugger;
+        // this.manager.schedules.subscribe(schedules => {
+        //     if (this.schedule.name === schedule.name) { this.schedule = schedule; }
+        // });
     }
 
     get today(): number {

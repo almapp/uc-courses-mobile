@@ -12,35 +12,18 @@ import {SectionListPage} from "../section-list/section-list";
     directives: [ScheduleView],
 })
 export class SchedulerPage {
-    schedules: Schedule[];
+    private schedules: Schedule[] = [];
 
     constructor(
         private platform: Platform,
         private nav: NavController,
         private manager: SchedulesProvider) {
 
-        this.schedules = null;
-        this.load().then(results => {
-            if (results.length === 0) {
-                return this.setup();
-            }
-        });
-    }
-
-    setup(): Promise<Schedule[]> {
-        return this.manager.create("Propio", 0).then(schedule => {
-            return this.schedules = [schedule];
-        });
-    }
-
-    load(): Promise<Schedule[]> {
-        return this.manager.loadAll().then(schedules => {
-            return this.schedules = schedules.sort((a, b) => a.position - b.position);
-        });
+        this.manager.source().subscribe(schedules => this.schedules = schedules);
     }
 
     seeCourses(schedule: Schedule) {
-        const modal = Modal.create(SectionListPage, { sections: schedule.courses });
+        const modal = Modal.create(SectionListPage, { sections: schedule.iterableCourses });
         modal.onDismiss((section: Course) => {
             if (section) { this.seeCourse(section); }
         });
@@ -63,21 +46,16 @@ export class SchedulerPage {
     }
 
     create(name: string) {
-        const repeated = this.schedules.some(sch => {
-            return sch.name === name;
-        });
-        if (repeated) {
-            this.alertRepeated(name);
-        } else {
-            const order = (this.schedules[0]) ? this.schedules[0].position + 1 : 0;
-            return this.manager.create(name, order).then(schedule => this.schedules.push(schedule));
-        }
+        const order = (this.schedules[0]) ? this.schedules[0].position + 1 : 0;
+        return this.manager.create(name, order);
     }
 
     delete(schedule: Schedule) {
-        this.manager.delete(schedule).then(() => {
-            return this.schedules = this.schedules.filter(s => s.name !== schedule.name);
-        });
+        this.manager.delete(schedule);
+    }
+
+    clone(schedule: Schedule) {
+        this.manager.save(this.manager.clone(schedule, `Copia de ${schedule.name}`));
     }
 
     select(block: Block, schedule: Schedule) {
@@ -93,6 +71,10 @@ export class SchedulerPage {
             title: `Optiones para horario '${schedule.name}'`,
             buttons: [
                 {
+                    text: "Crear copia",
+                    handler: () => this.clone(schedule),
+                },
+                {
                     text: "Borrar",
                     role: "destructive",
                     handler: () => this.delete(schedule),
@@ -104,14 +86,5 @@ export class SchedulerPage {
             ],
         });
         this.nav.present(sheet);
-    }
-
-    alertRepeated(name: string) {
-        const alert = Alert.create({
-            title: "Ups!",
-            subTitle: "Ya existe un horario con ese nombre, intenta con otro :)",
-            buttons: ["Ok"],
-        });
-        this.nav.present(alert);
     }
 }

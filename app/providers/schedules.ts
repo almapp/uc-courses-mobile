@@ -1,93 +1,124 @@
 import {Storage, SqlStorage} from "ionic-angular";
-import {Injectable, EventEmitter} from "angular2/core";
-import {createHash} from "crypto";
+import {Injectable} from "angular2/core";
 
-import {Course, ScheduleSchema} from "../models/course";
-import {Schedule} from "../models/schedule";
+import {Observable} from "rxjs/Observable";
+import "rxjs/add/operator/share";
+import "rxjs/add/operator/first";
+import "rxjs/add/operator/publishReplay";
+import "rxjs/add/operator/concat";
+import "rxjs/add/observable/fromPromise";
 
+import StorageProvider from "./storage";
 import {CoursesProvider} from "./courses";
 
-export interface Schedules {
-    [ Identifier: string ]: Schedule;
-}
+import {Course} from "../models/course";
+import {Schedule, EMPTY_WEEK} from "../models/schedule";
 
-function nameToID(name: string): string {
-    return createHash("md5").update(name).digest("hex");
+
+export interface ScheduleSchema {
+    _id?: string;
+    _rev?: string;
+    name: string;
+    position: number;
+    NRCs: string[];
 }
 
 @Injectable()
-export class SchedulesProvider {
-    // Database
-    private storage: Storage;
+export class SchedulesProvider extends StorageProvider {
+    public data = new Map();
+    public schedules: Observable<Schedule[]>;
+    private observer: any;
 
-    // Cache
-    private schedules: Schedules;
-    private IDS: string[];
-
-    // Events
-    public updated: EventEmitter<Schedule> = new EventEmitter<Schedule>();
-    public new: EventEmitter<Schedule> = new EventEmitter<Schedule>();
-    public removed: EventEmitter<Schedule> = new EventEmitter<Schedule>();
-
-    constructor() {
-        this.schedules = {};
-        this.setup();
+    constructor(private provider: CoursesProvider) {
+        super();
+        this.schedules = new Observable(observer => this.observer = observer).share();
     }
 
-    setup(): Storage {
-        return this.storage = new Storage(SqlStorage, { name: "buscacursos-uc" });
+    get all(): Schedule[] {
+        const array = Array.from(this.data.values()) as Schedule[];
+        return array.sort(Schedule.compare);
     }
 
-    loadIDS(): Promise<string[]> {
-        return (this.IDS && this.IDS.length !== 0) ? Promise.resolve(this.IDS) : this.storage.getJson("NAMES")
-            .then(IDS => IDS || [])
-            .then(IDS => this.IDS = IDS);
+    setup(name = "database") {
+        const db = super.setup(name);
+        this.loadAll({ fetch: true, persistent: true }).first().subscribe(result => {
+            if (result.length === 0) {
+                this.create("Propio", 0).then(sch => {
+                    console.log("Created", sch._id);
+                }).catch(console.error);
+            }
+        });
+        return db;
     }
 
-    saveIDS(IDS: string[]): Promise<void> {
-        this.IDS = IDS;
-        return this.storage.setJson("NAMES", IDS);
+    source(): Observable<Schedule[]> {
+        // return this.schedules;
+        return Observable.fromPromise(Promise.resolve(this.all)).concat(this.schedules);
     }
 
     delete(schedule: Schedule): Promise<void> {
-        const ID = nameToID(schedule.name);
-        return this.storage.remove(ID)
-            .then(() => this.loadIDS())
-            .then(IDS => this.saveIDS(IDS.filter(i => i !== ID)))
-            .then(() => this.removed.emit(schedule));
-    }
-
-    save(schedule: Schedule): Promise<void> {
-        const ID = nameToID(schedule.name);
-        this.schedules[ID] = schedule;
-        return this.storage.setJson(ID, schedule.prepareSave())
-            .then(() => this.updated.emit(schedule));
-    }
-
-    create(name: string, position?: number, courses?: Course[]): Promise<Schedule> {
-        const schedule = new Schedule(name, position || 0, courses);
-        return this.save(schedule)
-            .then(() => this.loadIDS())
-            .then(IDS => {
-                // Save name
-                IDS.push(nameToID(name));
-                return this.saveIDS(IDS);
-            }).then(() => {
-                // Return on success
-                this.new.emit(schedule);
-                return schedule;
-            });
-    }
-
-    load(ID: string): Promise<Schedule> {
-        return (this.schedules[ID]) ? Promise.resolve(this.schedules[ID]) : this.storage.getJson(ID).then(schedule => {
-            return (schedule) ? this.schedules[ID] = Schedule.parse(schedule) : null;
+        return this.db.remove(schedule._id, schedule._rev).then(success => {
+            this.data.delete(schedule._id);
+            this.observer.next(this.all);
+            return success;
         });
     }
 
-    loadAll(): Promise<Schedule[]> {
-        return this.loadIDS().then(IDS => {
-            return Promise.all(IDS.map(ID => this.load(ID)));
+    save(schedule: Schedule): Promise<Schedule> {
+        const doc: ScheduleSchema = {
+            _id: schedule._id,   // undefined if new
+            _rev: schedule._rev, // undefined if new
+            name: schedule.name,
+            position: schedule.position,
+            NRCs: schedule.NRCs,
+        };
+
+        const operation = (doc._id && this.data.has(doc._id)) ? this.db.put(doc) : this.db.post(doc);
+
+        return operation.then(success => {
+            schedule._id = success.id;
+            schedule._rev = success.rev;
+            this.data.set(schedule._id, schedule);
+            this.observer.next(this.all);
+            return schedule;
         });
+    }
+
+    create(name: string, position?: number, courses: Course[] = []): Promise<Schedule> {
+        const schedule = new Schedule(courses);
+        schedule.name = name;
+        schedule.position = position;
+        return this.save(schedule);
+    }
+
+    clone(schedule: Schedule, name?: string): Schedule {
+        const clone = new Schedule(schedule.iterableCourses);
+        clone.name = name || schedule.name;
+        clone.position = schedule.position + 1;
+        return clone;
+    }
+
+    protected load(primitive: ScheduleSchema, opts: { fetch?: boolean, persistent?: boolean }) {
+        this.provider.courses({ NRCs: primitive.NRCs, fetch: opts.fetch, persistent: opts.persistent}).subscribe(courses => {
+            const schedule = new Schedule(courses || []);
+            schedule._id = primitive._id;
+            schedule._rev = primitive._rev;
+            schedule.name = primitive.name;
+            schedule.position = primitive.position;
+            this.data.set(schedule._id, schedule);
+            this.observer.next(this.all);
+        });
+    }
+
+    protected loadAll(opts: { fetch?: boolean, persistent?: boolean } = {}): Observable<Schedule[]> {
+        this.db.allDocs({ include_docs: true }).then(result => {
+            return result.total_rows ? result.rows.map(r => r.doc) : [];
+        })
+        .then(jsons => {
+            if (jsons.length === 0) this.observer.next([]);
+            else jsons.forEach(json => this.load(json, opts));
+        });
+
+        return this.schedules;
     }
 }

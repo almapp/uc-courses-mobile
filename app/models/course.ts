@@ -31,10 +31,11 @@ export interface ScheduleSchema {
 
 export class Course {
     _id: string;
+    _rev: string;
     name: string;
     year: number;
     period: number;
-    NRC: number;
+    NRC: string;
     initials: string;
     section: number;
     school: string;
@@ -119,18 +120,34 @@ export class Course {
         return mod ? mod.location.campus : null;
     }
 
+    static compare(a: Course, b: Course): number {
+        if (a.initials < b.initials) return -1;
+        else if (a.initials > b.initials) return 1;
+        else return 0;
+    }
+
+    /**
+     * Add and change properties to worki with PouchDB
+     */
+    static prepare(json: any): any {
+        return Object.assign(json, { _id: String(json.NRC), _rev: "1-rev", __v: undefined });
+    }
+
     /**
      * Parse a JSON from the REST API to a native object.
      * @param  {any}    json JSON Object.
      * @return {Course}      Instance of class.
      */
     static parse(json: any): Course {
+        if (!json) return null;
+
         const course = new Course();
-        course._id = json._id;
+        course._id = String(json.NRC || json._id);
+        course._rev = String(json._rev) || "1-rev";
         course.name = json.name;
         course.year = json.year;
         course.period = json.period;
-        course.NRC = json.NRC;
+        course.NRC = String(json.NRC);
         course.initials = json.initials;
         course.section = json.section;
         course.school = json.school;

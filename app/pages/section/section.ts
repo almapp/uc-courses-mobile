@@ -18,8 +18,8 @@ export class SectionPage {
     private sections: Course[];
     private current: number;
 
-    private schedules: Schedule[];
-    private schedule: Schedule;
+    private schedules: Schedule[] = [];
+    private schedule: Schedule = null;
 
     constructor(
         private platform: Platform,
@@ -30,36 +30,21 @@ export class SectionPage {
 
         this.course = this.navParams.get("course");
 
-        this.provider.sections({ course: this.course }).then(sections => {
+        const query = {
+            initials: this.course.initials,
+            year: this.course.year,
+            period: this.course.period,
+        };
+        this.provider.sections(query).then(sections => {
             sections = sections.sort((a, b) => a.section - b.section);
             this.current = sections.map(s => s.section).indexOf(this.course.section);
             this.sections = sections;
         });
 
-        this.schedules = [];
-        this.loadSchedules();
-
-        this.manager.updated.subscribe(shc => {
-            this.schedule = this.schedules[this.schedules.map(s => s.name).indexOf(shc.name)] = shc;
-        });
-        this.manager.new.subscribe(shc => {
-            this.schedules.push(shc);
-        });
-        this.manager.removed.subscribe(shc => {
-            this.schedules = this.schedules.filter(s => s.name !== shc.name);
-            if (!this.schedule || shc.name === this.schedule.name) {
+        this.manager.source().subscribe(schedules => {
+            this.schedules = schedules;
+            if (!this.schedule || this.schedules.map(sch => sch._id).indexOf(this.schedule._id) === -1) {
                 this.schedule = this.schedules[0];
-            }
-        });
-    }
-
-    loadSchedules() {
-        this.manager.loadAll().then(schedules => {
-            if (schedules.length) {
-                if (!this.schedule || schedules.map(s => s.name).indexOf(this.schedule.name) < 0) {
-                    this.schedule = schedules[0];
-                }
-                this.schedules = schedules;
             }
         });
     }
@@ -82,12 +67,12 @@ export class SectionPage {
 
     selectSchedule() {
         const alert = Alert.create({
-            title: "Selecciona periodo",
+            title: "Selecciona horario",
             inputs: this.schedules.map((schedule, index) => ({
                 type: "radio",
                 value: String(index),
                 label: schedule.name,
-                checked: this.schedule.name === schedule.name,
+                checked: this.schedule._id === schedule._id,
             })),
             buttons: [
                 "Cancelar",

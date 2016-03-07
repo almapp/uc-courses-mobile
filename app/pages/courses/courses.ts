@@ -36,17 +36,17 @@ export class HumanizePeriodPipe {
 })
 export class CoursesPage {
     private period: Period;
-    private periods: Period[];
-    private campuses: string[];
+    private periods: Period[] = [];
+    private campuses: string[] = [];
+    private schools: string[] = [];
 
     private courses: Course[][];
-    private schools: string[];
 
     private query = {
         campus: "",
         school: "",
     };
-    private operation: Promise<any>;
+    private operation: boolean;
 
     constructor(
         private nav: NavController,
@@ -54,11 +54,8 @@ export class CoursesPage {
         private manager: SchedulesProvider,
         private keyboard: Keyboard) {
 
-        this.campuses = [];
-        this.provider.campuses().then(campuses => this.campuses = campuses.sort());
-
-        this.schools = [];
-        this.provider.schools().then(schools => this.schools = schools.sort());
+        this.provider.campuses().subscribe(campuses => this.campuses = campuses);
+        this.provider.schools().subscribe(schools => this.schools = schools);
 
         this.periods = [
             { year: 2016, period: 1 },
@@ -68,18 +65,21 @@ export class CoursesPage {
         this.period = this.periods[0]; // present
         this.courses = null;
 
-        this.manager.loadAll().then(schedules => {
-            const courses = schedules.reduce((array, schedule) => {
-                array.push(...schedule.courses);
-                return array;
-            }, []);
-            if (courses.length) {
-                this.process(courses);
-                this.operation = null;
-            } else {
-                const placeholders = ["MAT0", "LET0", "DPT", "TTF0", "DNO0", "DER0", "EDU0"];
-                const random = placeholders[Math.floor(Math.random() * placeholders.length)];
-                this.search({ initials: random });
+        this.manager.source().first().subscribe(schedules => {
+            // Only if no query has been made.
+            if (!this.query.campus && !this.query.school) {
+                const courses = schedules.reduce((array, schedule) => {
+                    array.push(...schedule.iterableCourses);
+                    return array;
+                }, []);
+                if (courses.length) {
+                    this.process(courses);
+                    this.operation = false;
+                } else {
+                    const placeholders = ["MAT0", "LET0", "DPT", "TTF0", "DNO0", "DER0", "EDU0"];
+                    const random = placeholders[Math.floor(Math.random() * placeholders.length)];
+                    this.search({ initials: random });
+                }
             }
         });
     }
@@ -108,10 +108,11 @@ export class CoursesPage {
         if (valid(query.school)) { request.school = query.school; }
         if (valid(query.initials)) { request.initials = query.initials; }
 
-        this.operation = this.provider.search(request).then(courses => {
-            this.process(courses);
-            this.operation = null;
-        }).catch(err => this.operation = null);
+        this.operation = true;
+        this.provider.search(request).subscribe(
+            courses => this.process(courses),
+            err => console.error(err),
+            () => this.operation = false);
     }
 
     process(results: Course[]): Course[][] {

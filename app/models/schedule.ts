@@ -4,35 +4,37 @@ export interface Block {
     day: string;
     block: number;
     modtype: string;
-    NRC: number;
-    // course: Course;
+    NRC: string;
 }
 
 export const DAYS = ["D", "L", "M", "W", "J", "V", "S"];
 export const MODULES = [1, 2, 3, 4, 5, 6, 7, 8];
 
-export class Schedule {
-    public courses: Course[] = [];
-    public week: Block[][][] = DAYS.map(_ => []); // Start with empty week
+export const EMPTY_WEEK = () => DAYS.map(_ => []);
 
-    constructor(public name: string, public position = 0, courses?: Course[]) {
-        if (courses) {
-            this.process(courses);
-        } else {
-            this.courses = [];
-        }
+export class Schedule {
+    public _id: string;
+    public _rev: string;
+    public name: string;
+    public position: number = 0;
+    public NRCs: string[] = [];
+    public courses = new Map();
+    public week: Block[][][] = EMPTY_WEEK(); // Start with empty week
+
+    constructor(courses: Course[] = []) {
+        this.add(...courses);
     }
 
     get count(): number {
-        return this.courses.length;
+        return this.NRCs.length;
+    }
+
+    get iterableCourses(): Course[] {
+        return Array.from(this.courses.values()) as Course[];
     }
 
     get credits(): number {
-        return this.courses.map(c => c.credits).reduce((a, b) => a + b, 0);
-    }
-
-    get NRCs(): number[] {
-        return this.courses.map(c => c.NRC);
+        return this.iterableCourses.map(c => c.credits).reduce((a, b) => a + b, 0);
     }
 
     get blocks(): Block[] {
@@ -41,8 +43,8 @@ export class Schedule {
         return result;
     }
 
-    course(NRC: number): Course {
-        return this.courses.find(course => course.NRC === NRC);
+    course(NRC: string): Course {
+        return this.courses.get(NRC) as Course;
     }
 
     day(day: string): Block[][] {
@@ -60,13 +62,25 @@ export class Schedule {
             block: block,
             modtype: type,
             NRC: course.NRC,
-            // course: course,
         });
         this.day(day)[block] = blocks;
     }
 
-    has(course: Course): boolean {
-        return this.courses.map(c => c.NRC).indexOf(course.NRC) > -1;
+    has(...courses: Course[]): boolean {
+        return courses.every(course => this.courses.has(course.NRC));
+    }
+
+    fill(...courses: Course[]): this {
+        courses.filter(course => !this.has(course)).forEach(course => {
+            course.schedule.forEach(type => {
+                type.modules.forEach(mod => {
+                    mod.hours.forEach(hour => {
+                        this.setBlock(mod.day, hour, type.identifier, course);
+                    });
+                });
+            });
+        });
+        return this;
     }
 
     add(...courses: Course[]): this {
@@ -78,34 +92,27 @@ export class Schedule {
                     });
                 });
             });
-            this.courses.push(course);
+            this.courses.set(course.NRC, course);
+            this.NRCs.push(course.NRC);
         });
         return this;
     }
 
     remove(...courses: Course[]): this {
-        // TODO: improve performance
         const NRCs = courses.map(course => course.NRC);
-        this.courses = this.courses.filter(c => NRCs.indexOf(c.NRC) === -1);
-        this.week = DAYS.map(_ => []);
-        this.add(...this.courses);
+        this.week = this.week.map(day => {
+            return day.map(block => {
+                return block.filter(mod => NRCs.indexOf(mod.NRC) === -1);
+            });
+        });
+        NRCs.forEach(NRC => this.courses.delete(NRC));
+        this.NRCs = this.NRCs.filter(NRC => NRCs.indexOf(NRC) === -1);
         return this;
     }
 
-    process(courses: Course[]) {
-        this.add(...courses);
-    }
-
-    prepareSave(): JSON {
-        return Schedule.toJSON(this) as any;
-    }
-
-    static toJSON(scheudle: Schedule): JSON {
-        return JSON.parse(JSON.stringify(scheudle));
-    }
-
-    static parse(json: any): Schedule {
-        const courses = json.courses.map(Course.parse);
-        return new Schedule(json.name, json.position, courses);
+    static compare(a: Schedule, b: Schedule): number {
+        if (a.position < b.position) return -1;
+        else if (a.position > b.position) return 1;
+        else return 0;
     }
 }

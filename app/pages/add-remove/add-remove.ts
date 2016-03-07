@@ -21,7 +21,7 @@ export class AddRemovePage {
 
         this.course = this.params.get("course");
         this.title = `${this.course.initials}-${this.course.section}`;
-        this.manager.loadAll().then(results => {
+        this.manager.source().subscribe(results => {
             this.items = results.map(schedule => ({
                 schedule: schedule,
                 checked: schedule.has(this.course),
