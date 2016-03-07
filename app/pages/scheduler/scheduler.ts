@@ -45,6 +45,24 @@ export class SchedulerPage {
         this.nav.present(alert);
     }
 
+    rename(schedule: Schedule) {
+        const alert = Alert.create({
+            title: "Cambiar nombre",
+            subTitle: "Ingresa el nuevo nombre",
+            inputs: [
+                { name: "name", placeholder: schedule.name },
+            ],
+            buttons: [
+                { text: "Cancelar" },
+                { text: "Guardar", handler: (values) => {
+                    schedule.name = values.name;
+                    this.manager.save(schedule);
+                } },
+            ],
+        });
+        this.nav.present(alert);
+    }
+
     create(name: string) {
         const order = (this.schedules[0]) ? this.schedules[0].position + 1 : 0;
         return this.manager.create(name, order);
@@ -73,6 +91,10 @@ export class SchedulerPage {
                 {
                     text: "Crear copia",
                     handler: () => this.clone(schedule),
+                },
+                {
+                    text: "Cambiar nombre",
+                    handler: () => this.rename(schedule),
                 },
                 {
                     text: "Borrar",
