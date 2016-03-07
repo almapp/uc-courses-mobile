@@ -33,8 +33,8 @@
     </ion-card-content>
   </ion-card>
 
-</ion-content>
+  <button fab fab-bottom fab-right *ngIf="platform.is('android')" (click)="new()">
+    <ion-icon name="add"></ion-icon>
+  </button>
 
-<button fab fab-bottom fab-right *ngIf="platform.is('android')" (click)="new()">
-  <ion-icon name="add"></ion-icon>
-</button>
+</ion-content>
