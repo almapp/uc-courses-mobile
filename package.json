@@ -8,6 +8,7 @@
     "start": "npm run watch & ionic serve --lab -c -s",
     "android": "ionic run android",
     "ios": "ionic emulate ios",
+    "windows": "ionic serve --platform windows",
     "resources": "ionic resources",
     "postinstall": "typings install && ionic state restore",
     "release-android": "ionic prepare android && ionic build --release android",
